@@ -44,7 +44,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\default.html">
       <PackagePath>default.html</PackagePath>
-      <Modified>2017-02-18T06:30:22.224</Modified>
+      <Modified>2017-07-02T11:14:33.811</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\images\LockScreenLogo.scale-200.png">
       <PackagePath>images\LockScreenLogo.scale-200.png</PackagePath>
@@ -76,11 +76,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\js\default.js">
       <PackagePath>js\default.js</PackagePath>
-      <Modified>2017-02-18T03:51:39.396</Modified>
+      <Modified>2017-07-02T10:32:07.480</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\js\js.js">
       <PackagePath>js\js.js</PackagePath>
-      <Modified>2017-02-18T05:45:36.415</Modified>
+      <Modified>2017-07-02T11:23:38.575</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\WinJS\js\en-US\ui.strings.js">
       <PackagePath>WinJS\js\en-US\ui.strings.js</PackagePath>

@@ -1,23 +1,34 @@
 var myApp = {
-    load: function () {
+	token: '00954bafe0c6182bb730d240f5147dd8',
+	ajax: function(url,onComplete) {
 
-        console.log('myAppLoad');
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', url, true);
+		xhr.onreadystatechange = function () {
+			//if(xhr.readyState==4) console.log(xhr.status);
+			if(xhr.readyState != 4) return;
+			
+			if(xhr.status != 200) onComplete(null, xhr);
+			else {
+				var json = JSON.parse(xhr.responseText);
+				onComplete(json, xhr);
+			}
+		};
+		xhr.send(null);
+	},
+	load: function() {
 
-        var wrp = document.getElementById('resp'),
-            xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://cherio.io/ajax/', true);
-        xhr.onreadystatechange = function () {
-            console.log(xhr.readyState, xhr.status);
-            if (xhr.readyState != 4) return;
-            if (xhr.status == 200) {
-                var rtxt = xhr.responseText,
-                    json = JSON.parse(rtxt);
-                console.log(json);
-                wrp.childNodes[0].nodeValue = json.date;
-            } else {
-                console.log('XHR Error' + xhr.status);
-            }
-        };
-        xhr.send(null);
-    }
+		console.log('myAppLoad');
+		this.ajax('http://api.peers.tv/registry/2/whereami.json',this.onload.bind(this));
+
+	},
+	onload: function(json) {
+		console.log(json);
+		var resp = document.getElementById('resp'),
+			prov = json.contractor,
+			terr = json.territories[0];
+
+		resp.innerText = '['+prov.contractorId+']'+prov.name;
+		resp.innerText+=' ['+terr.territoryId+']'+terr.name;
+	}
 };
