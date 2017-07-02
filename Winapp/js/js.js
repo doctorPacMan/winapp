@@ -1,25 +1,8 @@
 var myApp = {
-	token: '00954bafe0c6182bb730d240f5147dd8',
-	ajax: function(url,onComplete) {
-
-		var xhr = new XMLHttpRequest();
-		xhr.open('GET', url, true);
-		xhr.onreadystatechange = function () {
-			//if(xhr.readyState==4) console.log(xhr.status);
-			if(xhr.readyState != 4) return;
-			
-			if(xhr.status != 200) onComplete(null, xhr);
-			else {
-				var json = JSON.parse(xhr.responseText);
-				onComplete(json, xhr);
-			}
-		};
-		xhr.send(null);
-	},
 	load: function() {
 
 		console.log('myAppLoad');
-		this.ajax('http://api.peers.tv/registry/2/whereami.json',this.onload.bind(this));
+		cnapi.whereami(this.onload.bind(this));
 
 	},
 	onload: function(json) {
@@ -30,5 +13,19 @@ var myApp = {
 
 		resp.innerText = '['+prov.contractorId+']'+prov.name;
 		resp.innerText+=' ['+terr.territoryId+']'+terr.name;
+		
+		cnapi.channels(this.onloadChannels.bind(this));
+
+	},
+	onloadChannels: function(data) {
+		var re = new RegExp('^cam_'),
+			list = data.channels;
+		for(var j=0,cha; j<list.length; j++) {
+			cha = list[j];
+			if(cha.hasSchedule!=1) continue;
+			else if(!re.test(cha.alias)) continue;
+			else if(cha.ageRestriction===undefined) continue;
+			console.log(cha.hasSchedule, cha.ageRestriction, cha.alias);
+		}
 	}
 };
