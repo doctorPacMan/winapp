@@ -4,13 +4,14 @@ var $Ajax = function(url,onComplete) {
 		xhr.open('GET', url, true);
 		xhr.setRequestHeader('Authorization','Bearer 00954bafe0c6182bb730d240f5147dd8');
 		xhr.onreadystatechange = function () {
-			//if(xhr.readyState==4) console.log(xhr.status);
+			//console.log(xhr.readyState, xhr.status);
 			if(xhr.readyState != 4) return;
 			
 			if(xhr.status != 200) onComplete(null, xhr);
 			else {
-				var json = JSON.parse(xhr.responseText);
-				onComplete(json, xhr);
+				var text = xhr.responseText, json;
+				try{json = JSON.parse(xhr.responseText)}catch(e){};
+				onComplete(json || text, xhr);
 			}
 		};
 		xhr.send(null);
