@@ -22,7 +22,7 @@
     <AppXManifest Include="D:\WinApps\Winapp\Winapp\bin\Debug\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-02-18T07:01:57.884</Modified>
+      <Modified>2017-07-05T12:37:37.759</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
@@ -44,7 +44,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\default.html">
       <PackagePath>default.html</PackagePath>
-      <Modified>2017-07-02T11:14:33.811</Modified>
+      <Modified>2017-07-02T11:42:31.517</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\images\LockScreenLogo.scale-200.png">
       <PackagePath>images\LockScreenLogo.scale-200.png</PackagePath>
@@ -74,13 +74,17 @@
       <PackagePath>images\Wide310x150Logo.scale-200.png</PackagePath>
       <Modified>2017-02-18T06:56:44.868</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\js\api.js">
+      <PackagePath>js\api.js</PackagePath>
+      <Modified>2017-07-05T11:46:16.647</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\js\default.js">
       <PackagePath>js\default.js</PackagePath>
       <Modified>2017-07-02T10:32:07.480</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\js\js.js">
       <PackagePath>js\js.js</PackagePath>
-      <Modified>2017-07-02T11:23:38.575</Modified>
+      <Modified>2017-07-05T12:34:47.224</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\WinJS\js\en-US\ui.strings.js">
       <PackagePath>WinJS\js\en-US\ui.strings.js</PackagePath>
@@ -100,7 +104,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\bin\Debug\ReverseMap\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2017-02-18T07:01:57.766</Modified>
+      <Modified>2017-07-05T12:37:37.441</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

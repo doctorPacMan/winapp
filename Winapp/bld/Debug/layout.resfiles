@@ -8,6 +8,7 @@ images\Square44x44Logo.scale-200.png
 images\Square44x44Logo.targetsize-24_altform-unplated.png
 images\StoreLogo.png
 images\Wide310x150Logo.scale-200.png
+js\api.js
 js\default.js
 js\js.js
 WinJS\css\ui-dark.css

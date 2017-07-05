@@ -54,6 +54,9 @@
     <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\images\Wide310x150Logo.scale-200.png">
       <PackagePath>images\Wide310x150Logo.scale-200.png</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\js\api.js">
+      <PackagePath>js\api.js</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\js\default.js">
       <PackagePath>js\default.js</PackagePath>
     </AppxPackagedFile>
