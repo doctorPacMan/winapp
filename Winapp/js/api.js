@@ -21,6 +21,8 @@ var cnapi = {
 			$Ajax(apiurl, this._handler_acstoken.bind(this),params,false);
 		};
 		console.log(this.location, this.provider, this.token);
+		document.getElementById('inf-provider').innerText = this.provider;
+		document.getElementById('inf-acstoken').innerText = this.token;
 
 		this._iptv_channels = {};
 		var iptv = this._iptv_sources;

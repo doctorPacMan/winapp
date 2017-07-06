@@ -9,7 +9,7 @@
     <SolutionConfiguration>Debug|AnyCPU</SolutionConfiguration>
     <PackageArchitecture>neutral</PackageArchitecture>
     <PackageIdentityName>e44df013-bc89-481e-bb27-e97eebe2f38c</PackageIdentityName>
-    <IntermediateOutputPath>D:\WinApps\Winapp\Winapp\bld\Debug\</IntermediateOutputPath>
+    <IntermediateOutputPath>D:\winapp\Winapp\bld\Debug\</IntermediateOutputPath>
     <RegisteredManifestChecksum>5D79D1C86269773D44C30E6CB05B4DCD937FA8AE2B671A8AC4D66CF78F14D5FD</RegisteredManifestChecksum>
     <RegisteredPackageMoniker>e44df013-bc89-481e-bb27-e97eebe2f38c_1.0.0.0_neutral__dyw8sn143xnaa</RegisteredPackageMoniker>
     <RegisteredUserModeAppID>e44df013-bc89-481e-bb27-e97eebe2f38c_dyw8sn143xnaa!App</RegisteredUserModeAppID>
@@ -19,92 +19,100 @@
     <JitOptimizationSuppressed>True</JitOptimizationSuppressed>
   </PropertyGroup>
   <ItemGroup>
-    <AppXManifest Include="D:\WinApps\Winapp\Winapp\bin\Debug\AppxManifest.xml">
+    <AppXManifest Include="D:\winapp\Winapp\bin\Debug\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-07-05T12:37:37.759</Modified>
+      <Modified>2017-07-06T15:40:41.057</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\css\css.css">
+    <AppxPackagedFile Include="D:\winapp\Winapp\css\css.css">
       <PackagePath>css\css.css</PackagePath>
       <Modified>2017-02-18T03:22:55.146</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\css\main.css">
+    <AppxPackagedFile Include="D:\winapp\Winapp\css\main.css">
       <PackagePath>css\main.css</PackagePath>
       <Modified>2017-02-18T03:35:10.572</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\WinJS\css\ui-dark.css">
+    <AppxPackagedFile Include="D:\winapp\Winapp\WinJS\css\ui-dark.css">
       <PackagePath>WinJS\css\ui-dark.css</PackagePath>
       <Modified>2015-06-18T04:22:40.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\WinJS\css\ui-light.css">
+    <AppxPackagedFile Include="D:\winapp\Winapp\WinJS\css\ui-light.css">
       <PackagePath>WinJS\css\ui-light.css</PackagePath>
       <Modified>2015-06-18T04:22:40.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\default.html">
+    <AppxPackagedFile Include="D:\winapp\Winapp\default.html">
       <PackagePath>default.html</PackagePath>
-      <Modified>2017-07-02T11:42:31.517</Modified>
+      <Modified>2017-07-06T15:48:12.061</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\images\LockScreenLogo.scale-200.png">
+    <AppxPackagedFile Include="D:\winapp\Winapp\images\LockScreenLogo.scale-200.png">
       <PackagePath>images\LockScreenLogo.scale-200.png</PackagePath>
       <Modified>2017-02-18T06:56:00.679</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\images\SplashScreen.scale-200.png">
+    <AppxPackagedFile Include="D:\winapp\Winapp\images\SplashScreen.scale-200.png">
       <PackagePath>images\SplashScreen.scale-200.png</PackagePath>
       <Modified>2017-02-18T06:57:42.316</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\images\Square150x150Logo.scale-200.png">
+    <AppxPackagedFile Include="D:\winapp\Winapp\images\Square150x150Logo.scale-200.png">
       <PackagePath>images\Square150x150Logo.scale-200.png</PackagePath>
       <Modified>2017-02-18T06:53:36.395</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\images\Square44x44Logo.scale-200.png">
+    <AppxPackagedFile Include="D:\winapp\Winapp\images\Square44x44Logo.scale-200.png">
       <PackagePath>images\Square44x44Logo.scale-200.png</PackagePath>
       <Modified>2017-02-18T06:54:32.777</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\images\Square44x44Logo.targetsize-24_altform-unplated.png">
+    <AppxPackagedFile Include="D:\winapp\Winapp\images\Square44x44Logo.targetsize-24_altform-unplated.png">
       <PackagePath>images\Square44x44Logo.targetsize-24_altform-unplated.png</PackagePath>
       <Modified>2017-02-18T06:53:05.391</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\images\StoreLogo.png">
+    <AppxPackagedFile Include="D:\winapp\Winapp\images\StoreLogo.png">
       <PackagePath>images\StoreLogo.png</PackagePath>
       <Modified>2017-02-18T06:55:06.050</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\images\Wide310x150Logo.scale-200.png">
+    <AppxPackagedFile Include="D:\winapp\Winapp\images\Wide310x150Logo.scale-200.png">
       <PackagePath>images\Wide310x150Logo.scale-200.png</PackagePath>
       <Modified>2017-02-18T06:56:44.868</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\js\api.js">
+    <AppxPackagedFile Include="D:\winapp\Winapp\js\ajax.js">
+      <PackagePath>js\ajax.js</PackagePath>
+      <Modified>2017-07-06T15:38:56.481</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\winapp\Winapp\js\api.js">
       <PackagePath>js\api.js</PackagePath>
-      <Modified>2017-07-05T11:46:16.647</Modified>
+      <Modified>2017-07-06T15:48:48.407</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\js\default.js">
+    <AppxPackagedFile Include="D:\winapp\Winapp\js\default.js">
       <PackagePath>js\default.js</PackagePath>
-      <Modified>2017-07-02T10:32:07.480</Modified>
+      <Modified>2017-07-06T15:52:47.188</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\js\js.js">
+    <AppxPackagedFile Include="D:\winapp\Winapp\js\js.js">
       <PackagePath>js\js.js</PackagePath>
-      <Modified>2017-07-05T12:34:47.224</Modified>
+      <Modified>2017-07-06T15:38:56.483</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\WinJS\js\en-US\ui.strings.js">
+    <AppxPackagedFile Include="D:\winapp\Winapp\js\utils.js">
+      <PackagePath>js\utils.js</PackagePath>
+      <Modified>2017-07-06T15:38:56.483</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\winapp\Winapp\WinJS\js\en-US\ui.strings.js">
       <PackagePath>WinJS\js\en-US\ui.strings.js</PackagePath>
       <Modified>2015-06-03T12:55:06.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\WinJS\js\base.js">
+    <AppxPackagedFile Include="D:\winapp\Winapp\WinJS\js\base.js">
       <PackagePath>WinJS\js\base.js</PackagePath>
       <Modified>2015-06-18T04:22:40.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\WinJS\js\ui.js">
+    <AppxPackagedFile Include="D:\winapp\Winapp\WinJS\js\ui.js">
       <PackagePath>WinJS\js\ui.js</PackagePath>
       <Modified>2015-06-18T04:22:40.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\WinJS\fonts\Symbols.ttf">
+    <AppxPackagedFile Include="D:\winapp\Winapp\WinJS\fonts\Symbols.ttf">
       <PackagePath>WinJS\fonts\Symbols.ttf</PackagePath>
       <Modified>2015-06-03T12:55:06.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\bin\Debug\ReverseMap\resources.pri">
+    <AppxPackagedFile Include="D:\winapp\Winapp\bin\Debug\ReverseMap\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2017-07-05T12:37:37.441</Modified>
+      <Modified>2017-07-06T15:40:40.664</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

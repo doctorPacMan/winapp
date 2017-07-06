@@ -9,73 +9,79 @@
     <SolutionConfiguration>Debug|AnyCPU</SolutionConfiguration>
     <PackageArchitecture>neutral</PackageArchitecture>
     <PackageIdentityName>e44df013-bc89-481e-bb27-e97eebe2f38c</PackageIdentityName>
-    <IntermediateOutputPath>D:\WinApps\Winapp\Winapp\bld\Debug\</IntermediateOutputPath>
+    <IntermediateOutputPath>D:\winapp\Winapp\bld\Debug\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <AppXManifest Include="D:\WinApps\Winapp\Winapp\bin\Debug\AppxManifest.xml">
+    <AppXManifest Include="D:\winapp\Winapp\bin\Debug\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\css\css.css">
+    <AppxPackagedFile Include="D:\winapp\Winapp\css\css.css">
       <PackagePath>css\css.css</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\css\main.css">
+    <AppxPackagedFile Include="D:\winapp\Winapp\css\main.css">
       <PackagePath>css\main.css</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\WinJS\css\ui-dark.css">
+    <AppxPackagedFile Include="D:\winapp\Winapp\WinJS\css\ui-dark.css">
       <PackagePath>WinJS\css\ui-dark.css</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\WinJS\css\ui-light.css">
+    <AppxPackagedFile Include="D:\winapp\Winapp\WinJS\css\ui-light.css">
       <PackagePath>WinJS\css\ui-light.css</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\default.html">
+    <AppxPackagedFile Include="D:\winapp\Winapp\default.html">
       <PackagePath>default.html</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\images\LockScreenLogo.scale-200.png">
+    <AppxPackagedFile Include="D:\winapp\Winapp\images\LockScreenLogo.scale-200.png">
       <PackagePath>images\LockScreenLogo.scale-200.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\images\SplashScreen.scale-200.png">
+    <AppxPackagedFile Include="D:\winapp\Winapp\images\SplashScreen.scale-200.png">
       <PackagePath>images\SplashScreen.scale-200.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\images\Square150x150Logo.scale-200.png">
+    <AppxPackagedFile Include="D:\winapp\Winapp\images\Square150x150Logo.scale-200.png">
       <PackagePath>images\Square150x150Logo.scale-200.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\images\Square44x44Logo.scale-200.png">
+    <AppxPackagedFile Include="D:\winapp\Winapp\images\Square44x44Logo.scale-200.png">
       <PackagePath>images\Square44x44Logo.scale-200.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\images\Square44x44Logo.targetsize-24_altform-unplated.png">
+    <AppxPackagedFile Include="D:\winapp\Winapp\images\Square44x44Logo.targetsize-24_altform-unplated.png">
       <PackagePath>images\Square44x44Logo.targetsize-24_altform-unplated.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\images\StoreLogo.png">
+    <AppxPackagedFile Include="D:\winapp\Winapp\images\StoreLogo.png">
       <PackagePath>images\StoreLogo.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\images\Wide310x150Logo.scale-200.png">
+    <AppxPackagedFile Include="D:\winapp\Winapp\images\Wide310x150Logo.scale-200.png">
       <PackagePath>images\Wide310x150Logo.scale-200.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\js\api.js">
+    <AppxPackagedFile Include="D:\winapp\Winapp\js\ajax.js">
+      <PackagePath>js\ajax.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\winapp\Winapp\js\api.js">
       <PackagePath>js\api.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\js\default.js">
+    <AppxPackagedFile Include="D:\winapp\Winapp\js\default.js">
       <PackagePath>js\default.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\js\js.js">
+    <AppxPackagedFile Include="D:\winapp\Winapp\js\js.js">
       <PackagePath>js\js.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\WinJS\js\en-US\ui.strings.js">
+    <AppxPackagedFile Include="D:\winapp\Winapp\js\utils.js">
+      <PackagePath>js\utils.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\winapp\Winapp\WinJS\js\en-US\ui.strings.js">
       <PackagePath>WinJS\js\en-US\ui.strings.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\WinJS\js\base.js">
+    <AppxPackagedFile Include="D:\winapp\Winapp\WinJS\js\base.js">
       <PackagePath>WinJS\js\base.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\WinJS\js\ui.js">
+    <AppxPackagedFile Include="D:\winapp\Winapp\WinJS\js\ui.js">
       <PackagePath>WinJS\js\ui.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\WinJS\fonts\Symbols.ttf">
+    <AppxPackagedFile Include="D:\winapp\Winapp\WinJS\fonts\Symbols.ttf">
       <PackagePath>WinJS\fonts\Symbols.ttf</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\WinApps\Winapp\Winapp\bin\Debug\ReverseMap\resources.pri">
+    <AppxPackagedFile Include="D:\winapp\Winapp\bin\Debug\ReverseMap\resources.pri">
       <PackagePath>resources.pri</PackagePath>
     </AppxPackagedFile>
   </ItemGroup>

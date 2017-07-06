@@ -1,12 +1,12 @@
 ﻿(function () {
 "use strict";
-console.log('initialize Windows');
 
 	var app = WinJS.Application,
 		windows = window.Windows || null,
 		activation = windows ? windows.ApplicationModel.Activation : null;
 
-	if(!windows) return myApp.load();
+	console.log('initialize '+(!!windows?'Windows':'WebApp'));
+	if(!windows) return document.addEventListener('DOMContentLoaded',myApp.load.bind(myApp));
 
 	app.onactivated = function (args) {
 		if (args.detail.kind === activation.ActivationKind.launch) {

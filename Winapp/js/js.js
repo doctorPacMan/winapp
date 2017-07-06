@@ -1,10 +1,8 @@
 var myApp = {
 	load: function() {
 
-		console.log('myAppLoad');
-
-		'whereami','token','channels'
-		cnapi.initialize();
+		//console.log('myAppLoad');
+		//cnapi.initialize();
 	},
 	onload: function(json) {
 
