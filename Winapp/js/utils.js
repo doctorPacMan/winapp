@@ -1,12 +1,13 @@
 Utils = {};
-Utils.readPlaylist = function(playlist) {
+Utils.parseM3UPlaylist = function(playlist) {
 
-		if(playlist===null) return [];
+		if(typeof(playlist)!='string') {
+			console.warn('parseM3UPlaylist fail', playlist);
+			return [];
+		}
 
 		var data = playlist.replace('#EXTM3U\n',''),
 			lines = data.split(new RegExp('\n{2,3}'));
-
-		console.log('readPlaylist lines:',lines.length);
 
 		var	re_cid = new RegExp('channel-id=([\\d]+)(?: |$)'),
 			re_grp = new RegExp('group-title="(.+)"'),
@@ -43,7 +44,25 @@ Utils.readPlaylist = function(playlist) {
 			list.push(cha);
 			//console.log(re_ttl, rez, lines[j]);
 		}
-		console.log('readPlaylist items:',list.length);
-		//console.log(channels);
+		console.log('readPlaylist success '+list.length+' of '+lines.length);
 		return list;
 };
+document.addEventListener('DOMContentLoaded',function(){
+	var scb = document.querySelectorAll('.chalist');
+	for(var i=0;i<scb.length;i++) {
+		var nn = scb[i],
+			fc = nn.firstElementChild,
+			sw = nn.clientWidth-fc.clientWidth;
+		fc.classList.add('scrollhide'+sw);
+		//fc.style.width = 'calc(100% + '+sw+'px)';
+		//fc.style.marginRight = '-'+sw+'px';
+	}
+});
+
+if(typeof(window.localStorage)=='undefined'){
+console.log('LLLLLLLLLLL')
+window.localStorage = {
+	getItem:function(){return null},
+	setItem:function(){}
+};	
+}
