@@ -1,0 +1,35 @@
+/*
+@import url(http://fonts.googleapis.com/css?family=Noto+Sans:300,600,400&subset=cyrillic,latin);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300,600,400&subset=cyrillic,latin);
+@import url(http://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700&subset=latin,cyrillic);
+*/
+@font-face {
+	font-family: 'Diabla';
+	src: url('../fonts/diabla.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../fonts/NotoSansRegular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: bold;
+  src: url('../fonts/NotoSansBold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: italic;
+  font-weight: normal;
+  src: url('../fonts/NotoSansItalic.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: italic;
+  font-weight: bold;
+  src: url('../fonts/NotoSansBoldItalic.ttf') format('truetype');
+}

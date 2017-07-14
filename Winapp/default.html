@@ -14,39 +14,72 @@
 	<link href="css/_fonts.css" rel="stylesheet" />
 	<link href="css/css.css" rel="stylesheet" />
 
+	<script src="js/class_channel.js"></script>
+	<script src="js/class_tvshow.js"></script>
+
+	<script src="js/mod.js"></script>
+	<script src="js/mod_channels.js"></script>
+	<script src="js/mod_schedule.js"></script>
+	<script src="js/mod_titlebar.js"></script>
+
+	<script src="js/idate.js"></script>
 	<script src="js/utils.js"></script>
 	<script src="js/ajax.js"></script>
 	<script src="js/api.js"></script>
+	<script src="js/api.request.js"></script>
 	<script src="js/js.js"></script>
 	<script src="js/default.js"></script>
+
 
 </head>
 <body class="win-type-body">
 <div>
 	
-	<header>
-		<span id="inf-provider">Contractor</span>
-		<span id="inf-acstoken">Authtoken</span>
+	<header id="mod-titlebar" class="masthead">
+		<img src="img/logo120x120.png">
+		<time>12:22</time>
+		<div>
+			<i><img src="img/logo150x150.png"></i>
+			<u>Первый общеобразовательный телеканал</u>
+			<p>Семь цветов радуги. История развития живописи. Часть 2-я. Живопись первых цивилизаций. Часть 2-я. Живопись первых цивилизаций</p>
+		</div>
 	</header>
 	
+	<footer>
+		<span id="inf-provider">Contractor</span>
+		<span id="inf-acstoken">Authtoken</span>
+	</footer>
+
 	<section class="vplayah">
-		<video controls id="vplayah">
+		<video controls id="vplayah" autoplay>
+			<!--
 			<source src="http://hls.peers.tv/streaming/cam_krylova-krasny/16/variable.m3u8" type="application/x-mpegURL">
 			<source src="http://www.cn.ru/data/files/test/adv/banner0.mp4" type="video/mp4">
+			-->
 		</video>
 	</section>
 
-	<section class="chalist">
+	<aside class="mod-schedule" id="mod-schedule">
+		<div class="dayz">
+			<time><sup>07</sup><sub>Пт</sub></time>
+			<time><sup>08</sup><sub>Сб</sub></time>
+			<time><sup>09</sup><sub>Вс</sub></time>
+			<time><sup class="is-today">10.07</sup><sub>Сегодня</sub></time>
+			<time><sup>11</sup><sub>Вт</sub></time>
+			<time><sup>12</sup><sub>Ср</sub></time>
+			<time><sup>13</sup><sub>Чт</sub></time>
+		</div>
+	</aside>
+
+	<section class="chalist" id="mod-channels">
 	<div>
 	<ol id="channels-list">
-		<li><a class="chatile"><i><img src="http://a.promo.ptv.bender.inetra.ru/data/illustrations/ills/2017/04/14/93551/93551089.png"></i><u>Channel</u></a></li>
+		<li><a class="chatile" href="http://hls.peers.tv/streaming/cam_frunze_ippo/16/camv/playlist.m3u8"><i><img src="./img/logo150x150.png"></i><u>webcam</u></a></li>
+		<li><a class="chatile" href="http://109.71.162.112:1935/live/hd.jasminchannel.stream/playlist.m3u8"><i><img src="./img/logo150x150.png"></i><u>SD Channel</u></a></li>
+		<li><a class="chatile" href="http://hls.peers.tv/streaming/muzhskoj/126/tvrec/playlist.m3u8?token=572185ff4dd6da8f9f02d71198cb94ec"><i><img src="./img/logo150x150.png"></i><u>SD Channel</u></a></li>
 	</ol>
 	</div>
 	</section>
-
-	<aside>Aside</aside>
-
-	<div class="tst">Привет Мир! 1 2 3 4 H S</div>
 
 </div>
 </body>

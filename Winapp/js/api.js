@@ -9,10 +9,11 @@ var cnapi = {
 		this.data = {};
 		this.apis = {};
 		this._onready = callback;
-		this._iptv_sources = [];
+		this._tmp_iptvsrc = [];
+		this._tmp_iptvcha = {};
 
 		var apiurl = this.apiurl+'/registry/2/whereami.json';
-		this.location = 16; this.provider = '[2]Novotelecom';
+		//this.location = 12; this.provider = '[2]Novotelecom';
 		$Ajax(apiurl,this._handler_whereami.bind(this),null,false);
 
 		var token = this.getAuthToken();
@@ -22,10 +23,11 @@ var cnapi = {
 				params = {'grant_type':'inetra:anonymous','client_id':'demoapp','client_secret':'demoapp'};
 			$Ajax(apiurl, this._handler_acstoken.bind(this),params,false);
 		};
+		
 		//console.log(this.location, this.provider, this.token);
-		this._iptv_sources = ["http://tv.novotelecom.ru/playlist", "http://api.peers.tv/iptv/2/playlist.m3u"];
-		this._iptv_channels = {};
-		var iptv = this._iptv_sources;
+		//this._tmp_iptvsrc = ["/data/playlist.m3u"];
+		//this._tmp_iptvsrc = ["http://tv.novotelecom.ru/playlist", "http://api.peers.tv/iptv/2/playlist.m3u"];
+		var iptv = this._tmp_iptvsrc;
 		if(!iptv.length) this._handler_channels([]);
 		else for(var k=0;k<iptv.length;k++) $Ajax(iptv[k],this._onload_channels.bind(this,iptv[k]));
 	},
@@ -43,11 +45,8 @@ var cnapi = {
 			//console.log(at, av);
 		});
 
-		console.log('apis',apis);
-		console.log('iptv',iptv);
-
 		this.apis = apis;
-		this._iptv_sources = iptv;
+		this._tmp_iptvsrc = iptv;
 		this.data.whereami = data;
 		this.location = data.territories[0].territoryId;
 		this.provider = '['+data.contractor.contractorId+']'+data.contractor.name;
@@ -56,29 +55,29 @@ var cnapi = {
 		
 		var channels = Utils.parseM3UPlaylist(data);
 		console.log('_onload_channels', typeof(data)!='string' ? data : data.length, url, channels.length);
-		//this._iptv_channels = this._iptv_channels.concat(channels);
+		//this._tmp_iptvcha = this._tmp_iptvcha.concat(channels);
 
-		for(var cha, xst, i=0;i<channels.length;i++) {
+		for(var cha, i=0;i<channels.length;i++) {
 			cha = channels[i];
-			this._iptv_channels[cha.id] = cha;
+			this._tmp_iptvcha[cha.id] = cha;
 		}
 
-		var n = this._iptv_sources.indexOf(url);
-		this._iptv_sources.splice(n,1);
-		if(this._iptv_sources.length) return;
+		var n = this._tmp_iptvsrc.indexOf(url);
+		this._tmp_iptvsrc.splice(n,1);
+		if(this._tmp_iptvsrc.length) return;
 		
 		// COMPLETE
+		
 		var channelsData = {}, cids = [];
-		//this._iptv_channels.forEach(function(v){if(cids.indexOf(v.id)<0) cids.push(v.id)});
-		for(var cid in this._iptv_channels) cids.push(cid);
+		for(var cid in this._tmp_iptvcha) cids.push(cid);
 		
 		var apiurl = this.apis.tv_guide+'channels.json?t='+this.location;
 		apiurl += '&fields=channelId,title,alias,logoURL,hasSchedule';
 		apiurl += '&channel='+cids.join(',');
 		$Ajax(apiurl, function(d){channelsData = d.channels},null,false);
-		this._handler_channels(this._iptv_channels, channelsData);
-		delete this._iptv_channels;
-		delete this._iptv_sources;
+		this._handler_channels(this._tmp_iptvcha, channelsData);
+		delete this._tmp_iptvcha;
+		delete this._tmp_iptvsrc;
 	},
 	_handler_channels: function(channelsList, channelsData) {
 		//console.log('channelsList',channelsList);
@@ -95,13 +94,12 @@ var cnapi = {
 		this.setAuthToken(data.access_token, data.expires_in);
 	},
 	setAuthToken: function(token, expires) {
-		console.log('setAuthToken', token);
-		//localStorage.setItem('access_token', this.token = token);
+		if(localStorage) localStorage.setItem('access_token', token);
+		this.token = token;
 		return this.getAuthToken();
 	},
 	getAuthToken: function() {
-		//var token = this.token || localStorage.getItem('access_token');
-		//return token;
-		return null;
+		var token = localStorage ? localStorage.getItem('access_token') : this.token;
+		return token || null;
 	}
 }

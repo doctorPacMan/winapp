@@ -21,6 +21,12 @@
     <AppxPackagedFile Include="D:\winapp\Winapp\css\css.css">
       <PackagePath>css\css.css</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\winapp\Winapp\css\mod_schedule.css">
+      <PackagePath>css\mod_schedule.css</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\winapp\Winapp\css\_fonts.css">
+      <PackagePath>css\_fonts.css</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\winapp\Winapp\css\main.css">
       <PackagePath>css\main.css</PackagePath>
     </AppxPackagedFile>
@@ -32,6 +38,24 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\winapp\Winapp\default.html">
       <PackagePath>default.html</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\winapp\Winapp\fonts\diabla.woff">
+      <PackagePath>fonts\diabla.woff</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\winapp\Winapp\fonts\NotoSansBold.ttf">
+      <PackagePath>fonts\NotoSansBold.ttf</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\winapp\Winapp\fonts\NotoSansBoldItalic.ttf">
+      <PackagePath>fonts\NotoSansBoldItalic.ttf</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\winapp\Winapp\fonts\NotoSansItalic.ttf">
+      <PackagePath>fonts\NotoSansItalic.ttf</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\winapp\Winapp\fonts\NotoSansRegular.ttf">
+      <PackagePath>fonts\NotoSansRegular.ttf</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\winapp\Winapp\WinJS\fonts\Symbols.ttf">
+      <PackagePath>WinJS\fonts\Symbols.ttf</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\winapp\Winapp\images\LockScreenLogo.scale-200.png">
       <PackagePath>images\LockScreenLogo.scale-200.png</PackagePath>
@@ -54,17 +78,47 @@
     <AppxPackagedFile Include="D:\winapp\Winapp\images\Wide310x150Logo.scale-200.png">
       <PackagePath>images\Wide310x150Logo.scale-200.png</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\winapp\Winapp\img\logo150x150.png">
+      <PackagePath>img\logo150x150.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\winapp\Winapp\img\logo245x245.png">
+      <PackagePath>img\logo245x245.png</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\winapp\Winapp\js\ajax.js">
       <PackagePath>js\ajax.js</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\winapp\Winapp\js\api.js">
       <PackagePath>js\api.js</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\winapp\Winapp\js\api.request.js">
+      <PackagePath>js\api.request.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\winapp\Winapp\js\class_channel.js">
+      <PackagePath>js\class_channel.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\winapp\Winapp\js\class_tvshow.js">
+      <PackagePath>js\class_tvshow.js</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\winapp\Winapp\js\default.js">
       <PackagePath>js\default.js</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\winapp\Winapp\js\idate.js">
+      <PackagePath>js\idate.js</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\winapp\Winapp\js\js.js">
       <PackagePath>js\js.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\winapp\Winapp\js\mod.js">
+      <PackagePath>js\mod.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\winapp\Winapp\js\mod_channels.js">
+      <PackagePath>js\mod_channels.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\winapp\Winapp\js\mod_schedule.js">
+      <PackagePath>js\mod_schedule.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\winapp\Winapp\js\mod_titlebar.js">
+      <PackagePath>js\mod_titlebar.js</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\winapp\Winapp\js\utils.js">
       <PackagePath>js\utils.js</PackagePath>
@@ -77,9 +131,6 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\winapp\Winapp\WinJS\js\ui.js">
       <PackagePath>WinJS\js\ui.js</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\winapp\Winapp\WinJS\fonts\Symbols.ttf">
-      <PackagePath>WinJS\fonts\Symbols.ttf</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\winapp\Winapp\bin\Debug\ReverseMap\resources.pri">
       <PackagePath>resources.pri</PackagePath>

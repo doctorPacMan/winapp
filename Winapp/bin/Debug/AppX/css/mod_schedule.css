@@ -1,0 +1,97 @@
+@keyframes listAppear {
+  from {opacity: .25}
+  to {opacity: 1}
+}
+.mod-schedule {
+	position: absolute;
+	right:0;width:auto;
+	top: 0px; bottom:0;
+	margin: 36px 0 20px;
+	overflow: hidden;
+	background: rgb(42,48,57);
+	width: 300px;
+}
+.mod-schedule .dayz {
+	background: red;
+}
+.dayz {
+	height: 36px;
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: stretch;
+	align-content: flex-start;
+	justify-content: space-between;
+}
+.dayz > time {
+	display: block;
+	background: black;
+	min-width: 14%;
+	max-width: 14%;
+	text-align: center;
+}
+.dayz > time.is-today {
+	min-width: 16%;
+	max-width: 16%;
+}
+.dayz > time sup,
+.dayz > time sub {
+	display: block;
+	font-size: 100%;
+	vertical-align: baseline;	
+}
+.dayz > time sup {
+	line-height: 18px;
+}
+.dayz > time sub {
+	font-size: 78.6%;
+	line-height: 16px;
+}
+.mod-schedule ol,
+.mod-schedule li {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	overflow: hidden;
+}
+.mod-schedule ol {
+	overflow-y: scroll;
+	height: calc(100% - 36px);
+	animation: listAppear .25s ease-out 1;
+}
+.mod-schedule li {
+	margin: 0px 0;
+	border-top: 1px dashed rgba(255,255,255,.12);
+}
+.mod-schedule li:last-child {}
+.mod-schedule li > a,
+.mod-schedule li > a > time,
+.mod-schedule li > a > span {
+	display: block;
+	overflow: hidden;
+}
+.mod-schedule li > a {
+	height: 48px;
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	align-content: flex-start;
+	justify-content: flex-start;
+	background: rgba(49,58,73,0);
+}
+.mod-schedule li > a > time,
+.mod-schedule li > a > span {
+	width: 100%;
+	line-height: 36px;
+	max-height: 36px;
+	box-shadow: inset 0 0 0 0px red;
+}
+.mod-schedule li > a > time {
+	max-width: 44px;
+	padding-left: 4px;
+	opacity: .75;
+}
+.mod-schedule li > a > span {
+	line-height: 18px;
+	text-overflow: ellipsis;
+}

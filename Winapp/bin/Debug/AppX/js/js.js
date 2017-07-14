@@ -1,44 +1,61 @@
 var myApp = {
-	load: function() {
+	initialize: function() {
+		console.info('myApp initialize');
+		this._video = document.getElementById('vplayah');
+		this._telecast = {};
+		this._channels = {};
 
-		console.log('myAppLoad');
+		this.modChannels = new modChannels('mod-channels');
+		this.modSchedule = new modSchedule('mod-schedule');
+		this.modTitlebar = new modTitlebar('mod-titlebar');
 
-		'whereami','token','channels'
-		cnapi.initialize();
+		//var cb = this._channels_list.querySelectorAll('a.chatile');
+		//for(var i=0;i<cb.length;i++) cb[i].onclick = this.clickChannel.bind(this,cb[i]);
+
+		cnapi.initialize(this.onready.bind(this));
 	},
-	onload: function(json) {
+	onready: function(channels) {
 
-		console.log(json);
-		return cnapi.getToken();
+		document.getElementById('inf-provider').innerText = cnapi.location+' '+cnapi.provider;
+		document.getElementById('inf-acstoken').innerText = cnapi.getAuthToken();
+		console.log('READY', channels.length);
+		
+		while(channels.length) this.pushChannel(channels.shift());
+		this.modChannels.update(this._channels);
+		
+		//var cb = this._channels_list.querySelectorAll('a.chatile');
+		//for(var i=0;i<cb.length;i++) cb[i].onclick = this.clickChannel.bind(this,cb[i]);
 
-		var resp = document.getElementById('resp'),
-			prov = json.contractor,
-			terr = json.territories[0];
-
-		resp.innerText = '['+prov.contractorId+']'+prov.name;
-		resp.innerText+=' ['+terr.territoryId+']'+terr.name;
-		//cnapi.channels(this.onloadChannels.bind(this));
-
-		var iptvs = [];
-		for(var i=0,s;i<json.services.length;i++) {
-			s = json.services[i];
-			if(s.type=='iptv') iptvs = iptvs.concat(s.apiVersions.map(function(j){return j.location}));
-		}
-		console.log(iptvs);
-
-		//this._channels = {};
-		//$Ajax(iptvs[0],this.readPlaylist.bind(this));
-		//$Ajax(iptvs[1],this.readPlaylist.bind(this));
+		//return this.request.schedule(10338262);
+		return;
 	},
-	onloadChannels: function(data) {
-		var re = new RegExp('^cam_'),
-			list = data.channels;
-		for(var j=0,cha; j<list.length; j++) {
-			cha = list[j];
-			if(cha.hasSchedule!=1) continue;
-			else if(!re.test(cha.alias)) continue;
-			else if(cha.ageRestriction===undefined) continue;
-			console.log(cha.hasSchedule, cha.ageRestriction, cha.alias);
-		}
+	getChannelById: function(cid) {
+		return this._channels[cid];
+	},
+	getTelecastById: function(id) {
+		return this._telecast[id];
+	},
+	registerTelecast: function(json) {
+		if (!this._telecast[json.id]) this._telecast[json.id] = new TvShow(json);
+		return this._telecast[json.id];
+	},
+	pushChannel: function(json) {
+		if (this._channels[json.id]) return;
+		else this._channels[json.id] = new TvChannel(json);
+	},
+	clickChannel: function(tile, event) {
+		event.preventDefault();
+		var href = tile.getAttribute('href'),
+			cid = tile.getAttribute('data-cid'),
+			src = href;
+		
+		if (!href) console.log('NOHREF');
+		else if(href.indexOf('?sid=')>0) src = href.split('?sid=')[0];
+		
+		this._video.setAttribute('src',src);
+		this.currentChannel = cid;
+		//this._video.play();
+		
+		console.log(src);
 	}
 };
