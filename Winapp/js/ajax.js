@@ -13,7 +13,6 @@ var $Ajax = function(url,onComplete,params,async) {
 		xhr.onreadystatechange = function () {
 			//console.log(xhr.readyState, xhr.status);
 			if(xhr.readyState != 4) return;
-			
 			if(xhr.status != 200) onComplete(null, xhr);
 			else {
 				var text = xhr.responseText, json;

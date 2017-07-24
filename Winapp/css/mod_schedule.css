@@ -46,6 +46,10 @@
 	font-size: 78.6%;
 	line-height: 16px;
 }
+.dayz > time.is-crrnt {
+	background-color: dodgerblue;
+}
+
 .mod-schedule ol,
 .mod-schedule li {
 	list-style: none;

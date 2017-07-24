@@ -13,10 +13,11 @@ var cnapi = {
 		this._tmp_iptvcha = {};
 
 		var apiurl = this.apiurl+'/registry/2/whereami.json';
-		//this.location = 12; this.provider = '[2]Novotelecom';
 		$Ajax(apiurl,this._handler_whereami.bind(this),null,false);
 
 		var token = this.getAuthToken();
+		//token = false;
+		//token = '4daa321ff7606a316f3f5bd297001e3d';
 		if(token) this.setAuthToken(token);
 		else {
 			var apiurl = this.apis.auth+'token',
@@ -27,9 +28,14 @@ var cnapi = {
 		//console.log(this.location, this.provider, this.token);
 		//this._tmp_iptvsrc = ["/data/playlist.m3u"];
 		//this._tmp_iptvsrc = ["http://tv.novotelecom.ru/playlist", "http://api.peers.tv/iptv/2/playlist.m3u"];
+		//return;
 		var iptv = this._tmp_iptvsrc;
 		if(!iptv.length) this._handler_channels([]);
 		else for(var k=0;k<iptv.length;k++) $Ajax(iptv[k],this._onload_channels.bind(this,iptv[k]));
+	},
+	_handler_acstoken: function(data) {
+		console.log('acstoken',data);
+		this.setAuthToken(data.access_token, data.expires_in);
 	},
 	_handler_whereami: function(data) {
 		console.log('whereami',data);
@@ -45,11 +51,23 @@ var cnapi = {
 			//console.log(at, av);
 		});
 
+		var terr = data.territories[0];
+
 		this.apis = apis;
 		this._tmp_iptvsrc = iptv;
 		this.data.whereami = data;
-		this.location = data.territories[0].territoryId;
+		this.timezone = terr.timezone;
+		this.location = terr.territoryId;
 		this.provider = '['+data.contractor.contractorId+']'+data.contractor.name;
+
+		// user timezone check
+		var ldt = new Date(), wtz = (terr.timezone/60),
+			dtz = wtz + ldt.getTimezoneOffset();
+		if(dtz!=0) {
+			var fxd = new Date(ldt);
+			fxd.setMinutes(fxd.getMinutes() + dtz);
+			console.warn('incorrect timezone', ldt.getTimezoneOffset(), wtz,'\n\t'+ldt+'\n\t'+fxd);
+		}
 	},
 	_onload_channels: function(url, data){
 		
@@ -89,9 +107,6 @@ var cnapi = {
 			chd.logo = chd.logoURL;delete chd.logoURL;
 		}
 		this._onready(channelsData);
-	},
-	_handler_acstoken: function(data) {
-		this.setAuthToken(data.access_token, data.expires_in);
 	},
 	setAuthToken: function(token, expires) {
 		if(localStorage) localStorage.setItem('access_token', token);

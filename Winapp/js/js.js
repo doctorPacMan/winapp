@@ -1,16 +1,18 @@
-var myApp = {
+var $App = {
 	initialize: function() {
-		console.info('myApp initialize');
-		this._video = document.getElementById('vplayah');
+		console.info('$App initialize');
 		this._telecast = {};
 		this._channels = {};
+
+		this._video = document.getElementById('tvplayer');
+		this._sauce = this._video.querySelector('source[type="application/x-mpegURL"]');
 
 		this.modChannels = new modChannels('mod-channels');
 		this.modSchedule = new modSchedule('mod-schedule');
 		this.modTitlebar = new modTitlebar('mod-titlebar');
 
-		//var cb = this._channels_list.querySelectorAll('a.chatile');
-		//for(var i=0;i<cb.length;i++) cb[i].onclick = this.clickChannel.bind(this,cb[i]);
+		var cb = this.modChannels.node.querySelectorAll('a.chatile');
+		for(var i=0;i<cb.length;i++) cb[i].onclick = this.clickChannel.bind(this,cb[i]);
 
 		//cnapi.initialize(this.onready.bind(this));
 	},
@@ -52,10 +54,11 @@ var myApp = {
 		if (!href) console.log('NOHREF');
 		else if(href.indexOf('?sid=')>0) src = href.split('?sid=')[0];
 		
+		src = 'http://www.cn.ru/data/files/test/adv/banner0.mp4';
+		this._sauce.setAttribute('src',src);
 		this._video.setAttribute('src',src);
+		this._video.play();
 		this.currentChannel = cid;
-		//this._video.play();
-		
 		console.log(src);
 	}
 };

@@ -32,7 +32,7 @@ console.log('modChannels initialize');
 	},
 	onChannelView: function(event) {
 		var cid = event.detail.channelId,
-			cha = myApp.getChannelById(cid);
+			cha = $App.getChannelById(cid);
 		
 		if(this._current) this._channels[this._current].classList.remove('st-view');
 		

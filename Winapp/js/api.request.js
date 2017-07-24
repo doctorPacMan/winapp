@@ -15,7 +15,7 @@ cnapi.request.schedule_onload = function(callback, day, data) {
 	var list = data && data.telecastsList ? data.telecastsList : [],
 		indx = [];
 
-	list.forEach(myApp.registerTelecast.bind(myApp));
+	list.forEach($App.registerTelecast.bind($App));
 	indx = list.map(function(v){return v.id});
 	if(callback) callback(indx,day);
 	else console.log(data);

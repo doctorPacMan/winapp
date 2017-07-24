@@ -21,7 +21,7 @@ TvChannel.prototype = {
 
 		tile.className = 'chatile';
 		tile.setAttribute('data-cid',this.id);
-		tile.setAttribute('href', this.src);
+		tile.setAttribute('href', this.sauce);
 		tile.appendChild(logo);
 		tile.appendChild(name);
 		return tile;

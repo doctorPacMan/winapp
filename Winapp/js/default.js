@@ -6,7 +6,7 @@
 		activation = windows ? windows.ApplicationModel.Activation : null;
 
 	console.log('initialize '+(!!windows?'Windows':'WebApp'));
-	if(!windows) return document.addEventListener('DOMContentLoaded',myApp.initialize.bind(myApp));
+	if(!windows) return document.addEventListener('DOMContentLoaded',$App.initialize.bind($App));
 
 	//To launch your view with a specific size you first need to change the default startup mode:
 	//ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
@@ -19,11 +19,11 @@
 		if (args.detail.kind === activation.ActivationKind.launch) {
 			if (args.detail.previousExecutionState !== activation.ApplicationExecutionState.terminated) {
 				// TODO: это приложение только что запущено. Инициализируйте здесь свое приложение.
-				console.log('APP Initialize', myApp.initialize());
+				console.log('APP Initialize', $App.initialize());
 			} else {
 				// TODO: работа этого приложения была приостановлена и затем завершена.
 				// Для удобства пользователей восстановите здесь состояние приложения, как будто приложение никогда не прекращало работу.
-				console.log('APP Restore', myApp.initialize());
+				console.log('APP Restore', $App.initialize());
 			}
 			args.setPromise(WinJS.UI.processAll());
 		}
