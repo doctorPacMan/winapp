@@ -1,6 +1,6 @@
 var modTitlebar = extendModule({
 	initialize: function(node_id) {
-		console.log('modTitlebar initialize');
+		//console.log('modTitlebar initialize',node_id);
 		this.node = document.getElementById(node_id);
 		this._vtime = this.node.querySelector('time');
 		this._cname = this.node.querySelector('div > b');

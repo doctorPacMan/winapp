@@ -49,8 +49,7 @@ var modSchedule = extendModule({
 			this.dayz[v] = dayz[i];
 		}
 		//console.log('modSchedule.dayz',dayz,today,start);
-		console.log('modSchedule.dayz',this.dayz);
-		
+		//console.log('modSchedule.dayz',this.dayz);
 	},
 	fillProgram: function(list) {
 		

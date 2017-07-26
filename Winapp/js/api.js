@@ -17,7 +17,7 @@ var cnapi = {
 
 		var token = this.getAuthToken();
 		//token = false;
-		//token = '4daa321ff7606a316f3f5bd297001e3d';
+		//token = 'ecf362092aae55ab06e0fa027aba006a';
 		if(token) this.setAuthToken(token);
 		else {
 			var apiurl = this.apis.auth+'token',
@@ -28,7 +28,6 @@ var cnapi = {
 		//console.log(this.location, this.provider, this.token);
 		//this._tmp_iptvsrc = ["/data/playlist.m3u"];
 		//this._tmp_iptvsrc = ["http://tv.novotelecom.ru/playlist", "http://api.peers.tv/iptv/2/playlist.m3u"];
-		//return;
 		var iptv = this._tmp_iptvsrc;
 		if(!iptv.length) this._handler_channels([]);
 		else for(var k=0;k<iptv.length;k++) $Ajax(iptv[k],this._onload_channels.bind(this,iptv[k]));
@@ -51,6 +50,16 @@ var cnapi = {
 			//console.log(at, av);
 		});
 
+		data.services.forEach(function(v){
+			var at = v.type,
+				an = v.name,
+				av = v.apiVersions.pop();
+			if(at=='media_locator') apis[at] = av.location;
+			else if(at=='iptv' && iptv.indexOf(av.location)<0) iptv.push(av.location);
+			//console.log(at, an, av.location);
+		});
+		//console.log(apis);
+
 		var terr = data.territories[0];
 
 		this.apis = apis;
@@ -72,7 +81,7 @@ var cnapi = {
 	_onload_channels: function(url, data){
 		
 		var channels = Utils.parseM3UPlaylist(data);
-		console.log('_onload_channels', typeof(data)!='string' ? data : data.length, url, channels.length);
+		//console.log('_onload_channels', typeof(data)!='string' ? data : data.length, url, channels.length);
 		//this._tmp_iptvcha = this._tmp_iptvcha.concat(channels);
 
 		for(var cha, i=0;i<channels.length;i++) {
@@ -109,11 +118,12 @@ var cnapi = {
 		this._onready(channelsData);
 	},
 	setAuthToken: function(token, expires) {
+		if(typeof localStorage == 'undefined') return this.token = token;
 		if(localStorage) localStorage.setItem('access_token', token);
-		this.token = token;
 		return this.getAuthToken();
 	},
 	getAuthToken: function() {
+		if(typeof localStorage == 'undefined') return (this.token || null);
 		var token = localStorage ? localStorage.getItem('access_token') : this.token;
 		return token || null;
 	}

@@ -21,6 +21,7 @@
 	<script src="js/mod_channels.js"></script>
 	<script src="js/mod_schedule.js"></script>
 	<script src="js/mod_titlebar.js"></script>
+	<script src="js/mod_tvplayer.js"></script>
 
 	<script src="js/idate.js"></script>
 	<script src="js/utils.js"></script>
@@ -35,8 +36,8 @@
 <body class="win-type-body">
 <div>
 	
-	<div class="mod-tvplayer">
-		<video id="tvplayer" poster="img/poster.jpg" controls autoplayz muted>
+	<div class="mod-tvplayer" id="mod-tvplayer">
+		<video poster="img/poster.jpg" controls muted preload="metadata">
 			<source src="http://hls.peers.tv/streaming/cam_krylova-krasny/16/variable.m3u8" type="application/x-mpegURL">
 			<source src="http://www.cn.ru/data/files/test/adv/banner0.mp4" type="video/mp4">
 		</video>

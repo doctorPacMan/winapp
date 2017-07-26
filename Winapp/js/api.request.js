@@ -20,3 +20,27 @@ cnapi.request.schedule_onload = function(callback, day, data) {
 	if(callback) callback(indx,day);
 	else console.log(data);
 };
+
+cnapi.request.sauce = function(id, onComplete) {
+	var apiurl = cnapi.apis.media_locator + 'sources.json?id='+id;
+	console.log('cnapi.request.sauce', id, apiurl);
+	$Ajax(apiurl,this.sauce_onload.bind(this, onComplete));
+};
+cnapi.request.sauce_onload = function(callback, data) {
+	//console.log(data, callback);
+	var resp = !data ? null : data.replies,
+		rply = !resp ? null : resp[0],
+		rips = !rply ? [] : rply.rips,
+		files = [];
+
+	var pz;
+	rips.forEach(function(rip){
+		pz = [];
+		rip.parts.forEach(function(prt){pz = pz.concat(prt.locations)});
+		files.push(pz);
+	});
+	//console.log('FILES', files);
+	if(!files.length) console.log(data);
+	if(callback) callback(files);
+	else console.log('SL',files);
+};

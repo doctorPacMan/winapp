@@ -4,17 +4,7 @@ var $App = {
 		this._telecast = {};
 		this._channels = {};
 
-		this._video = document.getElementById('tvplayer');
-		this._sauce = this._video.querySelector('source[type="application/x-mpegURL"]');
-
-		this.modChannels = new modChannels('mod-channels');
-		this.modSchedule = new modSchedule('mod-schedule');
-		this.modTitlebar = new modTitlebar('mod-titlebar');
-
-		var cb = this.modChannels.node.querySelectorAll('a.chatile');
-		for(var i=0;i<cb.length;i++) cb[i].onclick = this.clickChannel.bind(this,cb[i]);
-
-		//cnapi.initialize(this.onready.bind(this));
+		cnapi.initialize(this.onready.bind(this));
 	},
 	onready: function(channels) {
 
@@ -22,6 +12,11 @@ var $App = {
 		document.getElementById('inf-acstoken').innerText = cnapi.getAuthToken();
 		console.log('READY', channels.length);
 		
+		this.modChannels = new modChannels('mod-channels');
+		this.modSchedule = new modSchedule('mod-schedule');
+		this.modTitlebar = new modTitlebar('mod-titlebar');
+		this.modTvplayer = new modTvplayer('mod-tvplayer');
+
 		while(channels.length) this.pushChannel(channels.shift());
 		this.modChannels.update(this._channels);
 		
@@ -55,10 +50,11 @@ var $App = {
 		else if(href.indexOf('?sid=')>0) src = href.split('?sid=')[0];
 		
 		src = 'http://www.cn.ru/data/files/test/adv/banner0.mp4';
-		this._sauce.setAttribute('src',src);
-		this._video.setAttribute('src',src);
-		this._video.play();
+		//this._sauce.setAttribute('src',src);
+		//this._video.setAttribute('src',src);
+		//this._video.play();
 		this.currentChannel = cid;
-		console.log(src);
+
+		this.modTvplayer.play(src);
 	}
 };

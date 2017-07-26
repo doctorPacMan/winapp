@@ -7,13 +7,13 @@
 }
 .mod-tvplayer > video {
 	display: block;
-	background: darkred;
+	background: darkslategrey;
 	position: absolute;
 	left:0;width: 100%;
 	top:0;height: 100%;
 }
 .mod-tvplayer > video {
-	margin: -150px 0 0 -200px;
-	left:50%;width: 400px;
-	top:50%;height: 300px;
+	margin: -180px 0 0 -240px;
+	left:50%;width: 480px;
+	top:50%;height: 360px;
 }
