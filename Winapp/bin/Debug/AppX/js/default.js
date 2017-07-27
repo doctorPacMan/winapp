@@ -1,12 +1,10 @@
-﻿(function () {
-"use strict";
+﻿"use strict";
+//console.info('init as '+(!!window.Windows?'Windows':'Webapp'));
+if(!window.Windows) document.addEventListener('DOMContentLoaded',$App.initialize.bind($App));
+else (function () {
 
 	var app = WinJS.Application,
-		windows = window.Windows || null,
-		activation = windows ? windows.ApplicationModel.Activation : null;
-
-	console.log('initialize '+(!!windows?'Windows':'WebApp'));
-	if(!windows) return document.addEventListener('DOMContentLoaded',$App.initialize.bind($App));
+		activation = Windows ? Windows.ApplicationModel.Activation : null;
 
 	//To launch your view with a specific size you first need to change the default startup mode:
 	//ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
@@ -14,7 +12,6 @@
 	//ApplicationView.PreferredLaunchViewSize = new Size(800, 800);
 	//Instead, to set the smallest size allowed for a view you can simply call the following method:
 	//ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(600, 600));
-
 	app.onactivated = function (args) {
 		if (args.detail.kind === activation.ActivationKind.launch) {
 			if (args.detail.previousExecutionState !== activation.ApplicationExecutionState.terminated) {

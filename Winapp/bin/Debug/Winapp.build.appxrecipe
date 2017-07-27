@@ -123,6 +123,9 @@
     <AppxPackagedFile Include="D:\winapp\Winapp\js\class_tvshow.js">
       <PackagePath>js\class_tvshow.js</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\winapp\Winapp\js\cookie.js">
+      <PackagePath>js\cookie.js</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\winapp\Winapp\js\default.js">
       <PackagePath>js\default.js</PackagePath>
     </AppxPackagedFile>

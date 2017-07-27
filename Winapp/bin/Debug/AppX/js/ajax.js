@@ -15,7 +15,7 @@ var $Ajax = function(url,onComplete,params,async) {
 		xhr.onreadystatechange = function () {
 			//console.log(xhr.readyState, xhr.status);
 			if(xhr.readyState != 4) return;
-			if(xhr.status != 200) onComplete(null, xhr);
+			if(xhr.status != 200) onComplete(false, xhr);
 			else {
 				var text = xhr.responseText, json;
 				try{json = JSON.parse(xhr.responseText)}catch(e){};

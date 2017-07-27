@@ -3,7 +3,6 @@ var $App = {
 		console.info('$App initialize');
 		this._telecast = {};
 		this._channels = {};
-
 		cnapi.initialize(this.onready.bind(this));
 	},
 	onready: function(channels) {
@@ -11,6 +10,8 @@ var $App = {
 		document.getElementById('inf-provider').innerText = cnapi.location+' '+cnapi.provider;
 		document.getElementById('inf-acstoken').innerText = cnapi.getAuthToken();
 		console.log('READY', channels.length);
+		
+return;
 		
 		this.modChannels = new modChannels('mod-channels');
 		this.modSchedule = new modSchedule('mod-schedule');

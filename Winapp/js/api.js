@@ -9,10 +9,6 @@ var cnapi = {
 			colbek = this._handler_whereami.bind(this);
 		$Ajax(apiurl,colbek,null,true);
 	},
-	_handler_acstoken: function(data) {
-		console.log('acstoken',data);
-		this.setAuthToken(data.access_token, data.expires_in);
-	},
 	_handler_whereami: function(data, xhr) {
 
 		console.log('Whereami',data);
@@ -35,19 +31,43 @@ var cnapi = {
 		};
 		data.contractor.images.forEach(function(v){if(v.profile==2)provider.logo=v.URL});
 		this.provider = provider;
-		console.log('Whereami provider', this.provider);
 
-		var playlist = [], mlocator = [], apislist = {};
+		var playlist = {}, mlocator = {}, apislist = {};
 		data.services.forEach(function(v){
-			var uri = v.apiVersions[0].location;
-			if(v.type=='iptv') playlist.push({pid:v.contractor.contractorId,uri:uri});
+			var uri = !v.apiVersions.length ? null : v.apiVersions[v.apiVersions.length-1].location,
+				pid = !v.contractor ? 0 : v.contractor.contractorId;
 			if(v.type=='auth') apislist.auth = uri;
 			if(v.type=='tv_guide') apislist.tvguide = uri;
-			if(v.type=='media_locator') mlocator.push({pid:v.contractor.contractorId,uri:uri});
+			if(v.type=='media_locator') mlocator[pid] = uri;
+			if(v.type=='iptv') playlist[pid] = uri;
 		});
+		console.log('Whereami provider', provider);
+		console.log('Whereami apislist', apislist);
 		console.log('Whereami playlist', playlist);
 		console.log('Whereami mlocator', mlocator);
-		console.log('Whereami apislist', apislist);
+
+		var token = this.getAuthToken();token = 'ef345db0e7385252d2ec7590ad601446';
+		if(!token) {
+			var apiurl = apislist.auth+'token',
+				params = {'grant_type':'inetra:anonymous','client_id':'demoapp','client_secret':'demoapp'};
+			$Ajax(apiurl,this._handler_acstoken.bind(this),params);
+		}
+		else {
+			console.log('Auth token',token);
+			this.token = token;
+		}
+	},
+	_handler_acstoken: function(data) {
+		console.log('acstoken',data);
+		var token = data.access_token,
+			renew = data.refresh_token,
+			expin = parseInt(data.expires_in, 10),
+			expat = new Date().getTime() + expin*1000;
+		cookie.set('token', token, expat);
+		cookie.set('renew', renew, new Date().getTime() + 86400*3*1000);// 3 days
+		return this.getAuthToken();
+
+		//this.token = this.setAuthToken(data.access_token, data.expires_in);
 	},
 	initializeOLD: function(callback) {
 
@@ -162,6 +182,7 @@ var cnapi = {
 		}
 		this._onready(channelsData);
 	},
+/*
 	setAuthToken: function(token, expires) {
 		if(typeof localStorage == 'undefined') return this.token = token;
 		if(localStorage) localStorage.setItem('access_token', token);
@@ -172,12 +193,15 @@ var cnapi = {
 		var token = localStorage ? localStorage.getItem('access_token') : this.token;
 		return token || null;
 	},
-	setAuthToken: function(token, expires) {
-		console.log(token, expires);
+*/
+	setAuthToken: function(token, exp) {
+		var expires = parseInt(exp, 10),
+			expires = new Date().getTime() + expires*1000;
+		// console.log(token, exp, expires);
+		cookie.set('token', token, expires);
+		return this.getAuthToken();
 	},
 	getAuthToken: function() {
-		if(typeof localStorage == 'undefined') return (this.token || null);
-		var token = localStorage ? localStorage.getItem('access_token') : this.token;
-		return token || null;
+		return cookie.get('token');
 	}
 }

@@ -30,6 +30,7 @@ js\api.js
 js\api.request.js
 js\class_channel.js
 js\class_tvshow.js
+js\cookie.js
 js\default.js
 js\idate.js
 js\js.js

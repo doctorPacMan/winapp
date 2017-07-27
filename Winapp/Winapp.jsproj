@@ -92,6 +92,7 @@
     <Content Include="js\api.request.js" />
     <Content Include="js\class_channel.js" />
     <Content Include="js\class_tvshow.js" />
+    <Content Include="js\cookie.js" />
     <Content Include="js\default.js" />
     <Content Include="css\main.css" />
     <Content Include="js\idate.js" />

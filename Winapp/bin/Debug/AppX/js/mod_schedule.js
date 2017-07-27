@@ -1,12 +1,12 @@
 var modSchedule = extendModule({
 	initialize: function(node_id) {
 		//console.log('modSchedule initialize');
-
 		this.dayz = {};
 		this._day = null;
 		this.node = document.getElementById(node_id);
 		this.dayzFill(this.node.querySelectorAll('.dayz > time'));
-		this.listen('channelView',this.onChannelView.bind(this));
+		//this.listen('channelView',this.onChannelView.bind(this));
+		this.node.style.display = 'none';
 	},
 	onChannelView: function(event) {
 		var cid = event.detail.channelId,
