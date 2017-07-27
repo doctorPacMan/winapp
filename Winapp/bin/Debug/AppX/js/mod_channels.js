@@ -1,7 +1,7 @@
 var modChannels = extendModule({
 	initialize: function(node_id, channels) {
 		
-console.log('modChannels initialize');
+//console.log('modChannels initialize');
 		
 		this.name = 'modChannels';
 		this.node = document.getElementById(node_id);
@@ -10,7 +10,14 @@ console.log('modChannels initialize');
 		this._current = false;
 
 		this.listen('channelView',this.onChannelView.bind(this));
-		console.log('MC init', this.node);
+//		console.log('MC init', this.node);
+
+		var cb = this.node.querySelectorAll('a.chatile');
+		for(var i=0;i<cb.length;i++) {
+			//cb[i].onclick = this.clickChannel.bind(this,cb[i]);
+			cb[i].onclick = function(e){console.log(e)};
+		}
+
 	},
 	update: function(channels) {
 
@@ -28,11 +35,11 @@ console.log('modChannels initialize');
 			this._channels[cid] = li;
 		}
 		this.list.appendChild(df);
-		console.log('MCupdate',channels[34498202]);
+//		console.log('MCupdate',channels[34498202]);
 	},
 	onChannelView: function(event) {
 		var cid = event.detail.channelId,
-			cha = myApp.getChannelById(cid);
+			cha = $App.getChannelById(cid);
 		
 		if(this._current) this._channels[this._current].classList.remove('st-view');
 		

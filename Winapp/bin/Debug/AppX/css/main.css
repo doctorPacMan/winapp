@@ -6,6 +6,7 @@ body {
 	height: 100%;
 	overflow: hidden;
 	position: relative;
+	cursor: default;
 }
 body {
 	font: 14px/20px 'Noto Sans';
@@ -36,7 +37,6 @@ header {
 }
 header {
 	top: 0;
-	height: 36px;
 }
 footer {
 	bottom: 0;
@@ -50,7 +50,7 @@ footer {
 	position: absolute;
 	left:0; width:auto;
 	top: 0px; bottom:0;
-	margin: 36px 0 20px;
+	margin: 48px 0 20px 48px;
 	overflow: hidden;
 	background: rgb(42,48,57);
 }

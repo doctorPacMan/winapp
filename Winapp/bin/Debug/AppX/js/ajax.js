@@ -7,13 +7,14 @@ var $Ajax = function(url,onComplete,params,async) {
 		var xhr = new XMLHttpRequest();
 		xhr.open('POST', url, async);
 		//xhr.setRequestHeader('X-Requested-With','XMLHttpRequest');
-		//var token = cnapi.getAuthToken();
-		//if(token) xhr.setRequestHeader('Authorization','Bearer '+token);
+		var token = cnapi.getAuthToken();
+		//if(url.indexOf('api.peers.tv')>=0) console.log('Token '+token);
+		if(url.indexOf('api.peers.tv')>=0 && token) xhr.setRequestHeader('Authorization','Bearer '+token);
+
 		xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 		xhr.onreadystatechange = function () {
 			//console.log(xhr.readyState, xhr.status);
 			if(xhr.readyState != 4) return;
-			
 			if(xhr.status != 200) onComplete(null, xhr);
 			else {
 				var text = xhr.responseText, json;

@@ -2,6 +2,8 @@ css\_fonts.css
 css\css.css
 css\main.css
 css\mod_schedule.css
+css\mod_titlebar.css
+css\mod_tvplayer.css
 default.html
 fonts\diabla.woff
 fonts\NotoSansBold.ttf
@@ -11,12 +13,18 @@ fonts\NotoSansRegular.ttf
 images\LockScreenLogo.scale-200.png
 images\SplashScreen.scale-200.png
 images\Square150x150Logo.scale-200.png
+images\Square44x44Logo.scale-100.png
 images\Square44x44Logo.scale-200.png
 images\Square44x44Logo.targetsize-24_altform-unplated.png
+images\Square44x44Logo.targetsize-256.png
 images\StoreLogo.png
 images\Wide310x150Logo.scale-200.png
+img\logo120x120.png
 img\logo150x150.png
 img\logo245x245.png
+img\poster.jpg
+img\poster16x10.jpg
+img\poster16x9.jpg
 js\ajax.js
 js\api.js
 js\api.request.js
@@ -29,6 +37,7 @@ js\mod.js
 js\mod_channels.js
 js\mod_schedule.js
 js\mod_titlebar.js
+js\mod_tvplayer.js
 js\utils.js
 WinJS\css\ui-dark.css
 WinJS\css\ui-light.css

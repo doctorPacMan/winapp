@@ -18,7 +18,8 @@ var cnapi = {
 		var token = this.getAuthToken();
 		//token = false;
 		//token = 'ecf362092aae55ab06e0fa027aba006a';
-		if(token) this.setAuthToken(token);
+		console.log('TOKEN ' + (token ? token : 'get new'));
+		if (token) this.setAuthToken(token);
 		else {
 			var apiurl = this.apis.auth+'token',
 				params = {'grant_type':'inetra:anonymous','client_id':'demoapp','client_secret':'demoapp'};

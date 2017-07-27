@@ -1,14 +1,18 @@
 var modSchedule = extendModule({
 	initialize: function(node_id) {
 		//console.log('modSchedule initialize');
+
+		this.dayz = {};
+		this._day = null;
 		this.node = document.getElementById(node_id);
 		this.dayzFill(this.node.querySelectorAll('.dayz > time'));
 		this.listen('channelView',this.onChannelView.bind(this));
 	},
 	onChannelView: function(event) {
-		var cid = event.detail.channelId;
-		cnapi.request.schedule(cid, null, this.setDay.bind(this));
-		console.log('onChannelView',cid);
+		var cid = event.detail.channelId,
+			day = new Date();
+		//cnapi.request.schedule(cid, null, this.setSchedule.bind(this));
+		console.log('onChannelView',cid,day);
 	},
 	dayzFill: function(dayz) {
 		var today = new Date(),
@@ -23,7 +27,8 @@ var modSchedule = extendModule({
 				d = day.getDate(),
 				m = day.getMonth()+1,
 				w = day.getDayNames(day.getDay()),
-				t = day.getHtmlTime();
+				t = day.getHtmlTime(),
+				v = day.format('yyyy-mm-dd');
 
 			var p = document.createElement('sup'),
 				b = document.createElement('sub');
@@ -34,15 +39,17 @@ var modSchedule = extendModule({
 			dayz[i].onclick = this.request.bind(this,day);
 
 			if(day.getTime()==today.getTime()) {
-				dayz[i].className = 'is-today';	
+				dayz[i].className = 'is-today';
 				p.innerText = d+'.'+(m<10?'0'+m:m);
 				b.innerText = 'Сегодня';
 			} else {
 				p.innerText = d;
 				b.innerText = w;
 			}
+			this.dayz[v] = dayz[i];
 		}
 		//console.log('modSchedule.dayz',dayz,today,start);
+		//console.log('modSchedule.dayz',this.dayz);
 	},
 	fillProgram: function(list) {
 		
@@ -87,13 +94,23 @@ var modSchedule = extendModule({
 		else this.node.replaceChild(ol,old);
 	},
 	request: function(day) {
-		var cid = myApp.currentChannel;
-		cnapi.request.schedule(cid, day, this.setDay.bind(this));
-	},
-	setDay: function(list, day) {
-		console.log('setDay',list);
+		var cid = $App.currentChannel;
+		cid = 10338262;
 		
-		var tc = myApp.getTelecastById(list[0]), 
+		if(this._day) {
+			var p = this._day.format('yyyy-mm-dd');
+			this.dayz[p].classList.remove('is-crrnt');
+		}
+		
+		var c = day.format('yyyy-mm-dd');
+		this.dayz[c].classList.add('is-crrnt');
+		this._day = day;
+		cnapi.request.schedule(cid, day, this.setSchedule.bind(this));
+	},
+	setSchedule: function(list, day) {
+		console.log('setSchedule',list);
+		
+		var tc = $App.getTelecastById(list[0]), 
 			t_from = day.setHours(6,0,0,0),
 			t_ends = t_from + 86400 * 1000;
 
@@ -102,7 +119,7 @@ var modSchedule = extendModule({
 
 		for(var i=0;i<list.length;i++) {
 
-			var tvs = myApp.getTelecastById(list[i]),
+			var tvs = $App.getTelecastById(list[i]),
 				time = tvs.time.getTime(),
 				ends = tvs.ends.getTime();
 			
@@ -112,11 +129,17 @@ var modSchedule = extendModule({
 			li = li.cloneNode(false);
 			li.appendChild(tvs.getNodeList());
 			ol.appendChild(li);
+			li.onclick = this.viewTelecast.bind(this,tvs.id);
 			//console.log(tvs);
 		}
 
 		var old = this.node.getElementsByTagName('ol')[0];
 		if (!old) this.node.appendChild(ol);
 		else this.node.replaceChild(ol,old);
+	},
+	viewTelecast: function(id) {
+		var tvs = $App.getTelecastById(id);
+		console.log('viewTelecast',tvs);
+		this.fire('telecastView',{id:id});
 	}
 });

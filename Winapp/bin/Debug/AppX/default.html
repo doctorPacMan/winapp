@@ -21,6 +21,7 @@
 	<script src="js/mod_channels.js"></script>
 	<script src="js/mod_schedule.js"></script>
 	<script src="js/mod_titlebar.js"></script>
+	<script src="js/mod_tvplayer.js"></script>
 
 	<script src="js/idate.js"></script>
 	<script src="js/utils.js"></script>
@@ -35,24 +36,27 @@
 <body class="win-type-body">
 <div>
 	
-	<header id="mod-titlebar">
-		<span>Channel</span>
-		<span>TvShow</span>
+	<div class="mod-tvplayer" id="mod-tvplayer">
+		<video poster="img/poster.jpg" controls muted preload="metadata">
+			<source src="http://hls.peers.tv/streaming/cam_krylova-krasny/16/variable.m3u8" type="application/x-mpegURL">
+			<source src="http://www.cn.ru/data/files/test/adv/banner0.mp4" type="video/mp4">
+		</video>
+	</div>
+
+	<header id="mod-titlebar" class="masthead">
+		<img src="img/logo120x120.png">
+		<time>12:22</time>
+		<div>
+			<i><img src="img/logo150x150.png"></i>
+			<b>Первый общеобразовательный телеканал</b>
+			<u>Семь цветов радуги. История развития живописи. Часть 2-я. Живопись первых цивилизаций. Часть 2-я. Живопись первых цивилизаций</u>
+		</div>
 	</header>
 	
 	<footer>
 		<span id="inf-provider">Contractor</span>
 		<span id="inf-acstoken">Authtoken</span>
 	</footer>
-
-	<section class="vplayah">
-		<video controls id="vplayah" autoplay>
-			<!--
-			<source src="http://hls.peers.tv/streaming/cam_krylova-krasny/16/variable.m3u8" type="application/x-mpegURL">
-			<source src="http://www.cn.ru/data/files/test/adv/banner0.mp4" type="video/mp4">
-			-->
-		</video>
-	</section>
 
 	<aside class="mod-schedule" id="mod-schedule">
 		<div class="dayz">
@@ -71,7 +75,7 @@
 	<ol id="channels-list">
 		<li><a class="chatile" href="http://hls.peers.tv/streaming/cam_frunze_ippo/16/camv/playlist.m3u8"><i><img src="./img/logo150x150.png"></i><u>webcam</u></a></li>
 		<li><a class="chatile" href="http://109.71.162.112:1935/live/hd.jasminchannel.stream/playlist.m3u8"><i><img src="./img/logo150x150.png"></i><u>SD Channel</u></a></li>
-		<li><a class="chatile" href="http://hls.peers.tv/streaming/muzhskoj/126/tvrec/playlist.m3u8?token=572185ff4dd6da8f9f02d71198cb94ec"><i><img src="./img/logo150x150.png"></i><u>SD Channel</u></a></li>
+		<li><a class="chatile" href="http://www.cn.ru/data/files/test/adv/banner0.mp4"><i><img src="./img/logo150x150.png"></i><u>Just a video</u></a></li>
 	</ol>
 	</div>
 	</section>
