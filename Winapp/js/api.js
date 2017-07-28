@@ -1,6 +1,7 @@
 var cnapi = {
 	//token: '00954bafe0c6182bb730d240f5147dd8',
-	apiurl: 'http://api.peers.tv',
+	//apiurl: 'http://api.peers.tv',
+	apiurl: 'http://a.trunk.ptv.bender.inetra.ru',
 	token: null,
 	location: null,
 	provider: null,
@@ -11,6 +12,8 @@ var cnapi = {
 	},
 	_handler_whereami: function(data, xhr) {
 
+		// Access-Control-Expose-Headers
+
 		console.log('Whereami',data);
 		if(data===false) return alert('Whereami failure');
 
@@ -18,18 +21,21 @@ var cnapi = {
 		this.location = terr.territoryId;
 		this.timezone = terr.timezone;
 
-		// user timezone check
-		var ldt = new Date(), wtz = (terr.timezone/60),
-			dtz = wtz + ldt.getTimezoneOffset();
-		//if(dtz!=0) {var fxd = new Date(ldt);fxd.setMinutes(fxd.getMinutes() + dtz);}
+		var hdt = xhr.getResponseHeader('Date'),
+			sdt = hdt ? new Date(hdt) : new Date(),
+			wtz = (data.territories[0].timezone/60),
+			dtz = wtz + sdt.getTimezoneOffset();
+		if(hdt) {
+			sdt.setMinutes(sdt.getMinutes() + dtz);
+			console.log('Whereami datetime', sdt);
+		}
 		console.log('Whereami timezone', dtz==0 ? 'OK' : ('incorrect: '+dtz));
-		
+
 		var provider = {
 			id: data.contractor.contractorId,
-			name: data.contractor.name,
-			logo: false
+			name: data.contractor.name
 		};
-		data.contractor.images.forEach(function(v){if(v.profile==2)provider.logo=v.URL});
+		if(data.contractor.images) data.contractor.images.forEach(function(v){if(v.profile==2)provider.logo=v.URL});
 		this.provider = provider;
 
 		var playlist = {}, mlocator = {}, apislist = {};
