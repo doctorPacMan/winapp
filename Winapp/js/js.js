@@ -7,13 +7,15 @@ var $App = {
 	},
 	onready: function(channels) {
 
-		document.getElementById('inf-provider').innerText = cnapi.location+' '+cnapi.provider;
+		document.getElementById('inf-provider').innerText = cnapi.location+' '+(cnapi.provider ? cnapi.provider.name : 'undefined');
 		document.getElementById('inf-acstoken').innerText = cnapi.getAuthToken();
-		console.log('READY', channels.length);
-		
-return;
+		console.log('READY', channels);
 		
 		this.modChannels = new modChannels('mod-channels');
+		//this.modChannels.update(channels);
+
+return;
+		
 		this.modSchedule = new modSchedule('mod-schedule');
 		this.modTitlebar = new modTitlebar('mod-titlebar');
 		this.modTvplayer = new modTvplayer('mod-tvplayer');
