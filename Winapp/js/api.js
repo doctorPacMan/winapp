@@ -51,6 +51,7 @@ var cnapi = {
 			if(v.type=='media_locator') mlocators[pid] = uri;
 			if(v.type=='iptv') playlists[pid] = uri;
 		});
+		//playlists['x'] = 'http://peerstv.io/data/m3u/playlist.xspf';
 		this._temp_playlists = playlists;
 		this.apis = apislist;
 
@@ -58,7 +59,7 @@ var cnapi = {
 		console.log('Whereami playlist', playlists);
 		console.log('Whereami mlocator', mlocators);
 
-		var token = this.getAuthToken();token = 'fc1cd05293b400581eb0f78a10cd4b3a';
+		var token = this.getAuthToken();token = 'cd4e5a6bee96fec8b50e9831cdac2572';
 		if(!token) {
 			var apiurl = this.apis.auth+'token',
 				params = {'grant_type':'inetra:anonymous','client_id':'demoapp','client_secret':'demoapp'};
@@ -84,7 +85,6 @@ var cnapi = {
 	_request_playlists: function() {
 		var playlists = this._temp_playlists;
 		delete this._temp_playlists;
-		playlists['Z'] = 'http://peerstv.io/data/m3u/playlist.xspf';
 
 		var progress = {},
 			channels = new ChannelsPlaylist(),
