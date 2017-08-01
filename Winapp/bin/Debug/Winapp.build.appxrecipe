@@ -45,6 +45,9 @@
     <AppxPackagedFile Include="D:\winapp\Winapp\default.html">
       <PackagePath>default.html</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\winapp\Winapp\index.html">
+      <PackagePath>index.html</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\winapp\Winapp\fonts\diabla.woff">
       <PackagePath>fonts\diabla.woff</PackagePath>
     </AppxPackagedFile>
@@ -149,6 +152,9 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\winapp\Winapp\js\mod_tvplayer.js">
       <PackagePath>js\mod_tvplayer.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\winapp\Winapp\js\playlist.js">
+      <PackagePath>js\playlist.js</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\winapp\Winapp\js\utils.js">
       <PackagePath>js\utils.js</PackagePath>

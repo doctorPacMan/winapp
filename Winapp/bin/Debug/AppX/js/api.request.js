@@ -44,3 +44,19 @@ cnapi.request.sauce_onload = function(callback, data) {
 	if(callback) callback(files);
 	else console.log('SL',files);
 };
+
+cnapi.request.channels = function(ids, onComplete) {
+	var apiurl = cnapi.apis.tvguide+'channels.json?t='+cnapi.location;
+	apiurl += '&fields=channelId,title,alias,logoURL,categories,hasSchedule';
+	//apiurl += ',description';
+	//apiurl += ',scheduledDates';
+	//apiurl += ',currentTelecast';
+	apiurl += '&channel='+ids;
+	$Ajax(apiurl,this.channels_onload.bind(this, onComplete));
+};
+cnapi.request.channels_onload = function(callback, data) {
+	var clist = data ? data.channels : data;
+	if(callback) callback(clist);
+	else console.log('CL',clist);
+
+};

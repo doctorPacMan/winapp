@@ -3,16 +3,21 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<meta charset="utf-8" />
-	<title>Win-Peers</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="cleartype" content="on">
+	<meta name="mobile-web-app-capable" content="yes">
+	<title>WebPeers</title>
 
 	<!-- Ссылки WinJS -->
 	<!-- <link href="WinJS/css/ui-dark.css" rel="stylesheet" /> -->
-	<script src="WinJS/js/base.js"></script>
-	<script src="WinJS/js/ui.js"></script>
+	<!-- <script src="WinJS/js/base.js"></script> -->
+	<!-- <script src="WinJS/js/ui.js"></script> -->
 
 	<!-- Ссылки Winapp -->
 	<link href="css/_fonts.css" rel="stylesheet" />
 	<link href="css/css.css" rel="stylesheet" />
+
+	<script src="js/hls.light.min.js"></script>
 
 	<script src="js/playlist.js"></script>
 	<script src="js/class_channel.js"></script>
@@ -46,7 +51,13 @@
 		</video>
 	</div>
 
-	<aside class="lside">L</aside>
+	<aside class="lside">
+		<span id="inf-provlogo"></span>
+	</aside>
+	<aside class="rside">
+		<span id="inf-provider">Provider</span>
+		<span id="inf-acstoken">Authtoken</span>
+	</aside>
 
 	<header id="mod-titlebar" class="masthead">
 		<img src="img/logo120x120.png">
@@ -58,10 +69,7 @@
 		</div>
 	</header>
 	
-	<footer>
-		<span id="inf-provider">Contractor</span>
-		<span id="inf-acstoken">Authtoken</span>
-	</footer>
+	<footer>footer</footer>
 
 	<aside class="mod-schedule" id="mod-schedule" style="display:none">
 		<div class="dayz">
@@ -79,8 +87,6 @@
 	<div>
 	<ol id="channels-list">
 		<li><a class="chatile" href="http://hls.peers.tv/streaming/cam_frunze_ippo/16/camv/playlist.m3u8"><i><img src="./img/logo150x150.png"></i><u>webcam</u></a></li>
-		<li><a class="chatile" href="http://109.71.162.112:1935/live/hd.jasminchannel.stream/playlist.m3u8"><i><img src="./img/logo150x150.png"></i><u>SD Channel</u></a></li>
-		<li><a class="chatile" href="http://www.cn.ru/data/files/test/adv/banner0.mp4"><i><img src="./img/logo150x150.png"></i><u>Just a video</u></a></li>
 	</ol>
 	</div>
 	</section>

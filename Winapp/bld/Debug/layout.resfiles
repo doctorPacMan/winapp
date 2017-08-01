@@ -25,6 +25,7 @@ img\logo245x245.png
 img\poster.jpg
 img\poster16x10.jpg
 img\poster16x9.jpg
+index.html
 js\ajax.js
 js\api.js
 js\api.request.js
@@ -39,6 +40,7 @@ js\mod_channels.js
 js\mod_schedule.js
 js\mod_titlebar.js
 js\mod_tvplayer.js
+js\playlist.js
 js\utils.js
 WinJS\css\ui-dark.css
 WinJS\css\ui-light.css

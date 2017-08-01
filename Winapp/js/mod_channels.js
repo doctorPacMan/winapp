@@ -6,7 +6,7 @@ var modChannels = extendModule({
 		this.name = 'modChannels';
 		this.node = document.getElementById(node_id);
 		this.list = this.node.getElementsByTagName('ol')[0];
-		this._channels = {};
+		this._tiles = {};
 		this._current = false;
 
 		this.listen('channelView',this.onChannelView.bind(this));
@@ -25,31 +25,49 @@ var modChannels = extendModule({
 			li = document.createElement('li'),
 			ch, ct;
 
-		for(var cid in channels) {
-			ch = channels[cid];
-			ct = ch.getTile();
+		for(var id in channels) {
+			ct = this.getTile(channels[id]);
 			li = li.cloneNode(false);
 			li.appendChild(ct);
 			df.appendChild(li);
-			ct.onclick = this.onChannelClick.bind(this,cid);
-			this._channels[cid] = li;
+			ct.onclick = this.onChannelClick.bind(this,id);
+			this._tiles[id] = li;
 		}
 		this.list.appendChild(df);
 //		console.log('MCupdate',channels[34498202]);
 	},
-	onChannelView: function(event) {
-		var cid = event.detail.channelId,
-			cha = $App.getChannelById(cid);
+	getTile: function(cha) {
 		
-		if(this._current) this._channels[this._current].classList.remove('st-view');
-		
-		this._channels[cid].classList.add('st-view');
-		this._current = cid;
+		var tile = document.createElement('a'),
+			name = document.createElement('u'),
+			logo = document.createElement('i'),
+			cimg = document.createElement('img');
 
-		console.log('onChannelView',cha);
+		name.innerText = cha.title;
+		cimg.setAttribute('src',cha.logo||'./img/logo150x150.png');
+		logo.appendChild(cimg);
+
+		tile.className = 'chatile';
+		tile.setAttribute('data-cid',cha.cid||'');
+		tile.setAttribute('href',cha.src);
+		tile.appendChild(logo);
+		tile.appendChild(name);
+		return tile;		
 	},
-	onChannelClick: function(cid, event) {
+	onChannelClick: function(id, event) {
 		if(event) event.preventDefault();
-		this.fire('channelView',{channelId:cid});
+		this.fire('channelView',{channelId:id});
+	},
+	onChannelView: function(event) {
+
+		var cur = this._current ? this._tiles[this._current] : null;
+		if(cur) cur.classList.remove('st-view');
+
+		var id = event.detail.channelId;
+		this._tiles[id].classList.add('st-view');
+		this._current = id;
+
+		//var cha = $App.getChannelById(id);
+		//console.log('onChannelView',cha);
 	}
 });

@@ -85,6 +85,7 @@
     <Content Include="img\poster.jpg" />
     <Content Include="img\poster16x10.jpg" />
     <Content Include="img\poster16x9.jpg" />
+    <Content Include="index.html" />
     <Content Include="js\ajax.js" />
     <Content Include="js\api.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
@@ -102,6 +103,7 @@
     <Content Include="js\mod_schedule.js" />
     <Content Include="js\mod_titlebar.js" />
     <Content Include="js\mod_tvplayer.js" />
+    <Content Include="js\playlist.js" />
     <Content Include="js\utils.js" />
     <Content Include="WinJS\css\ui-dark.css" />
     <Content Include="WinJS\css\ui-light.css" />

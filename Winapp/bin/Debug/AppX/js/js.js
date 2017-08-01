@@ -3,20 +3,28 @@ var $App = {
 		console.info('$App initialize');
 		this._telecast = {};
 		this._channels = {};
-		cnapi.initialize(this.onready.bind(this));
-	},
-	onready: function(channels) {
+		//cnapi.initialize(this.onready.bind(this));
 
-		document.getElementById('inf-provider').innerText = cnapi.location+' '+cnapi.provider;
+		var mtv = new modTvplayer('mod-tvplayer');
+		mtv.play('http://hls.peers.tv/streaming/cam_krylova-krasny/16/variable.m3u8');
+
+	},
+	onready: function(playlist) {
+
+		document.getElementById('inf-provider').innerText = cnapi.location+' '+(cnapi.provider ? cnapi.provider.name : 'undefined');
 		document.getElementById('inf-acstoken').innerText = cnapi.getAuthToken();
-		console.log('READY', channels.length);
+		console.log('READY', playlist);
 		
+		this._playlist = playlist;
+		this.modChannels = new modChannels('mod-channels');
+		this.modChannels.update(playlist.channels);
+
+		this.modTvplayer = new modTvplayer('mod-tvplayer');
+
 return;
 		
-		this.modChannels = new modChannels('mod-channels');
 		this.modSchedule = new modSchedule('mod-schedule');
 		this.modTitlebar = new modTitlebar('mod-titlebar');
-		this.modTvplayer = new modTvplayer('mod-tvplayer');
 
 		while(channels.length) this.pushChannel(channels.shift());
 		this.modChannels.update(this._channels);
@@ -27,8 +35,8 @@ return;
 		//return this.request.schedule(10338262);
 		return;
 	},
-	getChannelById: function(cid) {
-		return this._channels[cid];
+	getChannelById: function(id) {
+		return this._playlist.channels[id];
 	},
 	getTelecastById: function(id) {
 		return this._telecast[id];

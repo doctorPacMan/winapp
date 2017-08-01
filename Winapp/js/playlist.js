@@ -90,7 +90,7 @@ ChannelsPlaylist.prototype = {
 		var cha, str, rez, list = [], cids = {};
 		for(var j=0;j<lines.length;j++) {
 			
-			if(list.length>=12) break;
+			//if(list.length>=36) break;
 			
 			cha = {data:str = lines[j].trim()};
 			
@@ -123,7 +123,7 @@ ChannelsPlaylist.prototype = {
 		pcd.title = data.title;
 		pcd.alias = data.alias;
 		pcd.logo = data.logoURL;
-		pcd.id = data.channelId;
+		pcd.cid = data.channelId;
 		pcd.hasSchedule = !!data.hasSchedule;
 		if(cid==24646020) console.log(data);//HD
 		if(cid==58456826) console.log(data);//cam

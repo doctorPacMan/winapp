@@ -22,7 +22,7 @@
     <AppXManifest Include="D:\winapp\Winapp\bin\Debug\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-07-27T11:36:19.999</Modified>
+      <Modified>2017-07-31T15:41:18.580</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
@@ -60,7 +60,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\winapp\Winapp\default.html">
       <PackagePath>default.html</PackagePath>
-      <Modified>2017-07-27T11:01:25.396</Modified>
+      <Modified>2017-07-31T15:40:48.446</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\winapp\Winapp\index.html">
+      <PackagePath>index.html</PackagePath>
+      <Modified>2017-07-31T15:31:46.145</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\winapp\Winapp\fonts\diabla.woff">
       <PackagePath>fonts\diabla.woff</PackagePath>
@@ -148,15 +152,15 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\winapp\Winapp\js\ajax.js">
       <PackagePath>js\ajax.js</PackagePath>
-      <Modified>2017-07-27T10:10:19.062</Modified>
+      <Modified>2017-07-29T03:38:27.906</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\winapp\Winapp\js\api.js">
       <PackagePath>js\api.js</PackagePath>
-      <Modified>2017-07-27T13:14:34.165</Modified>
+      <Modified>2017-07-31T10:34:32.959</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\winapp\Winapp\js\api.request.js">
       <PackagePath>js\api.request.js</PackagePath>
-      <Modified>2017-07-26T10:51:22.263</Modified>
+      <Modified>2017-07-30T13:11:09.260</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\winapp\Winapp\js\class_channel.js">
       <PackagePath>js\class_channel.js</PackagePath>
@@ -176,11 +180,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\winapp\Winapp\js\idate.js">
       <PackagePath>js\idate.js</PackagePath>
-      <Modified>2017-07-10T11:28:17.129</Modified>
+      <Modified>2017-07-29T02:40:52.778</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\winapp\Winapp\js\js.js">
       <PackagePath>js\js.js</PackagePath>
-      <Modified>2017-07-27T10:10:19.074</Modified>
+      <Modified>2017-07-31T15:26:41.831</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\winapp\Winapp\js\mod.js">
       <PackagePath>js\mod.js</PackagePath>
@@ -188,7 +192,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\winapp\Winapp\js\mod_channels.js">
       <PackagePath>js\mod_channels.js</PackagePath>
-      <Modified>2017-07-26T10:51:22.264</Modified>
+      <Modified>2017-07-31T10:52:42.079</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\winapp\Winapp\js\mod_schedule.js">
       <PackagePath>js\mod_schedule.js</PackagePath>
@@ -200,7 +204,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\winapp\Winapp\js\mod_tvplayer.js">
       <PackagePath>js\mod_tvplayer.js</PackagePath>
-      <Modified>2017-07-26T10:51:22.266</Modified>
+      <Modified>2017-07-31T15:30:50.913</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\winapp\Winapp\js\playlist.js">
+      <PackagePath>js\playlist.js</PackagePath>
+      <Modified>2017-07-31T10:32:39.184</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\winapp\Winapp\js\utils.js">
       <PackagePath>js\utils.js</PackagePath>
@@ -220,7 +228,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\winapp\Winapp\bin\Debug\ReverseMap\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2017-07-27T11:36:19.702</Modified>
+      <Modified>2017-07-31T15:41:18.532</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

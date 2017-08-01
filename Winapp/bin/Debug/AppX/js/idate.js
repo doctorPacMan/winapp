@@ -11,6 +11,7 @@ Date.prototype.getNames = function(n, t, l) {
 				title: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
 				label: ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'],
 				day_short: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+				day_abbr: ['Вск', 'Пнд', 'Втр', 'Срд', 'Чтв', 'Птн', 'Сбт'],
 				day_full: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота']
 			},
 			'en': {
@@ -18,6 +19,7 @@ Date.prototype.getNames = function(n, t, l) {
 				title: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
 				label: ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'],
 				day_short: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+				day_abbr: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 				day_full: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 			}
 		},
@@ -63,6 +65,14 @@ Date.prototype.getAge = function(now) {
 	else if(day==new Date(now).setHours(-24,0,0,0)) dtext = 'вчера в '+dtime;
 
 	return dtext;
+};
+Date.prototype.formatHeader = function() {
+	var dt = this;
+	dt.setMinutes(dt.getMinutes() + dt.getTimezoneOffset());// GMT
+	var df = dt.getNames(dt.getDay(),'day_abbr','en')+', '+dt.getDate();
+	df+= ' '+dt.getNames(dt.getMonth(),'short','en');
+	df+= ' '+dt.format('yyyy h:nn:ss')+' GMT';
+	return df;
 };
 Date.prototype.getHtmlTime = function() {
 

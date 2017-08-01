@@ -38,7 +38,7 @@ var cnapi = {
 				id: data.contractor.contractorId,
 				name: data.contractor.name
 			};
-			if(data.contractor.images) data.contractor.images.forEach(function(v){if(v.profile==2)provider.logo=v.URL});
+			if(data.contractor.images) data.contractor.images.forEach(function(v){if(v.profile==1)provider.logo=v.URL});
 		}
 		console.log('Whereami provider', this.provider = provider);
 
@@ -51,7 +51,8 @@ var cnapi = {
 			if(v.type=='media_locator') mlocators[pid] = uri;
 			if(v.type=='iptv') playlists[pid] = uri;
 		});
-		//playlists['x'] = 'http://peerstv.io/data/m3u/playlist.xspf';
+		//playlists = {'x':'/data/playlist.xspf'};
+		playlists['x'] = '/data/playlist.xspf';
 		this._temp_playlists = playlists;
 		this.apis = apislist;
 
@@ -59,27 +60,27 @@ var cnapi = {
 		console.log('Whereami playlist', playlists);
 		console.log('Whereami mlocator', mlocators);
 
-		var token = this.getAuthToken();token = 'cd4e5a6bee96fec8b50e9831cdac2572';
-		if(!token) {
+		//this.setAuthToken('cd4e5a6bee96fec8b50e9831cdac2572');
+		if(this.token = this.getAuthToken()) {
+			console.log('Authtoken restore', this.token);
+			this._request_playlists();
+		}
+		else {
 			var apiurl = this.apis.auth+'token',
 				params = {'grant_type':'inetra:anonymous','client_id':'demoapp','client_secret':'demoapp'};
 			$Ajax(apiurl,this._handler_acstoken.bind(this),params);
 		}
-		else {
-			console.log('Auth token',token);
-			this.token = token;
-			this._request_playlists();
-		}
 	},
 	_handler_acstoken: function(data) {
-		console.log('acstoken',data);
+		//console.log('TOKEN',data);
 		var token = data.access_token,
 			renew = data.refresh_token,
 			expin = parseInt(data.expires_in, 10),
-			expat = new Date().getTime() + expin*1000;
-		cookie.set('token', token, expat);
-		cookie.set('renew', renew, new Date().getTime() + 86400*30*1000);// 30 days
-		this.token = token;
+			expdt = Date.now() + expin*1e3,
+			expdt = new Date(expdt).format('yyyy/mm/dd h:nn:ss');
+		
+		this.setAuthToken(token, expdt, renew);
+		console.log('Authtoken set new', this.token);
 		this._request_playlists();
 	},
 	_request_playlists: function() {
@@ -119,14 +120,46 @@ var cnapi = {
 		}
 		this._onready(playlist);
 	},
-	setAuthToken: function(token, exp) {
-		var expires = parseInt(exp, 10),
-			expires = new Date().getTime() + expires*1000;
-		// console.log(token, exp, expires);
-		cookie.set('token', token, expires);
-		return this.getAuthToken();
+	setAuthToken: function(token, expdt, refresh) {
+
+		//console.log('setAuthToken', token, expdt, refresh);
+
+		if(!expdt) {
+			expdt = Date.now() + 86400*1e3,// 24h
+			expdt = new Date(expdt).format('yyyy/mm/dd h:nn:ss');
+		}
+
+		cookie.set('token', token, expdt);
+		localStorage.setItem('token',token);
+		localStorage.setItem('token_expires',expdt);
+
+		if(refresh && false) {
+			var expre = Date.now() + 86400*7*1e3;// 7 days
+				expre = new Date(expre).format('yyyy/mm/dd h:nn:ss');
+			cookie.set('refresh', refresh, expre);
+			localStorage.setItem('token_refresh',refresh);
+		}
+		
+		return this.token = this.getAuthToken();
 	},
 	getAuthToken: function() {
-		return this.token || cookie.get('token');
+		
+		if(this.token) return this.token;
+		
+		var val = localStorage.getItem('token'),
+			exp = localStorage.getItem('token_expires');
+		if(!val || !exp) return null;
+		
+		var old = new Date(exp) - Date.now(),
+			lifetime = Math.round(old/1000/60),
+			obsolete = old<0,
+			token = obsolete ? null : val;
+
+		if(obsolete) {
+			localStorage.removeItem('token');
+			localStorage.removeItem('token_expires');
+		}
+		//console.log('getAuthToken', val, exp, obsolete, lifetime+'m');
+		return token;
 	}
 }

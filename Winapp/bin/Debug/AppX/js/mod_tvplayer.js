@@ -8,13 +8,13 @@ var modTvplayer = extendModule({
 
 		this._video = this.node.querySelector('video');
 
-		this.onTelecastView({detail:{id:100435894}});
+		//this.onTelecastView({detail:{id:100435894}});
 	},
 	onChannelView: function(event) {
-		var cid = event.detail.channelId,
-			cha = $App.getChannelById(cid);
+		var id = event.detail.channelId,
+			cha = $App.getChannelById(id);
 		
-		this.play(cha.sauce);
+		this.play(cha.src);
 
 		console.log('onChannelView',cha);
 	},
@@ -40,38 +40,47 @@ var modTvplayer = extendModule({
 
 	},
 	play: function(src) {
-		this.load([[{uri:src}]]);
-		this._video.play();
+
+		this.load(src, true);
+
 	},
-	load: function(files) {
+	load: function(src, autoplay) {
 		
 		this.stop();
-		
-		var part0 = files[0] || [];
-		console.log('PLAY', files, part0);
 
-		var first = false,
-			dfsrc = document.createDocumentFragment(),
-			sauce = document.createElement('source');
-		sauce.setAttribute('type','application/x-mpegURL');
+		var dfsrc = document.createDocumentFragment(),
+			sauce = document.createElement('source'),
+			hls = /\.(m3u8|m3u)($|\?|#)/.test(src),
+			avp = autoplay===true;
 
-		part0.forEach(function(p){
+		console.log('LOAD', hls, src, avp);
+
+		dfsrc.appendChild(sauce = sauce.cloneNode(true));
+		if(hls) sauce.setAttribute('type','application/x-mpegURL');
+		sauce.setAttribute('src',src);
+
+		if(hls) {
 			dfsrc.appendChild(sauce = sauce.cloneNode(true));
-			sauce.setAttribute('src',p.uri);
-			//dfsrc.appendChild(sauce);
-			console.log('sauce',p.uri);
-			if(!first) first = p.uri;
-		});
-		
-		if(1) {
-			sauce = sauce.cloneNode(true);
 			sauce.setAttribute('type','video/mp4');
-			sauce.setAttribute('src','http://www.cn.ru/data/files/test/adv/banner0.mp4');
-			dfsrc.appendChild(sauce);
-			first = false;
+			sauce.setAttribute('src','http://www.cn.ru/data/files/test/video.mp4');
 		}
-		//if(first) this._video.setAttribute('src',first);
+		
+		if(avp) this._video.setAttribute('autoplay','');
+		else this._video.removeAttribute('autoplay');
+		
+		//this._video.setAttribute('src',src);
 		this._video.appendChild(dfsrc);
 		this._video.load();
-	}
+	},
+	load: function(src, autoplay) {
+		if(!Hls.isSupported()) return;
+		
+		var video = this._video;
+		var hls = new Hls();
+		hls.loadSource('https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8');
+		hls.attachMedia(video);
+		hls.on(Hls.Events.MANIFEST_PARSED,function() {
+			video.play();
+		});
+	}	
 });
