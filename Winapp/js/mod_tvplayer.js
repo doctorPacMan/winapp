@@ -5,25 +5,36 @@ var modTvplayer = extendModule({
 		this.listen('channelView',this.onChannelView.bind(this));
 		
 		this._video = this.node.querySelector('video');
-		this._hls_type = this.hlsPlayType(this._video);
-		
-		this._hlsjs = new Hls({});
-		this._hlsjs.on(Hls.Events.MEDIA_ATTACHED,function(event,data){
-			var sauce = data.media.getElementsByTagName('source')[0];
-			this._hlsjs.loadSource(sauce.getAttribute('src'));
-		}.bind(this));
-
-		console.log('modTvplayer initialize', this._hls_type);
+		this._sauce = this.node.querySelector('video > source[type="application/x-mpegURL"]');
+		this._hlsPlayType = this.hlsPlayType(this._video);
+		this._hlsjs = this.attachHlsjs(this._video);
+		console.log('modTvplayer initialize '+(this._hlsjs?'hlsjs':this._hlsPlayType));
 
 		//this.onTelecastView({detail:{id:100435894}});
+	},
+	attachHlsjs: function(video) {
+
+		if(this._hlsPlayType) return null;
+		else if(!window.Hls || !Hls.isSupported()) return null;
+
+		var hlsjs = new Hls({});
+		hlsjs.on(Hls.Events.MEDIA_ATTACHED,function(event,data){
+			var src = this._sauce.getAttribute('src');
+				video = data.media;
+			//console.log('attach', src);
+		}.bind(this));
+		hlsjs.on(Hls.Events.MEDIA_DETACHED,function(event,data){
+			//console.log('detach');this._video.load();
+		}.bind(this));
+		video.className = 'hlsjs';
+		return hlsjs;
 	},
 	onChannelView: function(event) {
 		var id = event.detail.channelId,
 			cha = $App.getChannelById(id);
-		
-		this.play(cha.src);
 
-		console.log('onChannelView',cha);
+		this.play(cha.src);
+		//console.log('onChannelView',cha);
 	},
 	onTelecastView: function(event) {
 		var id = event.detail.id,
@@ -50,16 +61,21 @@ var modTvplayer = extendModule({
 	},
 	stop: function() {
 
-		this._hlsjs.stopLoad();
-		this._hlsjs.detachMedia(this._video);
+		if(this._hlsjs) {
+			this._hlsjs.stopLoad();
+			this._hlsjs.detachMedia(this._video);
+		}
 
 		this._video.pause();
 		this._video.currentTime = 0;
 		this._video.removeAttribute('src');
 		this._video.removeAttribute('poster');
 		this._video.removeAttribute('autoplay');
-		var so = Array.prototype.slice.call(this._video.querySelectorAll('source'));
-		while(so.length) this._video.removeChild(so.pop());
+		this._sauce.removeAttribute('type');
+		this._sauce.removeAttribute('src');
+		
+		//var so = Array.prototype.slice.call(this._video.querySelectorAll('source'));
+		//while(so.length) this._video.removeChild(so.pop());
 
 	},
 	play: function(src) {
@@ -70,85 +86,20 @@ var modTvplayer = extendModule({
 	load: function(src, autoplay) {
 
 		this.stop();
-
-		var dfsrc = document.createDocumentFragment(),
-			sauce = document.createElement('source'),
-			hls = /\.(m3u8|m3u)($|\?|#)/.test(src),
-			avp = autoplay===true,
-			htp = this._hls_type;
-
-		dfsrc.appendChild(sauce=sauce.cloneNode(true));
-		if(hls && htp) sauce.setAttribute('type', htp);
-		sauce.setAttribute('src', src);
-		this._video.appendChild(dfsrc);
-
-		if(!hls) this._video.load();
-		else this._hlsjs.attachMedia(this._video);
-
-		console.log('LOAD', src, hls, htp, avp);
-/*
-this._hlsjs
-		if(src===null) {
-			this._sauce.removeAttribute('src');
-			this._video.removeAttribute('src');
-		} else {
-			this._sauce.setAttribute('src', src);
-			this._video.setAttribute('src', src);
-		}
-
-		if(!hls) {
-			this._sauce.removeAttribute('type');
-			this._video.load();
-		} else if(this._hls_type) {
-			this._sauce.setAttribute('type',this._hls_type);
-			this._video.load();
-		} else {
-			this._sauce.setAttribute('type','application/x-mpegURL');
-			this._hlsjs.attachMedia(this._video);
-		}
-
-
-		 
-*/	
-	},
-	loadVideo: function(src, autoplay) {
-		
-		this.stop();
-
-		var dfsrc = document.createDocumentFragment(),
-			sauce = document.createElement('source'),
-			hls = /\.(m3u8|m3u)($|\?|#)/.test(src),
-			avp = autoplay===true;
-
-		console.log('LOAD', hls, src, avp);
-
-		dfsrc.appendChild(sauce = sauce.cloneNode(true));
-		if(hls) sauce.setAttribute('type','application/x-mpegURL');
-		sauce.setAttribute('src',src);
-
-		if(hls) {
-			dfsrc.appendChild(sauce = sauce.cloneNode(true));
-			sauce.setAttribute('type','video/mp4');
-			sauce.setAttribute('src','http://www.cn.ru/data/files/test/video.mp4');
-		}
-		
-		if(avp) this._video.setAttribute('autoplay','');
+		if(autoplay===true) this._video.setAttribute('autoplay','');
 		else this._video.removeAttribute('autoplay');
-		
-		//this._video.setAttribute('src',src);
-		this._video.appendChild(dfsrc);
-		this._video.load();
-	},
-	loadHlsjs: function(src, autoplay) {
-		if(!Hls.isSupported()) return;
-		
-		var video = this._video;
-		var hls = new Hls();
-		//hls.loadSource('https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8');
-		hls.loadSource(src);
-		hls.attachMedia(video);
-		hls.on(Hls.Events.MANIFEST_PARSED,function() {
-			video.play();
-		});
+
+		var hls = /\.(m3u8|m3u)($|\?|#)/.test(src),
+			hpt = this._hlsPlayType;
+
+		this._sauce.setAttribute('src',src);
+		if(hls && hpt) this._sauce.setAttribute('type', hpt);
+		else this._sauce.removeAttribute('type');
+
+		if(!hls || !this._hlsjs) this._video.load();
+		else setTimeout(function(){
+			this._hlsjs.loadSource(src);
+			this._hlsjs.attachMedia(this._video);
+		}.bind(this),250);
 	}	
 });

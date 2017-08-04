@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<playlist version="1" xmlns="http://xspf.org/ns/0/" xmlns:vlc="http://www.videolan.org/vlc/playlist/ns/0/" xmlns:cn="http://www.cn.ru">
+    <title>Кастомный плейлист</title>
+    <trackList>
+
+        <track>
+            <location>http://www.cn.ru/data/files/test/video.mp4</location>
+            <title>Amazing HTB</title>
+            <extension application="http://www.inetra.ru">
+                <inetra:channel-inf>
+                    <channel-id>10338229</channel-id>
+                    <recordable>true</recordable>
+                </inetra:channel-inf>
+                <inetra:stream-inf>
+                    <aspect-ratio>4:3</aspect-ratio>
+                    <access>allowed</access>
+                </inetra:stream-inf>
+            </extension>
+        </track>
+
+        <track>
+            <location>http://hls.tva.cdnvideo.ru/tva/tvahd.sdp/chunklist.m3u8</location>
+            <title>РЖД</title>
+            <extension application="http://www.inetra.ru">
+                <inetra:channel-inf>
+                    <channel-id>00000000</channel-id>
+                    <recordable>false</recordable>
+                </inetra:channel-inf>
+                <inetra:stream-inf>
+                    <aspect-ratio>16:9</aspect-ratio>
+                    <access>allowed</access>
+                </inetra:stream-inf>
+            </extension>
+        </track>
+
+        <track>
+            <location>http://109.71.162.112:1935/live/sd.jasminchannel.stream/playlist.m3u8</location>
+            <title>Мужской</title>
+            <extension application="http://www.inetra.ru">
+                <inetra:channel-inf>
+                    <channel-id>24970480</channel-id>
+                    <recordable>false</recordable>
+                </inetra:channel-inf>
+                <inetra:stream-inf>
+                    <aspect-ratio>16:9</aspect-ratio>
+                    <access>allowed</access>
+                </inetra:stream-inf>
+            </extension>
+        </track>
+
+        <track>
+            <location>http://109.71.162.112:1935/live/hd.jasminchannel.stream/playlist.m3u8</location>
+            <title>Jasmin HD</title>
+            <extension application="http://www.inetra.ru">
+                <inetra:channel-inf>
+                    <channel-id>00000002</channel-id>
+                    <recordable>false</recordable>
+                </inetra:channel-inf>
+                <inetra:stream-inf>
+                    <aspect-ratio>16:9</aspect-ratio>
+                    <access>allowed</access>
+                </inetra:stream-inf>
+            </extension>
+        </track>
+
+    </trackList>
+</playlist>

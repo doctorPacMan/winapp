@@ -7,11 +7,13 @@
 }
 .mod-tvplayer > video {
 	display: block;
-	background: darkslategrey;
+	background: rgb(53,53,53);
 	position: absolute;
 	left:0;width: 100%;
 	top:0;height: 100%;
 }
+.mod-tvplayer > video.hlsjs {background-color: darkslategray}
+
 .mod-tvplayer > xvideo {
 	margin: -180px 0 0 -240px;
 	left:50%;width: 480px;

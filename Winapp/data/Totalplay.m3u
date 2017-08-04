@@ -1,0 +1,142 @@
+#EXTM3U
+#EXTINF:0,
+#EXTINF:-1,Cinecanal Plus
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=312&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Cinecanal
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=349&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Cinemax
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=353&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Film Zone HD
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=324&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Golden Edge
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=363&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Golden HD
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=320&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,MGM HD
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=331&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,MGM
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=365&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Moviecity Action
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=304&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Moviecity Family
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=341&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Moviecity Classics
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=345&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Moviecity Hollywood HD
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=308&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Moviecity Mundo
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=337&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Moviecity Premieres HD
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=300&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Space HD
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=336&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Space
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=369&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Studio Universal
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=373&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,TNT HD
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=316&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,TNT
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=357&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Nicktoons
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=469&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Nick HD
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=216&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,tooncast
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=237&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Nick
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=217&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Disney
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=209&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Disney XD
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=225&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Cartoon Network
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=221&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,canal del congreso
+#EXTINF:0,tsp://dl-canalcongreso.xsn.com.mx/ccongreso/congreso2b.mp4
+#EXTINF:-1,Canal 2
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=44&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Canal 5
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=40&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Proyecto 40
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=72&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Cadena 3
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=73&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Once TV
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=64&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Azteca 7
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=16&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Azteca 13
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=68&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,MTV Live
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=432&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,MTV
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=441&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Ritmoson
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=445&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Telehit
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=436&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Vh1 HD
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=440&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Bandamax
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=449&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Animal Planet
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=261&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,BBC
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=129&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Discovery Civilization
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=281&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Discovery HD
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=244&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Discovery
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=257&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,elGourmet
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=161&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,History
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=248&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Nat Geo Wild
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=252&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Nat Geo
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=269&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Discovery Science
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=277&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,TLC HD
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=256&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,tbs
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=177&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,TCM
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=381&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,TRU TV HD
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=116&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Unicable
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=124&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Universal HD
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=100&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Warner
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=96&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,FX HD
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=104&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Glitz
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=165&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,I.Sat
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=377&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,ID
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=153&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,INFinito
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=157&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Sony
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=92&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,SyFy
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=141&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,A&E
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=108&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,AXN HD
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=112&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Comedy Central
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=120&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Distrito Comedia
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=173&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,E
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=133&lan=2&rows=40&f=.m3u8
+#EXTINF:-1,Fox
+#EXTINF:0,https://ott.totalplay.com.mx:443/TPHLSWeb/M3U8LiveFile?format=2&profile=88&lan=2&rows=40&f=.m3u8

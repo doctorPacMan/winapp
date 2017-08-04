@@ -10,7 +10,7 @@
 
 	<!-- Ссылки WinJS -->
 	<!-- <link href="WinJS/css/ui-dark.css" rel="stylesheet" /> -->
-	<!-- <script src="WinJS/js/base.js"></script> -->
+	<script src="WinJS/js/base.js"></script>
 	<!-- <script src="WinJS/js/ui.js"></script> -->
 
 	<!-- Ссылки Winapp -->
@@ -38,24 +38,22 @@
 	<script src="js/js.js"></script>
 	<script src="js/default.js"></script>
 
-
 </head>
 <body class="win-type-body">
 <div>
 	
 	<div class="mod-tvplayer" id="mod-tvplayer">
-		<video poster="img/poster.jpg" controls muted preload="metadata">
+		<video poster="img/poster.jpg" controls muted preload="none">
 			<source src="http://hls.peers.tv/streaming/cam_krylova-krasny/16/variable.m3u8" type="application/x-mpegURL">
-			<source src="http://www.cn.ru/data/files/test/countdown.mp4" type="video/mp4">
-			<source src="http://www.cn.ru/files/3162/" type="video/mp4">
+			<!-- <source src="http://www.cn.ru/data/files/test/countdown.mp4" type="video/mp4"> -->
 		</video>
 	</div>
 
 	<aside class="lside">
-		<span id="inf-provlogo"></span>
+		<span id="inf-provlogo" title="Unknown provider">?</span>
 	</aside>
 	<aside class="rside">
-		<span id="inf-provider">Provider</span>
+		<span id="inf-location">Location</span>
 		<span id="inf-acstoken">Authtoken</span>
 	</aside>
 
@@ -65,7 +63,7 @@
 		<div>
 			<i><img src="img/logo150x150.png"></i>
 			<b>Первый общеобразовательный телеканал</b>
-			<u>Семь цветов радуги. История развития живописи. Часть 2-я. Живопись первых цивилизаций. Часть 2-я. Живопись первых цивилизаций</u>
+			<u></u>
 		</div>
 	</header>
 	
@@ -83,12 +81,8 @@
 		</div>
 	</aside>
 
-	<section class="chalist" id="mod-channels">
-	<div>
-	<ol id="channels-list">
-		<li><a class="chatile" href="http://hls.peers.tv/streaming/cam_frunze_ippo/16/camv/playlist.m3u8"><i><img src="./img/logo150x150.png"></i><u>webcam</u></a></li>
-	</ol>
-	</div>
+	<section class="mod-playlist scrollhide" id="mod-channels">
+	<div><ol><!--<li><a class="chatile"><i><img src="./img/logo150x150.png"></i><u>webcam</u></a></li>--></ol></div>
 	</section>
 
 </div>

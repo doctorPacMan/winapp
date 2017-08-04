@@ -1,5 +1,4 @@
 var cnapi = {
-	//token: '00954bafe0c6182bb730d240f5147dd8',
 	apiurl: 'http://api.peers.tv',
 	//apiurl: 'http://a.trunk.ptv.bender.inetra.ru',
 	token: null,
@@ -21,16 +20,17 @@ var cnapi = {
 		this.location = terr.territoryId;
 		this.timezone = terr.timezone;
 
-		//var hdt = xhr.getResponseHeader('Date');// Access-Control-Expose-Headers: Date
-		//var hdt = (new Date('2017/07/29 09:34:00')).formatHeader();
-		var hdt = (new Date).formatHeader();
-		
-		var sdt = hdt ? new Date(hdt) : new Date(),
-			wtz = (data.territories[0].timezone/60),
-			dtz = wtz + sdt.getTimezoneOffset();
-		sdt.setMinutes(sdt.getMinutes() + dtz);
-		if(hdt)	console.log('Whereami datetime', sdt, hdt);
-		else console.log('Whereami timezone', sdt, dtz==0 ? 'OK' : ('incorrect: '+dtz));
+		var whrmdate = false;
+		//var whrmdate = xhr.getResponseHeader('Date');
+		if(whrmdate) Date.server(whrmdate);
+		else if(terr.timezone) {
+			var dt = new Date(),
+				dtz = dt.getTimezoneOffset() + terr.timezone/60;
+			Date.server(dt.setMinutes(dt.getMinutes() + dtz));
+		}
+		console.log('Whereami datetime', new Date.server());
+		//var dc = new Date(), ds = new Date.server();
+		//console.log('client '+dc.getTime()+' '+dc+'\nserver '+ds.getTime()+' '+ds);
 
 		var provider = null;
 		if(data.contractor) {
@@ -113,12 +113,24 @@ var cnapi = {
 		//console.log('playlist',playlist);
 		//console.log('channels',channels);
 		//console.log(playlist.cids.length, channels.length);
+
+		var missed = [].concat(playlist.cids);
 		for(var j=0; j<channels.length; j++) {
 			var data = channels[j],
-				cid = data.channelId;
+				cid = data.channelId.toString();
 			playlist.channelExtend(cid, data);
+
+			var n = missed.indexOf(cid);
+			if(n>-1) missed.splice(n,1);
 		}
+	
+		for(var j=0, titles = []; j<missed.length; j++) titles.push(playlist.channels[missed[j]].title);
+		if(titles.length) console.log('Missed channels: ', titles);
+		//cnapi.request.idbytitle(titles, this._handler_idbytitle.bind(this,playlist));
 		this._onready(playlist);
+	},
+	_handler_idbytitle: function(playlist, data) {
+		console.log(data);
 	},
 	setAuthToken: function(token, expdt, refresh) {
 

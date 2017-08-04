@@ -8,21 +8,35 @@ var modTitlebar = extendModule({
 		this._image = this.node.querySelector('div > i > img');
 		this.listen('channelView',this.onChannelView.bind(this));
 		this.listen('telecastView',this.onTelecastView.bind(this));
-		
-		//this._vtime.innerText = cnapi.timezone;
+
+		var vtime = this._vtime;
+		vtime.innerText = new Date.server().format('h:nn');
+		setInterval(function(){vtime.innerText = new Date.server().format('h:nn')},15000);
 	},
 	onTelecastView: function(event) {
 		var id = event.detail.id,
 			tvs = $App.getTelecastById(id);
-		//console.log('onTelecastView',id,tvs.title);
-		this._tname.innerText = tvs.time.format('dd mmmm h:nn') + ' \u2014 ' +tvs.title;
+		//console.log('onTelecastView', id, tvs);
+		if(!tvs) this._tname.innerText = '';
+		else this._tname.innerText = tvs.time.format('dd mmmm h:nn') + ' \u2014 ' +tvs.title;
 	},
 	onChannelView: function(event) {
 		var cid = event.detail.channelId,
-			cha = $App.getChannelById(cid);
-		//console.log('onChannelView',cid);
+			cha = $App.getChannelById(cid),
+			tvs = $App.getTelecastById(cha.currentTelecast);
+		//console.log('onChannelView',cha);
 
-		this._image.setAttribute('src',cha.image);
+		this._image.setAttribute('src',cha.logo);
 		this._cname.innerText = cha.title;
+		this._tname.innerText = '';
+
+		var tname = this._tname,
+			tview = this.onTelecastView.bind(this);
+		if(cha.cid) {
+			cnapi.request.current(cha.cid, function(id){
+				tview({detail:{id:id}});
+			});
+		} else this._tname.innerText = 'unknown telecast';
+
 	}
 });

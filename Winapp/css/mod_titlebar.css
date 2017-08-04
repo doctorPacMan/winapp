@@ -10,7 +10,9 @@
 }
 .masthead > time {
 	float: right;
-	font: 30px/36px monospace;
+	font: 30px/36px 'Ubuntu';
+	font: 30px/36px 'Open Sans';
+	font-weight: 200;
 	margin: 6px 6px 0 0;
 	color: gray;
 }
@@ -67,6 +69,14 @@
 .masthead > div > u {
 	color: lightgray;
 	font-size: 93%;
+	height: 16px;
+	line-height: 16px;
+}
+.masthead > div > b {
+	font-weight: 200;
+	font-size: 128%;
+	height: 20px;
+	line-height: 18px;
 }
 
 /*

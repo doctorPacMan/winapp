@@ -1,5 +1,24 @@
 var iDate = function() {return this.initialize.apply(this,arguments)};
-iDate.prototype = {initialize: function() {return new Date}};
+iDate.prototype = {
+	initialize: function() {
+		var args = Array.prototype.slice.call(arguments),
+			date = new (Date.bind.apply(Date,[null].concat(args)))();
+    	return date;
+	}
+};
+
+Date.server = function(datetime) {
+	if(datetime) {
+		var srv = new Date(datetime);
+		Date.prototype._delay = srv.getTime() - (new Date).getTime();
+	}
+	var delay = (Date.prototype._delay || 0),
+		args = Array.prototype.slice.call(arguments),
+		date = new (Date.bind.apply(Date,[null].concat(args)))();
+	date.setMilliseconds(date.getMilliseconds() + delay);
+   	return date;
+};
+
 Date.prototype.setLocale = function(locale) {
 	locale = locale || 'ru';
 	return Date.prototype._locale = locale;

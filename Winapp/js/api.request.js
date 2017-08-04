@@ -48,9 +48,7 @@ cnapi.request.sauce_onload = function(callback, data) {
 cnapi.request.channels = function(ids, onComplete) {
 	var apiurl = cnapi.apis.tvguide+'channels.json?t='+cnapi.location;
 	apiurl += '&fields=channelId,title,alias,logoURL,categories,hasSchedule';
-	//apiurl += ',description';
 	//apiurl += ',scheduledDates';
-	//apiurl += ',currentTelecast';
 	apiurl += '&channel='+ids;
 	$Ajax(apiurl,this.channels_onload.bind(this, onComplete));
 };
@@ -58,5 +56,48 @@ cnapi.request.channels_onload = function(callback, data) {
 	var clist = data ? data.channels : data;
 	if(callback) callback(clist);
 	else console.log('CL',clist);
+};
 
+cnapi.request.current = function(cid, onComplete) {
+	var apiurl = cnapi.apis.tvguide+'channels.json?t='+cnapi.location;
+	apiurl += '&fields=channelId,currentTelecast';
+	apiurl += '&channel='+cid;
+	$Ajax(apiurl,this.current_onload.bind(this,onComplete));
+};
+cnapi.request.current_onload = function(callback, data) {
+	if(!data) return console.log('cnapi.request.current fail', data);
+
+	var res = data.channels.length ? data.channels[0] : null,
+		tvs = !res ? null : res.currentTelecast;
+	
+	if(!tvs) return callback ? callback(null) : null;
+	if(!tvs.channel) tvs.channel = {channelId:res.channelId};
+	
+	var tlc = $App.registerTelecast(tvs);
+	if(callback) callback(tvs.id);
+	else console.log('cT',tvs,tlc);
+};
+
+cnapi.request.idbytitle = function(cnames, onComplete) {
+
+	var titles = [];
+	cnames.forEach(function(name) {
+		var n = name.replace(',','\\,').replace(' ','+');
+		titles.push(n);
+	});
+
+	var apiurl = cnapi.apis.tvguide+'idbytitle.json?titles='+titles.join(',');
+	$Ajax(apiurl,this.idbytitle_onload.bind(this,onComplete,cnames));
+};
+cnapi.request.idbytitle_onload = function(callback, cnames, data) {
+	console.log('[BT]', cnames, data);
+	var resp = [];
+	for(var i=0;i<cnames.length;i++) {
+		var cid = data.channels[i].channelId,
+			title = data.channels[i].title;
+		resp.push(cid ? {cid:cid,title:title} : null);
+		console.log(cnames[i],(cid ? {cid:cid,title:title} : null));
+	}
+	if(callback) callback(resp);
+	else console.log('TD',resp);
 };

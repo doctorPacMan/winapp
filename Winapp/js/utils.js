@@ -47,11 +47,12 @@ Utils.parseM3UPlaylist = function(playlist) {
 		return list;
 };
 document.addEventListener('DOMContentLoaded',function(){
-	var scb = document.querySelectorAll('.chalist');
+	var scb = document.querySelectorAll('.scrollhide');
 	for(var i=0;i<scb.length;i++) {
 		var nn = scb[i],
 			fc = nn.firstElementChild,
 			sw = nn.clientWidth-fc.clientWidth;
+		fc.classList.remove('scrollhide');
 		fc.classList.add('scrollhide'+sw);
 		//fc.style.width = 'calc(100% + '+sw+'px)';
 		//fc.style.marginRight = '-'+sw+'px';

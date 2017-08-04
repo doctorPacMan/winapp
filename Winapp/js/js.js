@@ -14,19 +14,21 @@ var $App = {
 	onready: function(playlist) {
 
 		console.log('READY', playlist);
-
+		
 		this.informers();
+		//return cnapi.request.current(10338200);
+		//return cnapi.request.idbytitle(['ЛДПР','Jasmin']);
 		
 		this._playlist = playlist;
 		this.modChannels = new modChannels('mod-channels');
 		this.modChannels.update(playlist.channels);
 
 		this.modTvplayer = new modTvplayer('mod-tvplayer');
-
+		this.modTitlebar = new modTitlebar('mod-titlebar');
 return;
 		
 		this.modSchedule = new modSchedule('mod-schedule');
-		this.modTitlebar = new modTitlebar('mod-titlebar');
+
 
 		while(channels.length) this.pushChannel(channels.shift());
 		this.modChannels.update(this._channels);
@@ -38,12 +40,16 @@ return;
 		return;
 	},
 	informers: function() {
-		document.getElementById('inf-acstoken').innerText = cnapi.getAuthToken();
-		document.getElementById('inf-provider').innerText = cnapi.location+' '+(cnapi.provider ? cnapi.provider.name : 'undefined');
-		var provlogo = document.getElementById('inf-provlogo');
+		var provlogo = document.getElementById('inf-provlogo'),
+			acstoken = document.getElementById('inf-acstoken'),
+			location = document.getElementById('inf-location');
+
+		acstoken.innerText = cnapi.getAuthToken();
+		location.innerText = cnapi.location;
 		if(cnapi.provider) {
 			provlogo.style.backgroundImage = cnapi.provider.logo ? 'url("'+cnapi.provider.logo+'")' : null;
-			provlogo.title = cnapi.provider.name;
+			provlogo.innerText = cnapi.provider.name ? cnapi.provider.name[0] : '?';
+			provlogo.title = cnapi.provider.name || 'Unknown';
 		}
 		else provlogo.innerText = '?';
 	},

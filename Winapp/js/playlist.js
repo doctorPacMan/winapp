@@ -1,10 +1,10 @@
 var ChannelsPlaylist = function(data) {
 	this.channels = {};
 	this.cids = [];
+	this.list = {};
+	this.cnt = 0;
 };
 ChannelsPlaylist.prototype = {
-	//list: [],
-	//indx: {},
 	push: function(pid, data) {
 		
 		var list = [], indx = this.channels;
@@ -13,26 +13,34 @@ ChannelsPlaylist.prototype = {
 		else if(data.indexOf('#EXTM3U')==0) {try{list = this.parseM3U8(data)}catch(e){}}
 		else {}
 		
-		if(list) for(var i=0;i<list.length;i++) {
+		this.list[pid] = [];
+		
+		if(list) for(var i=0;i<list.length;i++) {if(i>=16) break;
+			
+			var cha = list[i],
+				cid = (cha.cid || undefined),
+				chn = Object.assign({
+					logo: (cha.logo || 'img/logo150x150.png'),
+					cid: cid,
+					pid: pid
+				},cha);
 
-			var cha = list[i];
-			if(!indx[cha.cid]) {
-				indx[cha.cid] = cha;
-				indx[cha.cid].pid = pid;
-				this.cids.push(cha.cid);
-				delete cha.cid;
+			this.list[pid].push(chn);
+			this.cnt++;
+
+			if(!cid) continue;
+			if(!indx[cid]) {
+				indx[cid] = chn;
+				this.cids.push(cid);
 				continue;
 			}
-
-			var cur = indx[cha.cid], src = cur.src;
-			if(src.indexOf('peers.tv')<0) continue;
-			
-			indx[cha.cid].pid = pid;
-			indx[cha.cid].src = cha.src;
-			console.log('[merge]'+ cha.title+'\n\tfrom '+src+'\n\t  to '+cha.src);
+			else {
+				var cur = indx[chn.cid];
+				//console.log('[merge]', cur, chn);
+				if(chn.pid!=2) cur.src = chn.src; // bypass inetra data				
+			}
 		}
-
-		//console.log(this.indx);
+		console.log(pid, this.list[pid].length, this.cnt);
 		//this.list = this.list.concat(list);
 	},
 	parseXspf: function(xmldata) {
@@ -61,8 +69,6 @@ ChannelsPlaylist.prototype = {
 					cha.cid = !val ? undefined : val.innerHTML;
 				}
 			}
-
-			//console.log(cha);
 
 			if(!cha.cid || !cha.src || !cha.title) continue;
 			else if(cha.src.indexOf('http')!=0) continue;
@@ -122,10 +128,11 @@ ChannelsPlaylist.prototype = {
 		var pcd = this.channels[cid];
 		pcd.title = data.title;
 		pcd.alias = data.alias;
-		pcd.logo = data.logoURL;
 		pcd.cid = data.channelId;
 		pcd.hasSchedule = !!data.hasSchedule;
-		if(cid==24646020) console.log(data);//HD
-		if(cid==58456826) console.log(data);//cam
+		if(data.logoURL) pcd.logo = data.logoURL;
+		//if(cid==24646020) console.log(data);//HD
+		//if(cid==58456826) console.log(data);//cam
+		//if(!data.logoURL) console.log(data);
 	}
 };
