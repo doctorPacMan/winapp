@@ -1,6 +1,6 @@
 var cnapi = {
-	apiurl: 'http://api.peers.tv',
-	//apiurl: 'http://a.trunk.ptv.bender.inetra.ru',
+	//apiurl: 'http://api.peers.tv',
+	apiurl: 'http://a.trunk.ptv.bender.inetra.ru',
 	token: null,
 	location: null,
 	provider: null,

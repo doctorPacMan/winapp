@@ -130,9 +130,20 @@ ChannelsPlaylist.prototype = {
 		pcd.alias = data.alias;
 		pcd.cid = data.channelId;
 		pcd.hasSchedule = !!data.hasSchedule;
+		pcd.scheduledDates = data.scheduledDates;
 		if(data.logoURL) pcd.logo = data.logoURL;
+		
+		pcd.scheduledDates = [];
+		if(data.scheduledDates)	data.scheduledDates.forEach(function(v){
+			var sd = v.year+'/'+v.month+'/'+v.day;
+			sd += ' '+v.hour+':'+v.minute+':'+v.second;
+			pcd.scheduledDates.push(new Date(sd));//var tz = v.timezone/60;
+		});
 		//if(cid==24646020) console.log(data);//HD
 		//if(cid==58456826) console.log(data);//cam
 		//if(!data.logoURL) console.log(data);
+	},
+	getSchedates: function() {
+		console.log('getSchedates');
 	}
 };

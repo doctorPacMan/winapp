@@ -20,7 +20,7 @@ else (function () {
 			} else {
 				// TODO: работа этого приложения была приостановлена и затем завершена.
 				// Для удобства пользователей восстановите здесь состояние приложения, как будто приложение никогда не прекращало работу.
-				console.log('APP Restore', $App.initialize());
+				// console.log('APP Restore', $App.initialize());
 			}
 			args.setPromise(WinJS.UI.processAll());
 		}

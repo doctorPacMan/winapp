@@ -5,6 +5,16 @@
 	top: 48px;
 	bottom: 20px;
 }
+.mod-tvplayer > i {
+	position: absolute;
+	left: 0;right:0;
+	top: 0;
+	color: white;
+	text-align: center;
+	pointer-events: none;
+	padding: 2px 12px;
+	font: normal normal 12px 'Ubuntu';
+}
 .mod-tvplayer > video {
 	display: block;
 	background: rgb(53,53,53);

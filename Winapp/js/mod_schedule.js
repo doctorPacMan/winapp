@@ -6,13 +6,60 @@ var modSchedule = extendModule({
 		this.node = document.getElementById(node_id);
 		this.dayzFill(this.node.querySelectorAll('.dayz > time'));
 		//this.listen('channelView',this.onChannelView.bind(this));
-		this.node.style.display = 'none';
+		this.node.style.display = 'block';
+		
+		this.onChannelView({detail:{channelId:10338251}});
+		//cnapi.request.schedule(cid, null, this.setSchedule.bind(this));
 	},
 	onChannelView: function(event) {
-		var cid = event.detail.channelId,
-			day = new Date();
+		var day = new Date.server(),
+			cid = event.detail.channelId,
+			cha = $App.getChannelById(cid),
+			days = cha.scheduledDates;
 		//cnapi.request.schedule(cid, null, this.setSchedule.bind(this));
-		console.log('onChannelView',cid,day);
+		console.log('onChannelView',days);
+		this.daysFill(cid, days);
+	},
+	daysFill: function(cid, days) {
+		var list = this.node.querySelector('.dayz');
+		while(list.childNodes.length) list.removeChild(list.childNodes[0]);
+
+		var today = new Date();
+		today.setHours(6,0,0,0);
+
+		for(var i=0;i<days.length;i++) {
+			var day = days[i];
+			day.setHours(6,0,0,0);
+			
+			var d = day.getDate(),
+				m = day.getMonth()+1,
+				w = day.getDayNames(day.getDay()),
+				t = day.getHtmlTime(),
+				v = day.format('yyyy-mm-dd');
+
+			var time = document.createElement('time'),
+				p = document.createElement('sup'),
+				b = document.createElement('sub');
+			time.setAttribute('datetime',t);
+			time.innerHTML = '';
+			time.appendChild(p);
+			time.appendChild(b);
+			time.onclick = this.request.bind(this,cid,day);
+
+			if(day.getTime()==today.getTime()) {
+				time.className = 'is-today';
+				p.innerText = d+'.'+(m<10?'0'+m:m);
+				b.innerText = 'Сегодня';
+			} else {
+				p.innerText = d;
+				b.innerText = w;
+			}
+			this.dayz[v] = time;
+			list.appendChild(time);
+		}
+
+		
+		console.log(list);
 	},
 	dayzFill: function(dayz) {
 		var today = new Date(),
@@ -93,10 +140,7 @@ var modSchedule = extendModule({
 		if (!old) this.node.appendChild(ol);
 		else this.node.replaceChild(ol,old);
 	},
-	request: function(day) {
-		var cid = $App.currentChannel;
-		cid = 10338262;
-		
+	request: function(cid,day) {
 		if(this._day) {
 			var p = this._day.format('yyyy-mm-dd');
 			this.dayz[p].classList.remove('is-crrnt');

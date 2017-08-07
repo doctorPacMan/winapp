@@ -7,7 +7,7 @@
 	<meta http-equiv="cleartype" content="on">
 	<meta name="mobile-web-app-capable" content="yes">
 	<title>WebPeers</title>
-
+	<link rel="icon" type="image/png" href="/img/favicon.png" />
 	<!-- Ссылки WinJS -->
 	<!-- <link href="WinJS/css/ui-dark.css" rel="stylesheet" /> -->
 	<script src="WinJS/js/base.js"></script>
@@ -47,15 +47,14 @@
 			<source src="http://hls.peers.tv/streaming/cam_krylova-krasny/16/variable.m3u8" type="application/x-mpegURL">
 			<!-- <source src="http://www.cn.ru/data/files/test/countdown.mp4" type="video/mp4"> -->
 		</video>
+		<i>video</i>
 	</div>
 
 	<aside class="lside">
 		<span id="inf-provlogo" title="Unknown provider">?</span>
 	</aside>
-	<aside class="rside">
-		<span id="inf-location">Location</span>
-		<span id="inf-acstoken">Authtoken</span>
-	</aside>
+
+	<aside class="rside" style="display:none">RS</aside>
 
 	<header id="mod-titlebar" class="masthead">
 		<img src="img/logo120x120.png">
@@ -67,7 +66,10 @@
 		</div>
 	</header>
 	
-	<footer>footer</footer>
+	<footer>
+		<span id="inf-location">Location</span>
+		<span id="inf-acstoken">Authtoken</span>
+	</footer>
 
 	<aside class="mod-schedule" id="mod-schedule" style="display:none">
 		<div class="dayz">

@@ -25,9 +25,10 @@ var $App = {
 
 		this.modTvplayer = new modTvplayer('mod-tvplayer');
 		this.modTitlebar = new modTitlebar('mod-titlebar');
+		this.modSchedule = new modSchedule('mod-schedule');
 return;
 		
-		this.modSchedule = new modSchedule('mod-schedule');
+
 
 
 		while(channels.length) this.pushChannel(channels.shift());

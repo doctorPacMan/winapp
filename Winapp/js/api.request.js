@@ -48,7 +48,7 @@ cnapi.request.sauce_onload = function(callback, data) {
 cnapi.request.channels = function(ids, onComplete) {
 	var apiurl = cnapi.apis.tvguide+'channels.json?t='+cnapi.location;
 	apiurl += '&fields=channelId,title,alias,logoURL,categories,hasSchedule';
-	//apiurl += ',scheduledDates';
+	apiurl += ',scheduledDates';
 	apiurl += '&channel='+ids;
 	$Ajax(apiurl,this.channels_onload.bind(this, onComplete));
 };

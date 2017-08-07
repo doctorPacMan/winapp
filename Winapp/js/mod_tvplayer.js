@@ -4,12 +4,15 @@ var modTvplayer = extendModule({
 		this.listen('telecastView',this.onTelecastView.bind(this));
 		this.listen('channelView',this.onChannelView.bind(this));
 		
+		this._ntype = this.node.querySelector('i');
 		this._video = this.node.querySelector('video');
 		this._sauce = this.node.querySelector('video > source[type="application/x-mpegURL"]');
 		this._hlsPlayType = this.hlsPlayType(this._video);
 		this._hlsjs = this.attachHlsjs(this._video);
-		console.log('modTvplayer initialize '+(this._hlsjs?'hlsjs':this._hlsPlayType));
-
+		
+		//console.log('modTvplayer initialize');
+		this._ntype.innerText = this._hlsjs ? 'hlsjs' : (this._hlsPlayType || 'video');
+		
 		//this.onTelecastView({detail:{id:100435894}});
 	},
 	attachHlsjs: function(video) {
