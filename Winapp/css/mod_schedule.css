@@ -8,50 +8,80 @@
 	top: 0px; bottom:0;
 	margin: 48px 0 20px;
 	overflow: hidden;
-	background: rgb(42,48,57);
-	width: 300px;
+	background: rgba(42,48,57,.9);
+	border: 1px solid rgba(255,255,255,.125);
+	box-shadow: inset;
+	width: 342px;
+	box-shadow: 0 0 5px black;
 }
-.mod-schedule .dayz {
-	background: red;
+
+
+.mod-schedule-dayz {
+	height: 48px;
+	width: 100%;
+	display: block;
+	overflow: hidden;
+	border-bottom: 1px solid dodgerblue;
 }
-.dayz {
-	height: 36px;
+.mod-schedule-dayz > div {
+	height: calc(100% + 24px);
+	overflow: hidden;
+	overflow-x: scroll;
+	scroll-behavior: smooth;
+}
+.mod-schedule-dayz ul,
+.mod-schedule-dayz li {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	height: 48px;
+}
+.mod-schedule-dayz ul {
 	display: flex;
 	flex-flow: row nowrap;
-	align-items: stretch;
+	align-items: flex-start;
 	align-content: flex-start;
-	justify-content: space-between;
+	justify-content: flex-start;
 }
-.dayz > time {
+.mod-schedule-dayz li {
 	display: block;
-	background: black;
-	min-width: 14%;
-	max-width: 14%;
+	min-width: 48px;
+	max-width: 48px;
+	border-right: 1px solid rgba(255,255,255,.125);
+}
+.mod-schedule-dayz li:last-child {border-right:0}
+
+.mod-schedule-dayz time {
+	display: block;
 	text-align: center;
+	width: 100%;
+	height: 40px;
+	padding: 4px 0;
 }
-.dayz > time.is-today {
-	min-width: 16%;
-	max-width: 16%;
-}
-.dayz > time sup,
-.dayz > time sub {
+.mod-schedule-dayz time sup,
+.mod-schedule-dayz time sub {
 	display: block;
 	font-size: 100%;
 	vertical-align: baseline;	
 }
-.dayz > time sup {
-	line-height: 18px;
+.mod-schedule-dayz time sup {
+	line-height: 20px;
+	font-size: 114%;
 }
-.dayz > time sub {
+.mod-schedule-dayz time sub {
 	font-size: 78.6%;
-	line-height: 16px;
+	line-height: 20px;
 }
-.dayz > time.is-crrnt {
-	background-color: dodgerblue;
+.mod-schedule-dayz time:hover {background-color: rgba(255,255,255,.125)}
+.mod-schedule-dayz time.is-today {}
+.mod-schedule-dayz time.is-crrnt {
+	background-color: rgba(255,255,255,.125);
+	border-bottom: 4px solid dodgerblue;
+	padding-bottom: 0;
 }
 
 .mod-schedule ol,
-.mod-schedule li {
+.mod-schedule ol li {
 	list-style: none;
 	padding: 0;
 	margin: 0;
@@ -60,21 +90,21 @@
 }
 .mod-schedule ol {
 	overflow-y: scroll;
-	height: calc(100% - 36px);
+	height: calc(100% - 49px);
 	animation: listAppear .25s ease-out 1;
 }
-.mod-schedule li {
+.mod-schedule ol li {
 	margin: 0px 0;
 	border-top: 1px dashed rgba(255,255,255,.12);
 }
-.mod-schedule li:last-child {}
-.mod-schedule li > a,
-.mod-schedule li > a > time,
-.mod-schedule li > a > span {
+.mod-schedule ol li:last-child {}
+.mod-schedule ol li > a,
+.mod-schedule ol li > a > time,
+.mod-schedule ol li > a > span {
 	display: block;
 	overflow: hidden;
 }
-.mod-schedule li > a {
+.mod-schedule ol li > a {
 	height: 48px;
 	display: flex;
 	flex-flow: row nowrap;
@@ -83,19 +113,19 @@
 	justify-content: flex-start;
 	background: rgba(49,58,73,0);
 }
-.mod-schedule li > a > time,
-.mod-schedule li > a > span {
+.mod-schedule ol li > a > time,
+.mod-schedule ol li > a > span {
 	width: 100%;
 	line-height: 36px;
 	max-height: 36px;
 	box-shadow: inset 0 0 0 0px red;
 }
-.mod-schedule li > a > time {
+.mod-schedule ol li > a > time {
 	max-width: 44px;
 	padding-left: 4px;
 	opacity: .75;
 }
-.mod-schedule li > a > span {
+.mod-schedule ol li > a > span {
 	line-height: 18px;
 	text-overflow: ellipsis;
 }

@@ -4,11 +4,13 @@ var modSchedule = extendModule({
 		this.dayz = {};
 		this._day = null;
 		this.node = document.getElementById(node_id);
-		this.dayzFill(this.node.querySelectorAll('.dayz > time'));
-		//this.listen('channelView',this.onChannelView.bind(this));
+		this.container = this.node.querySelector('.mod-schedule-dayz > div');
+		//this.dayzFill(this.node.querySelectorAll('.mod-schedule-dayz time'));
+		this.listen('channelView',this.onChannelView.bind(this));
 		this.node.style.display = 'block';
 		
-		this.onChannelView({detail:{channelId:10338251}});
+		//this.onChannelView({detail:{channelId:10338251}});
+		//this.request(10338251);
 		//cnapi.request.schedule(cid, null, this.setSchedule.bind(this));
 	},
 	onChannelView: function(event) {
@@ -16,87 +18,45 @@ var modSchedule = extendModule({
 			cid = event.detail.channelId,
 			cha = $App.getChannelById(cid),
 			days = cha.scheduledDates;
-		//cnapi.request.schedule(cid, null, this.setSchedule.bind(this));
 		console.log('onChannelView',days);
-		this.daysFill(cid, days);
+		this.dayzFill(cid, days);
+		this.request(cid);
 	},
-	daysFill: function(cid, days) {
-		var list = this.node.querySelector('.dayz');
-		while(list.childNodes.length) list.removeChild(list.childNodes[0]);
+	dayzFill: function(cid, days) {
+		var list = document.createElement('ul'),
+			wrpr = this.container;
+		while(wrpr.childNodes.length) wrpr.removeChild(wrpr.childNodes[0]);
 
-		var today = new Date();
-		today.setHours(6,0,0,0);
+		var today = new Date.server().setHours(6,0,0,0);
+		// return console.log(wrpr, days, today);
 
 		for(var i=0;i<days.length;i++) {
 			var day = days[i];
 			day.setHours(6,0,0,0);
-			
 			var d = day.getDate(),
 				m = day.getMonth()+1,
 				w = day.getDayNames(day.getDay()),
-				t = day.getHtmlTime(),
+				t = day.getTime(),
 				v = day.format('yyyy-mm-dd');
 
-			var time = document.createElement('time'),
+			var li = document.createElement('li'),
+				time = document.createElement('time'),
 				p = document.createElement('sup'),
 				b = document.createElement('sub');
-			time.setAttribute('datetime',t);
-			time.innerHTML = '';
+
+			p.innerText = t!=today ? d : d+'.'+(m<10?'0'+m:m);
+			b.innerText = t!=today ? w : 'Сегодня';
+			if(t==today) time.className='is-today';
+
+			time.onclick = this.request.bind(this,cid,day);
+			time.setAttribute('datetime',day.getHtmlTime());
 			time.appendChild(p);
 			time.appendChild(b);
-			time.onclick = this.request.bind(this,cid,day);
-
-			if(day.getTime()==today.getTime()) {
-				time.className = 'is-today';
-				p.innerText = d+'.'+(m<10?'0'+m:m);
-				b.innerText = 'Сегодня';
-			} else {
-				p.innerText = d;
-				b.innerText = w;
-			}
+			li.appendChild(time);
+			list.appendChild(li);
 			this.dayz[v] = time;
-			list.appendChild(time);
 		}
-
-		
-		console.log(list);
-	},
-	dayzFill: function(dayz) {
-		var today = new Date(),
-			dates = [],
-			ds = 86400 * 1000;
-
-		today.setHours(6,0,0,0);
-
-		var start = today.getTime() - Math.floor(dayz.length/2)*ds;
-		for(var i=0;i<dayz.length;i++) {
-			var day = new Date(start + i*ds),
-				d = day.getDate(),
-				m = day.getMonth()+1,
-				w = day.getDayNames(day.getDay()),
-				t = day.getHtmlTime(),
-				v = day.format('yyyy-mm-dd');
-
-			var p = document.createElement('sup'),
-				b = document.createElement('sub');
-			dayz[i].setAttribute('datetime',t);
-			dayz[i].innerHTML = '';
-			dayz[i].appendChild(p);
-			dayz[i].appendChild(b);
-			dayz[i].onclick = this.request.bind(this,day);
-
-			if(day.getTime()==today.getTime()) {
-				dayz[i].className = 'is-today';
-				p.innerText = d+'.'+(m<10?'0'+m:m);
-				b.innerText = 'Сегодня';
-			} else {
-				p.innerText = d;
-				b.innerText = w;
-			}
-			this.dayz[v] = dayz[i];
-		}
-		//console.log('modSchedule.dayz',dayz,today,start);
-		//console.log('modSchedule.dayz',this.dayz);
+		wrpr.appendChild(list);
 	},
 	fillProgram: function(list) {
 		
@@ -140,35 +100,46 @@ var modSchedule = extendModule({
 		if (!old) this.node.appendChild(ol);
 		else this.node.replaceChild(ol,old);
 	},
-	request: function(cid,day) {
+	request: function(cid, day) {
 		if(this._day) {
 			var p = this._day.format('yyyy-mm-dd');
 			this.dayz[p].classList.remove('is-crrnt');
 		}
 		
-		var c = day.format('yyyy-mm-dd');
+		var day = day || Date.server(),
+			c = day.format('yyyy-mm-dd');
 		this.dayz[c].classList.add('is-crrnt');
 		this._day = day;
+		this.scrollTo(day);
 		cnapi.request.schedule(cid, day, this.setSchedule.bind(this));
 	},
-	setSchedule: function(list, day) {
-		console.log('setSchedule',list);
-		
-		var tc = $App.getTelecastById(list[0]), 
-			t_from = day.setHours(6,0,0,0),
-			t_ends = t_from + 86400 * 1000;
+	scrollTo: function(day) {
+		var c = day.format('yyyy-mm-dd'),
+			li = this.dayz[c].parentNode,
+			lx = li.offsetLeft,
+			lw = li.offsetWidth,
+			dx = Math.round(this.container.offsetWidth/2);
+		//console.log('scrollTo', c);
+		this.container.scrollLeft = lx + lw/2 - dx;
+	},
+	setSchedule: function(tvs_ids, day) {
+
+		console.log('setSchedule',tvs_ids);
+
+		var day_from = day.setHours(6,0,0,0),
+			day_ends = day_from + 86400 * 1000;// +24h
 
 		var ol = document.createElement('ol'),
 			li = document.createElement('li');
 
-		for(var i=0;i<list.length;i++) {
+		for(var i=0;i<tvs_ids.length;i++) {
 
-			var tvs = $App.getTelecastById(list[i]),
+			var tvs = $App.getTelecastById(tvs_ids[i]),
 				time = tvs.time.getTime(),
 				ends = tvs.ends.getTime();
 			
-			if(time<t_from && ends<=t_from) continue;
-			else if(time>=t_ends) break;
+			if(time<day_from && ends<=day_from) continue;
+			else if(time>=day_ends) break;
 
 			li = li.cloneNode(false);
 			li.appendChild(tvs.getNodeList());
@@ -183,7 +154,7 @@ var modSchedule = extendModule({
 	},
 	viewTelecast: function(id) {
 		var tvs = $App.getTelecastById(id);
-		console.log('viewTelecast',tvs);
-		this.fire('telecastView',{id:id});
+		console.log('viewTelecast', tvs);
+		// this.fire('telecastView',{id:id});
 	}
 });

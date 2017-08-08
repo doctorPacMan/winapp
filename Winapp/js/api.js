@@ -1,6 +1,6 @@
 var cnapi = {
-	//apiurl: 'http://api.peers.tv',
-	apiurl: 'http://a.trunk.ptv.bender.inetra.ru',
+	apiurl: 'http://api.peers.tv',
+	//apiurl: 'http://a.trunk.ptv.bender.inetra.ru',
 	token: null,
 	location: null,
 	provider: null,
@@ -72,7 +72,13 @@ var cnapi = {
 		}
 	},
 	_handler_acstoken: function(data) {
+		
 		//console.log('TOKEN',data);
+		if(data===false) {
+			console.warn('Authtoken request failure');
+			return this.delAuthToken();
+		}
+		
 		var token = data.access_token,
 			renew = data.refresh_token,
 			expin = parseInt(data.expires_in, 10),
@@ -151,16 +157,22 @@ var cnapi = {
 			cookie.set('refresh', refresh, expre);
 			localStorage.setItem('token_refresh',refresh);
 		}
-		
 		return this.token = this.getAuthToken();
+	},
+	delAuthToken: function() {
+		cookie.set('token', '0', new Date('1970/1/1'));
+		localStorage.removeItem('token');
+		localStorage.removeItem('token_expires');
+		delete this.token;
+		return null;
 	},
 	getAuthToken: function() {
 		
 		if(this.token) return this.token;
-		
+
 		var val = localStorage.getItem('token'),
 			exp = localStorage.getItem('token_expires');
-		if(!val || !exp) return null;
+		if(!val || !exp || val==='undefined') return null;
 		
 		var old = new Date(exp) - Date.now(),
 			lifetime = Math.round(old/1000/60),
