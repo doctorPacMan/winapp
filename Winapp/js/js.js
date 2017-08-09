@@ -16,6 +16,8 @@ var $App = {
 		this.informers();
 		//return cnapi.request.current(10338200);
 		//return cnapi.request.idbytitle(['ЛДПР','Jasmin']);
+		//return cnapi.request.schedule(10338262);
+		//return cnapi.request.sauce(101613384);
 		
 		this._playlist = playlist;
 		this.modChannels = new modChannels('mod-channels');
@@ -24,19 +26,8 @@ var $App = {
 		this.modTvplayer = new modTvplayer('mod-tvplayer');
 		this.modTitlebar = new modTitlebar('mod-titlebar');
 		this.modSchedule = new modSchedule('mod-schedule');
-return;
-		
 
-
-
-		while(channels.length) this.pushChannel(channels.shift());
-		this.modChannels.update(this._channels);
-		
-		//var cb = this._channels_list.querySelectorAll('a.chatile');
-		//for(var i=0;i<cb.length;i++) cb[i].onclick = this.clickChannel.bind(this,cb[i]);
-
-		//return this.request.schedule(10338262);
-		return;
+		return;		
 	},
 	informers: function() {
 		var provlogo = document.getElementById('inf-provlogo'),

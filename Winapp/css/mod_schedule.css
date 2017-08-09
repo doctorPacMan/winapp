@@ -105,6 +105,7 @@
 	overflow: hidden;
 }
 .mod-schedule ol li > a {
+	color: darkgray;
 	height: 48px;
 	display: flex;
 	flex-flow: row nowrap;
@@ -126,6 +127,17 @@
 	opacity: .75;
 }
 .mod-schedule ol li > a > span {
+	font-weight: 200;
 	line-height: 18px;
 	text-overflow: ellipsis;
+}
+.mod-schedule ol li > a.pg-next {}
+.mod-schedule ol li > a.pg-past,
+.mod-schedule ol li > a.pg-live {color: white}
+.mod-schedule ol li > a.pg-live:after {
+	display: block;
+	padding: 0 4px;
+	text-align: center;
+	font: 20px/36px 'Segoe';
+	content: '\E93E';
 }

@@ -1,6 +1,13 @@
 /*
 @import url(http://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700&subset=latin,cyrillic);
 */
+/* docs.microsoft.com/ru-ru/windows/uwp/style/segoe-ui-symbol-font#icon-list */
+@font-face {
+  font-family: 'Segoe';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../fonts/SegoeMDL2Assets.ttf') format('truetype');
+}
 /* Open Sans */
 @font-face {
   font-family: 'Ubuntu';

@@ -22,27 +22,39 @@ cnapi.request.schedule_onload = function(callback, day, data) {
 };
 
 cnapi.request.sauce = function(id, onComplete) {
-	var apiurl = cnapi.apis.media_locator + 'sources.json?id='+id;
-	console.log('cnapi.request.sauce', id, apiurl);
-	$Ajax(apiurl,this.sauce_onload.bind(this, onComplete));
-};
-cnapi.request.sauce_onload = function(callback, data) {
-	//console.log(data, callback);
-	var resp = !data ? null : data.replies,
-		rply = !resp ? null : resp[0],
-		rips = !rply ? [] : rply.rips,
-		files = [];
 
-	var pz;
+	var tvs = $App.getTelecastById(id),
+		cha = $App.getChannelById(tvs.channel),
+		pid = cha.pid,
+		medialocator = cnapi.apis.medialocator[pid];
+	console.log('cnapi.request.sauce', id, pid, medialocator);
+	//console.log('cnapi.request.sauce', medialocator);
+	//console.log('cnapi.request.sauce', tvs, cha);
+	if(!medialocator) return !onComplete ? null : onComplete([]);
+	
+	var apiurl = medialocator + 'sources.json?id=' + id;
+	$Ajax(apiurl,this.sauce_onload.bind(this,onComplete,id));
+};
+cnapi.request.sauce_onload = function(callback, id, data) {
+	//console.log(id, data, callback);
+	var	resp = !data ? null : data.replies,
+		rply = !resp ? null : resp[0],
+		ctid = !rply ? null : rply.catalogue_item_id,
+		rips = !rply ? [] : rply.rips;
+
+	var files = [];
 	rips.forEach(function(rip){
-		pz = [];
-		rip.parts.forEach(function(prt){pz = pz.concat(prt.locations)});
-		files.push(pz);
+		rip.parts.forEach(function(prt){files = files.concat(prt.locations)});
 	});
+
+	if(files.length) {
+		var tvs = $App.getTelecastById(id);
+		tvs['files'] = files;
+	}
+	//else console.log(data);
 	//console.log('FILES', files);
-	if(!files.length) console.log(data);
-	if(callback) callback(files);
-	else console.log('SL',files);
+	if (callback) callback(files);
+	else console.log('SRC',files);
 };
 
 cnapi.request.channels = function(ids, onComplete) {

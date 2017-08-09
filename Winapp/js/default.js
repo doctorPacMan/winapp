@@ -1,7 +1,12 @@
 ﻿"use strict";
-//console.info('init as '+(!!window.Windows?'Windows':'Webapp'));
 if(!window.Windows) document.addEventListener('DOMContentLoaded',$App.initialize.bind($App));
 else (function () {
+
+	var basejs = document.createElement('script');
+	basejs.setAttribute('src','WinJS/js/base.js');
+	basejs.onload = function(){console.log('SUCCESS',basejs.src)};
+	basejs.onerror = function(){console.log('ERROR', basejs.src)};
+	document.getElementsByTagName('head')[0].appendChild(basejs);
 
 	var app = WinJS.Application,
 		activation = Windows ? Windows.ApplicationModel.Activation : null;
@@ -20,7 +25,7 @@ else (function () {
 			} else {
 				// TODO: работа этого приложения была приостановлена и затем завершена.
 				// Для удобства пользователей восстановите здесь состояние приложения, как будто приложение никогда не прекращало работу.
-				// console.log('APP Restore', $App.initialize());
+				// console.log('APP Restore', $App.restore());
 			}
 			args.setPromise(WinJS.UI.processAll());
 		}

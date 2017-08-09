@@ -19,11 +19,7 @@ ChannelsPlaylist.prototype = {
 			
 			var cha = list[i],
 				cid = (cha.cid || undefined),
-				chn = Object.assign({
-					logo: (cha.logo || 'img/logo150x150.png'),
-					cid: cid,
-					pid: pid
-				},cha);
+				chn = Object.assign({cid:cid,pid:pid},cha);
 
 			this.list[pid].push(chn);
 			this.cnt++;
@@ -37,11 +33,10 @@ ChannelsPlaylist.prototype = {
 			else {
 				var cur = indx[chn.cid];
 				//console.log('[merge]', cur, chn);
-				if(chn.pid!=2) cur.src = chn.src; // bypass inetra data				
+				if(chn.pid!=2) cur.src = chn.src; // bypass inetra data
 			}
 		}
-		console.log(pid, this.list[pid].length, this.cnt);
-		//this.list = this.list.concat(list);
+		//console.log(pid, this.list[pid].length, this.cnt);
 	},
 	parseXspf: function(xmldata) {
 		var xml = (new DOMParser).parseFromString(xmldata.trim(), "text/xml"),
@@ -77,8 +72,7 @@ ChannelsPlaylist.prototype = {
 			cids[cha.cid] = cha;
 			list.push(cha);
 		}
-
-		console.log('parseXSPF result '+list.length+' of '+lines.length);
+		//console.log('parseXSPF result '+list.length+' of '+lines.length);
 		return list;
 	},
 	parseM3U8: function(playlist) {
@@ -121,29 +115,7 @@ ChannelsPlaylist.prototype = {
 			cids[cha.cid] = cha;
 			list.push(cha);
 		}
-		console.log('parseM3U8 result '+list.length+' of '+lines.length);
+		//console.log('parseM3U8 result '+list.length+' of '+lines.length);
 		return list;
-	},
-	channelExtend: function(cid, data) {
-		var pcd = this.channels[cid];
-		pcd.title = data.title;
-		pcd.alias = data.alias;
-		pcd.cid = data.channelId;
-		pcd.hasSchedule = !!data.hasSchedule;
-		pcd.scheduledDates = data.scheduledDates;
-		if(data.logoURL) pcd.logo = data.logoURL;
-		
-		pcd.scheduledDates = [];
-		if(data.scheduledDates)	data.scheduledDates.forEach(function(v){
-			var sd = v.year+'/'+v.month+'/'+v.day;
-			sd += ' '+v.hour+':'+v.minute+':'+v.second;
-			pcd.scheduledDates.push(new Date(sd));//var tz = v.timezone/60;
-		});
-		//if(cid==24646020) console.log(data);//HD
-		//if(cid==58456826) console.log(data);//cam
-		//if(!data.logoURL) console.log(data);
-	},
-	getSchedates: function() {
-		console.log('getSchedates');
 	}
 };

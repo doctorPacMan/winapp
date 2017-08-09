@@ -55,6 +55,7 @@ var cnapi = {
 		playlists['x'] = '/data/playlist.xspf';
 		this._temp_playlists = playlists;
 		this.apis = apislist;
+		this.apis.medialocator = mlocators;
 
 		console.log('Whereami apislist', apislist);
 		console.log('Whereami playlist', playlists);
@@ -122,22 +123,25 @@ var cnapi = {
 
 		var missed = [].concat(playlist.cids);
 		for(var j=0; j<channels.length; j++) {
-			var data = channels[j],
-				cid = data.channelId.toString();
-			playlist.channelExtend(cid, data);
+			var json = channels[j],
+				cid = json.channelId.toString(),
+				data = playlist.channels[cid];
+			playlist.channels[cid] = new TvChannel(data, json);
 
 			var n = missed.indexOf(cid);
 			if(n>-1) missed.splice(n,1);
 		}
 	
-		for(var j=0, titles = []; j<missed.length; j++) titles.push(playlist.channels[missed[j]].title);
-		if(titles.length) console.log('Missed channels: ', titles);
+		for(var j=0, titles = []; j<missed.length; j++) {
+			var cid = missed[j],
+				data = playlist.channels[cid];
+			playlist.channels[cid] = new TvChannel(data);
+			//console.log('Missed channel:', cid, playlist.channels[cid]);
+		}
 		//cnapi.request.idbytitle(titles, this._handler_idbytitle.bind(this,playlist));
 		this._onready(playlist);
 	},
-	_handler_idbytitle: function(playlist, data) {
-		console.log(data);
-	},
+	//_handler_idbytitle: function(playlist, data) {console.log(data)},
 	setAuthToken: function(token, expdt, refresh) {
 
 		//console.log('setAuthToken', token, expdt, refresh);

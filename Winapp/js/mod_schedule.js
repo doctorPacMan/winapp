@@ -18,7 +18,7 @@ var modSchedule = extendModule({
 			cid = event.detail.channelId,
 			cha = $App.getChannelById(cid),
 			days = cha.scheduledDates;
-		console.log('onChannelView',days);
+		console.log('onChannelView',cha);
 		this.dayzFill(cid, days);
 		this.request(cid);
 	},
@@ -57,48 +57,6 @@ var modSchedule = extendModule({
 			this.dayz[v] = time;
 		}
 		wrpr.appendChild(list);
-	},
-	fillProgram: function(list) {
-		
-		console.log('fillProgram',list);
-
-		var ol = document.createElement('ol'),
-			li = document.createElement('li'),
-			show, time, name, cell,
-			v = list[0], 
-			rf = new Date(v.date.year, v.date.month-1, v.date.day, 6, 0, 0, 0),
-			t_from = rf.getTime(),
-			t_ends = t_from + 86400 * 1000;
-
-//console.log(new Date(t_from), new Date(t_ends));
-
-		for(var i=0;i<list.length;i++) {
-			var v = list[i],
-				t = new Date(v.date.year, v.date.month-1, v.date.day, v.date.hour, v.date.minute, 0, 0);
-			
-			if(t.getTime()<t_from) continue;
-			else if(t.getTime()>=t_ends) break;
-			
-			cell = li.cloneNode(false);
-			show = document.createElement('a');
-			name = document.createElement('span');
-			time = document.createElement('time');
-			
-			time.setAttribute('datetime',t.getHtmlTime());
-			time.innerText = t.format('h:nn');
-			name.innerText = v.title;
-
-			show.appendChild(time);
-			show.appendChild(name);
-			cell.appendChild(show);
-			
-			ol.appendChild(cell);
-			//console.log(v);
-		}
-		
-		var old = this.node.getElementsByTagName('ol')[0];
-		if (!old) this.node.appendChild(ol);
-		else this.node.replaceChild(ol,old);
 	},
 	request: function(cid, day) {
 		if(this._day) {
@@ -144,7 +102,8 @@ var modSchedule = extendModule({
 			li = li.cloneNode(false);
 			li.appendChild(tvs.getNodeList());
 			ol.appendChild(li);
-			li.onclick = this.viewTelecast.bind(this,tvs.id);
+			//li.onclick = this.viewTelecast.bind(this,tvs.id);
+			li.onclick = this.fire.bind(this,'telecastView',{id:tvs.id});
 			//console.log(tvs);
 		}
 
