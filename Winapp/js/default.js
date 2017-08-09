@@ -1,13 +1,13 @@
 ﻿"use strict";
 if(!window.Windows) document.addEventListener('DOMContentLoaded',$App.initialize.bind($App));
 else (function () {
-
+/*
 	var basejs = document.createElement('script');
 	basejs.setAttribute('src','WinJS/js/base.js');
 	basejs.onload = function(){console.log('SUCCESS',basejs.src)};
 	basejs.onerror = function(){console.log('ERROR', basejs.src)};
 	document.getElementsByTagName('head')[0].appendChild(basejs);
-
+*/
 	var app = WinJS.Application,
 		activation = Windows ? Windows.ApplicationModel.Activation : null;
 

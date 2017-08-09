@@ -82,6 +82,7 @@
     <Content Include="fonts\OpenSansRegular.ttf" />
     <Content Include="fonts\OpenSansSemibold.ttf" />
     <Content Include="fonts\OpenSansSemiboldItalic.ttf" />
+    <Content Include="fonts\SegoeMDL2Assets.ttf" />
     <Content Include="fonts\UbuntuMono.ttf" />
     <Content Include="images\100x100.png" />
     <Content Include="images\142x142.png" />
@@ -90,6 +91,7 @@
     <Content Include="images\310x310.png" />
     <Content Include="images\48x48.png" />
     <Content Include="images\88x88.png" />
+    <Content Include="img\favicon.png" />
     <Content Include="img\logo120x120.png" />
     <Content Include="img\logo150x150.png" />
     <Content Include="img\logo245x245.png" />

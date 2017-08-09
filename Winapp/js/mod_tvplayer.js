@@ -53,7 +53,7 @@ var modTvplayer = extendModule({
 			cha = $App.getChannelById(tvs.channel),
 			live = (typeof(tvs.getProgress())!='boolean');
 		
-		console.log('loadTelecast',tvs.getProgress());
+		console.log('loadTelecast',live,tvs.files);
 		
 		if(live) {
 			this._video.setAttribute('poster', tvs.poster);
