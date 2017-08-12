@@ -19,6 +19,7 @@ var $Ajax = function(url,onComplete,params,async) {
 			else {
 				var text = xhr.responseText, json;
 				try{json = JSON.parse(xhr.responseText)}catch(e){};
+				//catch(e){console.log('Ajax error',e,text)};
 				onComplete(json || text, xhr);
 			}
 		};

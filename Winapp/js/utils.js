@@ -50,19 +50,9 @@ document.addEventListener('DOMContentLoaded',function(){
 	var scb = document.querySelectorAll('.scrollhide');
 	for(var i=0;i<scb.length;i++) {
 		var nn = scb[i],
-			fc = nn.firstElementChild,
-			sw = nn.clientWidth-fc.clientWidth;
-		fc.classList.remove('scrollhide');
-		fc.classList.add('scrollhide'+sw);
-		//fc.style.width = 'calc(100% + '+sw+'px)';
-		//fc.style.marginRight = '-'+sw+'px';
+			div = nn.firstElementChild,
+			sw = div.offsetWidth - div.scrollWidth;
+		nn.classList.add('scrollhide'+sw);
+		if(sw>0) div.style.paddingRight = (35-sw)+'px';
 	}
 });
-
-if(typeof(window.localStorage)=='undefined'){
-console.log('LLLLLLLLLLL')
-window.localStorage = {
-	getItem:function(){return null},
-	setItem:function(){}
-};	
-}

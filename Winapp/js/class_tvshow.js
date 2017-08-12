@@ -17,7 +17,7 @@ TvShow.prototype = {
 
 		var telecastImage = 'img/poster.jpg';
 		var telecastPoster = 'img/poster.jpg';
-		json.telecastImages.forEach(function(v){
+		(json.telecastImages || []).forEach(function(v){
 			if(v.profile===2) telecastPoster = v.location;
 			else if(v.profile===0) telecastImage = v.location;
 		});

@@ -4,18 +4,30 @@
 }
 .mod-tvplayer {
 	position: absolute;
-	right: 292px;
-	left: 292px;
-	top: 48px;
-	bottom: 20px;
+	left:0px;right:0px;
+	top:0px;bottom:0px;
 }
 .mod-tvplayer > div {
 	position: absolute;
-	margin: -180px 0 0 -240px;
-	left:50%;width: 480px;
-	top:50%;height: 360px;
-	border: 1px solid tomato;
+	left:0;width:100%;
+	top:0;height:100%;
+	margin: 0;
 }
+.mod-tvplayer-xx > div {
+	left:50%;width:480px;
+	top:50%;height:360px;
+	border: 1px solid tomato;
+	margin: -180px 0 0 -240px;
+}
+.mod-tvplayer > div > video {
+	display: block;
+	position: relative;
+	left:0;width: 100%;
+	top:0;height: 100%;
+	margin: 0 auto;
+}
+
+
 .mod-tvplayer > div.load:after {
 	content:'';
 	position: absolute;

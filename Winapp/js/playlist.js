@@ -15,7 +15,9 @@ ChannelsPlaylist.prototype = {
 		
 		this.list[pid] = [];
 		
-		if(list) for(var i=0;i<list.length;i++) {if(i>=16) break;
+		if(list) for(var i=0;i<list.length;i++) {
+
+			//if(i>=16) break;
 			
 			var cha = list[i],
 				cid = (cha.cid || undefined),
@@ -89,8 +91,6 @@ ChannelsPlaylist.prototype = {
 
 		var cha, str, rez, list = [], cids = {};
 		for(var j=0;j<lines.length;j++) {
-			
-			//if(list.length>=36) break;
 			
 			cha = {data:str = lines[j].trim()};
 			

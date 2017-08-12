@@ -14,8 +14,9 @@ var modTvplayer = extendModule({
 		this._button = this.node.querySelector('button');
 		this._button.onclick = this.click.bind(this);
 
+		this.fitinWidth(16/9);
+		//this.fitinHeight(16/9);
 		this.initVideo(this._video);
-
 
 		this._hlsjs = this.attachHlsjs(this._video);
 		
@@ -24,12 +25,12 @@ var modTvplayer = extendModule({
 		
 		//this.onTelecastView({detail:{id:100435894}});
 		//this._video.setAttribute('autoplay','');
-		var load_mov = this.load.bind(this,'http://www.cn.ru/data/files/test/countdown.mp4');
-		var load_stream = this.load.bind(this,'http://hls.peers.tv/streaming/cam_lunintsev_sq/16/variable.m3u8');
-		var load_record = this.load.bind(this,'http://hls.peers.tv/variant_playlist/program/101704626.m3u8?rnd=881&t=16');
-		//setTimeout(load_mov,0);
-		//setTimeout(load_stream,3000);
-		//setTimeout(load_record,1000);
+		var view_movie = this.play.bind(this,'http://www.cn.ru/data/files/test/countdown.mp4');
+		var view_stream = this.play.bind(this,'http://hls.peers.tv/streaming/cam_lunintsev_sq/16/variable.m3u8');
+		var view_record = this.play.bind(this,'http://hls.peers.tv/playlist/program/101354016.m3u8');
+		//setTimeout(view_movie,0);
+		//setTimeout(view_record,4000);
+		//setTimeout(view_stream,8000);
 	},
 	poster: function(src) {
 		this._posta.style.display = src===false?'none':'block';
@@ -44,14 +45,14 @@ var modTvplayer = extendModule({
 		//video.addEventListener('playing',this._event_playstart.bind(this,false));
 		//video.addEventListener('ended',this._event_complete.bind(this));
 
-		var event_playing = function(e){console.log('PLAY',e)};
-		video.addEventListener('playing',event_playing.bind(this));
+		video.addEventListener('playing',this._event_playstart.bind(this,false));
+		video.addEventListener('loadstart',this._event_playstart.bind(this,true));
 
 		var event_ended = function(e){console.log('ENDS',e)};
 		video.addEventListener('ended',event_ended.bind(this));
 
 		var event_cnplay = function(e){console.log('CNPL',e)};
-		video.addEventListener('canplay',event_cnplay.bind(this));
+		//video.addEventListener('canplay',event_cnplay.bind(this));
 
 		var event_error = function(e){console.log('EROR',e)};
 		video.addEventListener('error',event_error.bind(this));
@@ -70,6 +71,19 @@ var modTvplayer = extendModule({
 			bufdone_events = ['playing','suspend','emptied','seeked','error'];
 		bufdone_events.forEach(function(en){video.addEventListener(en,buffering_done)});
 
+	},
+	_event_playstart:function(reset, e) {
+		if(reset===true) return this._playstart = false;
+		else if(this._playstart) return null;
+		else this._playstart = true;
+		
+		console.log('_event_playing',e.type);
+		var vw = this._video.videoWidth || 600,
+			vh = this._video.videoHeight || 450;
+		console.log('playstart', vw+'x'+vh);
+		this._video.setAttribute('width',vw);
+		this._video.setAttribute('height',vh);
+		this.fitinWidth(vw/vh);
 	},
 	attachHlsjs: function(video) {
 
@@ -183,5 +197,29 @@ var modTvplayer = extendModule({
 			this._hlsjs.loadSource(src);
 			this._hlsjs.attachMedia(this._video);
 		}.bind(this),250);
-	}	
+	},
+	fitinWidth: function(pp) {
+		var prop = pp || (4/3),
+			cont = this._wrppr,
+			cw = cont.offsetWidth,
+			ch = cont.offsetHeight,
+			vw = cw, vh = Math.ceil(vw/prop);
+
+		//console.log('video', vw+'x'+vh, this._video.videoWidth+'x'+this._video.videoHeight);
+		this._video.style.width = vw+'px';
+		this._video.style.height = vh+'px';
+		this._video.style.marginTop = (ch - vh)/2 + 'px';
+	},
+	fitinHeight: function(pp) {
+		var prop = pp || (4/3),
+			cont = this._wrppr,
+			cw = cont.offsetWidth,
+			ch = cont.offsetHeight,
+			vh = ch, vw = Math.ceil(vh*prop);
+
+		//console.log('video', vw+'x'+vh, this._video.videoWidth+'x'+this._video.videoHeight);
+		this._video.style.width = vw+'px';
+		this._video.style.height = vh+'px';
+		this._video.style.marginLeft = (cw - vw)/2 + 'px';
+	}
 });

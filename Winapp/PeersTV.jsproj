@@ -53,9 +53,10 @@
     <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>$(VersionNumberMajor).$(VersionNumberMinor)</MinimumVisualStudioVersion>
     <DefaultLanguage>en-us</DefaultLanguage>
-    <PackageCertificateKeyFile>Winapp_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>PeersTV_StoreKey.pfx</PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Never</AppxBundle>
+    <PackageCertificateThumbprint>25558BE218A2D4E2E69725E85F58B4808D5A00E8</PackageCertificateThumbprint>
   </PropertyGroup>
   <ItemGroup>
     <AppxManifest Include="package.appxmanifest">
@@ -118,6 +119,8 @@
     <Content Include="js\mod_tvplayer.js" />
     <Content Include="js\playlist.js" />
     <Content Include="js\utils.js" />
+    <None Include="Package.StoreAssociation.xml" />
+    <None Include="PeersTV_StoreKey.pfx" />
     <Content Include="WinJS\css\ui-dark.css" />
     <Content Include="WinJS\css\ui-light.css" />
     <Content Include="WinJS\fonts\Symbols.ttf" />

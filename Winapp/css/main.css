@@ -20,18 +20,18 @@ body {
 	);
 }
 body > div {
-	position: absolute;
+	position:absolute;
+	left:0;width:100%;
+	top:0;height:100%;
+	overflow: hidden;
+	margin: 0;
+}
+body > div.w1024 {
 	left: 50%; top:50%;
 	width: 1024px;
 	height: 576px;
 	margin: -288px 0 0 -512px;
 	border: 1px solid dodgerblue;
-}
-body > div {
-	margin: 0;
-	left: 0; top:0;
-	width: calc(100% - 2px);
-	height: calc(100% - 2px);
 }
 footer,
 header,

@@ -8,11 +8,10 @@
 	top: 0px; bottom:0;
 	margin: 48px 0 20px;
 	overflow: hidden;
-	background: rgba(42,48,57,.9);
-	border: 1px solid rgba(255,255,255,.125);
-	box-shadow: inset;
-	width: 342px;
+	background: rgba(42,48,57,.82);
+	border-left: 1px solid rgba(255,255,255,.125);
 	box-shadow: 0 0 5px black;
+	width: 342px;
 }
 
 
@@ -61,17 +60,13 @@
 .mod-schedule-dayz time sup,
 .mod-schedule-dayz time sub {
 	display: block;
-	font-size: 100%;
+	font-size: 14px;
+	line-height: 20px;
 	vertical-align: baseline;	
 }
-.mod-schedule-dayz time sup {
-	line-height: 20px;
-	font-size: 114%;
-}
-.mod-schedule-dayz time sub {
-	font-size: 78.6%;
-	line-height: 20px;
-}
+.mod-schedule-dayz time sup {font-size: 18px}
+.mod-schedule-dayz time sub {font-size: 14px}
+
 .mod-schedule-dayz time:hover {background-color: rgba(255,255,255,.125)}
 .mod-schedule-dayz time.is-today {}
 .mod-schedule-dayz time.is-crrnt {
