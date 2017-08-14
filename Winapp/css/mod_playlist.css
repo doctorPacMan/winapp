@@ -1,19 +1,38 @@
-.mod-playlist {
+section.mod-playlist {
+	z-index: 3;
 	position: absolute;
-	left:0; width:auto;
+	left:0;width:242px;
 	top: 0px; bottom:0;
-	margin: 48px 0 20px 48px;
+	margin: 0 0 0 48px;
 	overflow: hidden;
 	background: rgba(42,48,57,.82);
-	border-right: 0px solid rgba(255,255,255,.125);
+	border-right: 1px solid rgba(255,255,255,.125);
 	box-shadow: 4px 0px 4px 0px rgba(0,0,0,.25);
+	transition: left .25s ease-out 0s;
 }
-.mod-playlist {width: 242px}
+section.mod-playlist.hidden {
+	left: -243px;
+	box-shadow: none;
+}
+.mod-playlist > big,
 .mod-playlist > div {
+	display: block;
+	position: relative;
+}
+.mod-playlist > big {
+	padding: 11px 10px 12px;
+	font-size: 24px;
+	font-weight: 200;
+	line-height: 24px;
+	border-bottom: 1px solid dodgerblue;
+	box-shadow: 0 0 12px black;
+	z-index: 2;
+}
+.mod-playlist > div {
+	height: calc(100% - 48px);
 	width: 100%;
-	height: 100%;
-	overflow: hidden;
-	overflow-y: scroll;
+	position: relative;
+	z-index: 1;
 }
 .mod-playlist ol,
 .mod-playlist li {
@@ -35,12 +54,8 @@
 .mod-playlist li {
 	width: 80px;
 	margin: 0 1px 1px 0;
-	background: rgb(49,58,73);
 	box-shadow: inset 0 0 0 0px blue;
 	overflow: hidden;
-}
-.mod-playlist li.st-view {
-	background-color: dodgerblue;
 }
 a.chatile {
 	position: relative;
@@ -48,6 +63,7 @@ a.chatile {
 	width: 80px;
 	height: 80px;
 	text-align: center;
+	background: rgba(49,58,73,0);
 }
 a.chatile > i,
 a.chatile > u,
@@ -69,10 +85,9 @@ a.chatile > i {
 }
 a.chatile > i:after {
 	content: '';
-	display:block;
-	width: 100%;left:0;
-	height: 100%;top:0;
-	position:absolute;
+	position: absolute;
+	width:100%; left:0;
+	height:100%; top:0;
 	box-shadow: inset 0 0 0 1px rgba(255,255,255,.25);
 	background-image: linear-gradient(0deg, rgba(255,255,255,.3) 0%, transparent 75%, transparent);
 }
@@ -97,19 +112,22 @@ a.chatile > u {
 	text-overflow: ellipsis;
 }
 a.chatile:after {
+	display: none;
 	content: '';
-	right: 0;
-	top: 0;
-	height: 100%;
-	width: 100%;
-	background: rgba(0,0,0,.0) none no-repeat 0 0;
-	background-image: linear-gradient(0deg, rgba(0,0,0,0) 0%, transparent 33%, transparent);
+	position: absolute;
+	width:100%; left:0;
+	height:100%; top:0;
+	background: rgba(0,0,0,.25) none no-repeat 0 0;
+	background-image: linear-gradient(0deg, rgba(0,255,0,.5) 0%, transparent 33%, transparent);
 }
-a.chatile:hover:after {
-	background-color: transparent;
+a.chatile:hover {
+	background-color: rgba(220,220,220,.16);
+	box-shadow: inset 0 0 0 1px rgba(220,220,220,.25);
+}
+a.chatile:active {
+	background-color: rgba(220,220,220,.16);
 	box-shadow: inset 0 0 0 1px dodgerblue;
 }
-.st-view a.chatile:after {
-	box-shadow: inset 0 0 0 1px dodgerblue;
-	background-color: transparent
-}
+.st-view a.chatile:hover,
+.st-view a.chatile:active {background: transparent}
+.mod-playlist li.st-view {background-color: dodgerblue}

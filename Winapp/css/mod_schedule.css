@@ -3,16 +3,23 @@
   to {opacity: 1}
 }
 .mod-schedule {
+	z-index: 3;
 	position: absolute;
 	right:0;width:auto;
 	top: 0px; bottom:0;
-	margin: 48px 0 20px;
+	margin: 0 0 0px;
 	overflow: hidden;
 	background: rgba(42,48,57,.82);
 	border-left: 1px solid rgba(255,255,255,.125);
 	box-shadow: 0 0 5px black;
 	width: 342px;
+	transition: right .25s ease-out 0s;
 }
+.mod-schedule.hidden {
+	right: -342px;
+	box-shadow: none;
+}
+
 
 
 .mod-schedule-dayz {
@@ -57,15 +64,16 @@
 	height: 40px;
 	padding: 4px 0;
 }
-.mod-schedule-dayz time sup,
-.mod-schedule-dayz time sub {
+.mod-schedule-dayz time b,
+.mod-schedule-dayz time u {
 	display: block;
-	font-size: 14px;
+	position: static;
 	line-height: 20px;
-	vertical-align: baseline;	
+	text-decoration: none;
+	font-weight: normal;
 }
-.mod-schedule-dayz time sup {font-size: 18px}
-.mod-schedule-dayz time sub {font-size: 14px}
+.mod-schedule-dayz time b {font-size: 16px}
+.mod-schedule-dayz time u {font-size: 12px}
 
 .mod-schedule-dayz time:hover {background-color: rgba(255,255,255,.125)}
 .mod-schedule-dayz time.is-today {}

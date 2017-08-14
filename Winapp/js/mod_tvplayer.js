@@ -31,6 +31,7 @@ var modTvplayer = extendModule({
 		//setTimeout(view_movie,0);
 		//setTimeout(view_record,4000);
 		//setTimeout(view_stream,8000);
+		this._wrppr.classList.add('load');
 	},
 	poster: function(src) {
 		this._posta.style.display = src===false?'none':'block';

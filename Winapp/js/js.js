@@ -1,16 +1,43 @@
 var $App = {
 	initialize: function() {
 
-		//var tp = new modTvplayer('mod-tvplayer');
+		var tp = new modTvplayer('mod-tvplayer');
 		//tp.load('http://hls.peers.tv/streaming/cam_krylova-krasny/16/variable.m3u8');
 		//tp.load('http://www.cn.ru/data/files/test/countdown.mp4');
-
-//return new modTvplayer('mod-tvplayer');
+		//return;
 
 		console.info('$App initialize');
 		this._telecast = {};
 		this._channels = {};
+		//cnapi.initialize(this.onready.bind(this));
+		var brun = document.getElementById('runapp');
+		brun.onclick = this.apprun.bind(this,brun);
+		var brun = document.getElementById('apinfo');
+		brun.onclick = this.apinfo.bind(this,brun);
+		
+		var bttn = document.getElementById('chlist');
+		bttn.onclick = this.toggleSection.bind(this,'mod-channels',bttn);
+		//bttn.onclick();
+
+		var bttn = document.getElementById('schdle');
+		bttn.onclick = this.toggleSection.bind(this,'mod-schedule',bttn);
+		//bttn.onclick();
+		
+	},
+	toggleSection: function(section,bttn) {
+		var section = document.getElementById(section),
+			st = !section.classList.contains('hidden');
+		console.log(section, st, bttn);
+		section.classList[st?'add':'remove']('hidden');
+		bttn.classList[!st?'add':'remove']('active');
+	},
+	apinfo: function(brun) {
+		//alert('INFO');
+		console.log(cnapi)
+	},
+	apprun: function(brun) {
 		cnapi.initialize(this.onready.bind(this));
+		brun.onclick = function(){};
 	},
 	onready: function(playlist) {
 

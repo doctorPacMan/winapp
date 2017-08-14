@@ -1,5 +1,7 @@
 @import url("_fonts.css");
-@import url("main.css");
+@import url("normalize.css");
+@import url("appstyles.css");
+@import url("sidebar.css");
 @import url("mod_playlist.css");
 @import url("mod_tvplayer.css");
 @import url("mod_schedule.css");
@@ -19,4 +21,4 @@
 }
 .scrollhide > div::-webkit-scrollbar {width:0}
 .scrollhide > div {-ms-overflow-style: none}
-.scrollhide0 > div {padding-right: 0;width: 100%}
+.scrollhide00 > div {padding-right: 0;width: 100%}
