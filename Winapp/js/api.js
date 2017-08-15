@@ -4,17 +4,20 @@ var cnapi = {
 	token: null,
 	location: null,
 	provider: null,
-	initialize: function(callback) {
+	initialize: function(callback, monitor) {
+		this._onready = callback;
+		this._monitor = monitor.progress.bind(monitor);
+		this._monitor('whereami',0);
+
 		var apiurl = this.apiurl+'/registry/2/whereami.json',
 			colbek = this._handler_whereami.bind(this);
-		
-		this._onready = callback;
 		$Ajax(apiurl,colbek,null,true);
 	},
 	_handler_whereami: function(data, xhr) {
 
 		console.log('Whereami',data);
-		if(data===false) return alert('Whereami failure');
+		if(data===false) return this._monitor('whereami',false);
+		else this._monitor('whereami',true);
 
 		var terr = data.territories[0];
 		this.location = terr.territoryId;
@@ -64,12 +67,14 @@ var cnapi = {
 		//this.setAuthToken('cd4e5a6bee96fec8b50e9831cdac2572');
 		if(this.token = this.getAuthToken()) {
 			console.log('Authtoken restore', this.token);
+			this._monitor('authtoken',true);
 			this._request_playlists();
 		}
 		else {
 			var apiurl = this.apis.auth+'token',
 				params = {'grant_type':'inetra:anonymous','client_id':'demoapp','client_secret':'demoapp'};
 			$Ajax(apiurl,this._handler_acstoken.bind(this),params);
+			this._monitor('authtoken',0);
 		}
 	},
 	_handler_acstoken: function(data) {
@@ -77,8 +82,9 @@ var cnapi = {
 		//console.log('TOKEN',data);
 		if(data===false) {
 			console.warn('Authtoken request failure');
+			this._monitor('authtoken',false);
 			return this.delAuthToken();
-		}
+		} this._monitor('authtoken',true);
 		
 		var token = data.access_token,
 			renew = data.refresh_token,
@@ -94,6 +100,8 @@ var cnapi = {
 		var playlists = this._temp_playlists;
 		delete this._temp_playlists;
 
+		this._monitor('playlist',0);
+		
 		var progress = {},
 			channels = new ChannelsPlaylist(),
 			loadinfo = this._request_channels.bind(this),
@@ -112,6 +120,7 @@ var cnapi = {
 		}
 	},
 	_request_channels: function(playlist){
+		this._monitor('playlist',true).progress('channels',0);
 		//console.log(playlist);
 		var onload = this._handler_channels.bind(this,playlist);
 		this.request.channels(playlist.cids.join(','),onload);
@@ -139,6 +148,7 @@ var cnapi = {
 			//console.log('Missed channel:', cid, playlist.channels[cid]);
 		}
 		//cnapi.request.idbytitle(titles, this._handler_idbytitle.bind(this,playlist));
+		this._monitor('channels',true);
 		this._onready(playlist);
 	},
 	//_handler_idbytitle: function(playlist, data) {console.log(data)},

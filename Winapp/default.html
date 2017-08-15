@@ -23,11 +23,12 @@
 	<script src="js/class_tvshow.js"></script>
 
 	<script src="js/mod.js"></script>
+	<script src="js/mod_loading.js"></script>
 	<script src="js/mod_channels.js"></script>
 	<script src="js/mod_schedule.js"></script>
 	<script src="js/mod_titlebar.js"></script>
 	<script src="js/mod_tvplayer.js"></script>
-
+	
 	<script src="js/cookie.js"></script>
 	<script src="js/idate.js"></script>
 	<script src="js/utils.js"></script>
@@ -40,7 +41,29 @@
 </head>
 <body class="win-type-body">
 <div>
+
+	<div class="mod-loading" id="mod-loading">
+	<div>
+		<span>Whereami</span>
+		<span>Authorization</span>
+		<span>Playlist</span>
+		<span>Channels</span>
+		<button disabled>Continue</button>
+	</div>
+	</div>
 	
+	<div class="mod-tvplayer" id="mod-tvplayer">
+		<div>
+			<video poster="img/poster16x9.jpg" controls muted preload="none" width="480" height="270">
+			<source src="http://hls.peers.tv/streaming/cam_krylova-krasny/16/variable.m3u8" type="application/x-mpegURL">
+			<!-- <source src="http://www.cn.ru/data/files/test/countdown.mp4" type="video/mp4"> -->
+			</video>
+			<i>video</i>
+			<p style="background-image:url('http://peers.tv/data/images/imgs/2017/07/27/100763/100763159.jpg');display:none">poster</p>
+			<button class="bttn-play"></button>
+		</div>
+	</div>
+
 	<div class="mod-tvplayer" id="mod-tvplayer">
 		<div>
 			<video poster="img/poster16x9.jpg" controls muted preload="none" width="480" height="270">

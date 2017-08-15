@@ -26,6 +26,7 @@ section.mod-playlist.hidden {
 	line-height: 24px;
 	border-bottom: 1px solid dodgerblue;
 	box-shadow: 0 0 12px black;
+	background: rgba(42,48,57,1);
 	z-index: 2;
 }
 .mod-playlist > div {
