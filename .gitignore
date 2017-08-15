@@ -4,3 +4,5 @@ Winapp/bld
 Winapp/AppPackages
 Winapp/WinJS
 Winapp/Assets
+Winapp/Package.StoreAssociation.xml
+Winapp/PeersTV_StoreKey.pfx
