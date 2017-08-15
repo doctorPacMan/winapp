@@ -41,17 +41,17 @@ var modSchedule = extendModule({
 
 			var li = document.createElement('li'),
 				time = document.createElement('time'),
-				p = document.createElement('sup'),
-				b = document.createElement('sub');
+				b = document.createElement('b'),
+				u = document.createElement('u');
 
-			p.innerText = t!=today ? d : d+'.'+(m<10?'0'+m:m);
-			b.innerText = t!=today ? w : 'Сегодня';
+			b.innerText = t!=today ? d : d+'.'+(m<10?'0'+m:m);
+			u.innerText = t!=today ? w : 'Сегодня';
 			if(t==today) time.className='is-today';
 
 			time.onclick = this.request.bind(this,cid,day);
 			time.setAttribute('datetime',day.getHtmlTime());
-			time.appendChild(p);
 			time.appendChild(b);
+			time.appendChild(u);
 			li.appendChild(time);
 			list.appendChild(li);
 			this.dayz[v] = time;

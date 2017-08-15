@@ -1,0 +1,39 @@
+aside.sidebar {
+	z-index: 5;
+	right: auto;
+	width: 48px;
+	bottom: 0px;
+	top: 0px;
+	background: black;
+	color: white;
+}
+.sidebar > img {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+.sidebar > a {
+	position: relative;
+	font: 0px/0px serif;
+	display: block;
+	height: 48px;
+	margin-top: 1px;
+	text-decoration: none;
+	background: transparent;
+	color: inherit;
+}
+.sidebar > a.active {color: darkorange}
+.sidebar > a:hover {background-color: rgba(220,220,220,.16)}
+.sidebar > a:before {
+	display: block;
+	font: 16px/48px 'Segoe';
+	text-align: center;
+	content: '\E0A2';
+}
+.sidebar > a#runapp:before {content: '\E7E8'}
+.sidebar > a#apinfo:before {content: '\E946'}
+.sidebar > a#schdle:before {content: '\E8FD'}
+.sidebar > a#chlist:before {
+	content: '\EC05';
+	font-size: 25px;
+}

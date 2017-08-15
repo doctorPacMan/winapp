@@ -1,22 +1,40 @@
 var $App = {
 	initialize: function() {
 
-		//var tp = new modTvplayer('mod-tvplayer');
+		var tp = new modTvplayer('mod-tvplayer');
 		//tp.load('http://hls.peers.tv/streaming/cam_krylova-krasny/16/variable.m3u8');
 		//tp.load('http://www.cn.ru/data/files/test/countdown.mp4');
-
-//return new modTvplayer('mod-tvplayer');
+		//return;
 
 		console.info('$App initialize');
 		this._telecast = {};
 		this._channels = {};
+
+
+		var ml = new modLoading('mod-loading');
+		cnapi.initialize(this.onready.bind(this), ml);
+	},
+	toggleSection: function(section,bttn) {
+		var section = document.getElementById(section),
+			st = !section.classList.contains('hidden');
+		console.log(section, st, bttn);
+		section.classList[st?'add':'remove']('hidden');
+		bttn.classList[!st?'add':'remove']('active');
+	},
+	apinfo: function(brun) {
+		//alert('INFO');
+		console.log(cnapi)
+	},
+	apprun: function(brun) {
 		cnapi.initialize(this.onready.bind(this));
+		brun.onclick = function(){};
 	},
 	onready: function(playlist) {
 
 		console.log('READY', playlist);
 		
 		this.informers();
+		this.sbbuttons();
 		//return cnapi.request.current(10338200);
 		//return cnapi.request.idbytitle(['ЛДПР','Jasmin']);
 		//return cnapi.request.schedule(10338262);
@@ -31,6 +49,21 @@ var $App = {
 		this.modSchedule = new modSchedule('mod-schedule');
 
 		return;		
+	},
+	sbbuttons: function() {
+		var bttn = document.getElementById('runapp');
+		bttn.onclick = this.apprun.bind(this,bttn);
+		
+		bttn = document.getElementById('apinfo');
+		bttn.onclick = this.apinfo.bind(this,bttn);
+		
+		bttn = document.getElementById('chlist');
+		bttn.onclick = this.toggleSection.bind(this,'mod-channels',bttn);
+		//bttn.onclick();
+
+		bttn = document.getElementById('schdle');
+		bttn.onclick = this.toggleSection.bind(this,'mod-schedule',bttn);
+		//bttn.onclick();
 	},
 	informers: function() {
 		var provlogo = document.getElementById('inf-provlogo'),
