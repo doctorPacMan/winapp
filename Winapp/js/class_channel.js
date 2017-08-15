@@ -26,22 +26,5 @@ TvChannel.prototype = {
 		//if(cid==24646020) console.log(data);//HD
 		//if(cid==58456826) console.log(data);//cam
 		//if(!data.logoURL) console.log(data);
-	},
-	getTileNOT: function() {
-		var tile = document.createElement('a'),
-			name = document.createElement('u'),
-			logo = document.createElement('i'),
-			cimg = document.createElement('img');
-		
-		name.innerText = this.title;
-		cimg.setAttribute('src',this.image||'./img/logo150x150.png');
-		logo.appendChild(cimg);
-
-		tile.className = 'chatile';
-		tile.setAttribute('data-cid',this.id);
-		tile.setAttribute('href', this.sauce);
-		tile.appendChild(logo);
-		tile.appendChild(name);
-		return tile;
 	}
 };

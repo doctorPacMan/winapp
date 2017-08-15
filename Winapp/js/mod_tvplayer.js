@@ -1,7 +1,7 @@
 var modTvplayer = extendModule({
 	initialize: function(node_id) {
 		this.node = document.getElementById(node_id);
-		this.listen('telecastView',this.onTelecastView.bind(this));
+		//this.listen('telecastView',this.onTelecastView.bind(this));
 		this.listen('channelView',this.onChannelView.bind(this));
 		
 		this._wrppr = this.node.querySelector('div');
@@ -14,13 +14,13 @@ var modTvplayer = extendModule({
 		this._button = this.node.querySelector('button');
 		this._button.onclick = this.click.bind(this);
 
-		this.fitinWidth(16/9);
-		//this.fitinHeight(16/9);
+		//this.fitinWidth();
+		this.fitinHeight(4/3);
 		this.initVideo(this._video);
 
 		this._hlsjs = this.attachHlsjs(this._video);
 		
-		//console.log('modTvplayer initialize');
+		console.log('modTvplayer initialize');
 		this._ntype.innerText = this._hlsjs ? 'hlsjs' : (this._hlsPlayType || 'video');
 		
 		//this.onTelecastView({detail:{id:100435894}});
@@ -78,10 +78,9 @@ var modTvplayer = extendModule({
 		else if(this._playstart) return null;
 		else this._playstart = true;
 		
-		console.log('_event_playing',e.type);
 		var vw = this._video.videoWidth || 600,
 			vh = this._video.videoHeight || 450;
-		console.log('playstart', vw+'x'+vh);
+		console.log('playstart', e.type, vw+'x'+vh,this._sauce.src);
 		this._video.setAttribute('width',vw);
 		this._video.setAttribute('height',vh);
 		this.fitinWidth(vw/vh);
@@ -106,9 +105,8 @@ var modTvplayer = extendModule({
 	onChannelView: function(event) {
 		var id = event.detail.channelId,
 			cha = $App.getChannelById(id);
-
+		console.log('onChannelView',cha);
 		this.play(cha.stream);
-		//console.log('onChannelView',cha);
 	},
 	onTelecastView: function(event) {
 		var id = event.detail.id,
@@ -192,6 +190,9 @@ var modTvplayer = extendModule({
 		this._sauce.setAttribute('src',src);
 		if(hls && hpt) this._sauce.setAttribute('type', hpt);
 		else this._sauce.removeAttribute('type');
+
+			console.log('LOAD',src,!hls,!this._hlsjs)
+
 
 		if(!hls || !this._hlsjs) this._video.load();
 		else setTimeout(function(){

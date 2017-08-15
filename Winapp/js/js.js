@@ -1,7 +1,7 @@
 var $App = {
 	initialize: function() {
 
-		var tp = new modTvplayer('mod-tvplayer');
+		//var tp = new modTvplayer('mod-tvplayer');
 		//tp.load('http://hls.peers.tv/streaming/cam_krylova-krasny/16/variable.m3u8');
 		//tp.load('http://www.cn.ru/data/files/test/countdown.mp4');
 		//return;
@@ -9,7 +9,6 @@ var $App = {
 		console.info('$App initialize');
 		this._telecast = {};
 		this._channels = {};
-
 
 		var ml = new modLoading('mod-loading');
 		cnapi.initialize(this.onready.bind(this), ml);
@@ -107,7 +106,6 @@ var $App = {
 		//this._video.setAttribute('src',src);
 		//this._video.play();
 		this.currentChannel = cid;
-
-		this.modTvplayer.play(src);
+		//this.modTvplayer.play(src);
 	}
 };

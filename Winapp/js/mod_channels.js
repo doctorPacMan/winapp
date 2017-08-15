@@ -15,7 +15,7 @@ var modChannels = extendModule({
 		var cb = this.node.querySelectorAll('a.chatile');
 		for(var i=0;i<cb.length;i++) {
 			//cb[i].onclick = this.clickChannel.bind(this,cb[i]);
-			cb[i].onclick = function(e){console.log(e)};
+			//cb[i].onclick = function(e){console.log(e)};
 		}
 
 	},
@@ -30,7 +30,7 @@ var modChannels = extendModule({
 			li = li.cloneNode(false);
 			li.appendChild(ct);
 			df.appendChild(li);
-			ct.onclick = this.onChannelClick.bind(this,id);
+			ct.addEventListener('click',this.onChannelClick.bind(this,id),false);
 			this._tiles[id] = li;
 		}
 		this.list.appendChild(df);
@@ -49,13 +49,16 @@ var modChannels = extendModule({
 
 		tile.className = 'chatile';
 		tile.setAttribute('data-cid',cha.cid||'');
-		tile.setAttribute('href',cha.src);
+		//tile.setAttribute('href',cha.src);
 		tile.appendChild(logo);
 		tile.appendChild(name);
 		return tile;		
 	},
 	onChannelClick: function(id, event) {
-		if(event) event.preventDefault();
+		if(event) {
+			event.preventDefault();
+			event.stopImmediatePropagation();
+		}
 		this.fire('channelView',{channelId:id});
 	},
 	onChannelView: function(event) {
