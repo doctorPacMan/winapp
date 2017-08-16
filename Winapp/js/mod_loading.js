@@ -11,30 +11,27 @@ var modLoading = extendModule({
 		//console.log('modLoading initialize',this._N);
 		this._bttn = this.node.querySelector('button');
 		this._bttn.setAttribute('type','button');
+		this.node.style.display = 'block';
 	},
 	onfail: function() {
 		//this.node.parentNode.removeChild(this.node);
-		this._bttn.innerText = 'Retry';
+		this._bttn.innerText = 'Reload';
 		this._bttn.removeAttribute('disabled');
-		this._bttn.onclick = function(){};
+		this._bttn.onclick = function(){document.location.reload(true)};
 	},
 	onokay: function() {
-		//this.node.parentNode.removeChild(this.node);
 		this._bttn.innerText = 'Continue';
 		this._bttn.removeAttribute('disabled');
-		var n = this.node;
-		this._bttn.onclick = function(){n.parentNode.removeChild(n)};
+		var p = this.node.parentNode;
+		this._bttn.onclick = p.removeChild.bind(p,this.node);
 		setTimeout(this._bttn.onclick.bind(this._bttn),1500);
 	},
 	progress: function(v, state) {
 		var cn = 'idle';
 		switch(state) {
-			case 0: cn = 'load';
-			break;
-			case false: cn = 'fail';
-			break;
-			case true: cn = 'okay';
-			break;
+			case 0: cn = 'load';break;
+			case false: cn = 'fail';break;
+			case true: cn = 'okay';break;
 		}
 		this._N[v].className = cn;
 		if(typeof(state)=='boolean') this._N[v] = state;

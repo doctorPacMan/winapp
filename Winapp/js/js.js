@@ -3,8 +3,7 @@ var $App = {
 
 		//var tp = new modTvplayer('mod-tvplayer');
 		//tp.load('http://hls.peers.tv/streaming/cam_krylova-krasny/16/variable.m3u8');
-		//tp.load('http://www.cn.ru/data/files/test/countdown.mp4');
-		//return;
+		//return tp.load('http://www.cn.ru/data/files/test/countdown.mp4');
 
 		console.info('$App initialize');
 		this._telecast = {};

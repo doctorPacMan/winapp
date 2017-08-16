@@ -191,9 +191,9 @@ var modTvplayer = extendModule({
 		if(hls && hpt) this._sauce.setAttribute('type', hpt);
 		else this._sauce.removeAttribute('type');
 
-			console.log('LOAD',src,!hls,!this._hlsjs)
+			console.log('LOAD', src, (!hls||!this._hlsjs), this._video)
 
-
+this._video.setAttribute('autoplay','')
 		if(!hls || !this._hlsjs) this._video.load();
 		else setTimeout(function(){
 			this._hlsjs.loadSource(src);
@@ -211,6 +211,7 @@ var modTvplayer = extendModule({
 		this._video.style.width = vw+'px';
 		this._video.style.height = vh+'px';
 		this._video.style.marginTop = (ch - vh)/2 + 'px';
+		this._video.style.marginLeft = '0px';
 	},
 	fitinHeight: function(pp) {
 		var prop = pp || (4/3),
@@ -222,6 +223,7 @@ var modTvplayer = extendModule({
 		//console.log('video', vw+'x'+vh, this._video.videoWidth+'x'+this._video.videoHeight);
 		this._video.style.width = vw+'px';
 		this._video.style.height = vh+'px';
+		this._video.style.marginTop = '0px';
 		this._video.style.marginLeft = (cw - vw)/2 + 'px';
 	}
 });
