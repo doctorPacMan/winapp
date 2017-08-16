@@ -9,8 +9,8 @@ var $App = {
 		this._telecast = {};
 		this._channels = {};
 
-		var ml = new modLoading('mod-loading');
-		cnapi.initialize(this.onready.bind(this), ml);
+		cnapi.initialize(this.onready.bind(this),new modLoading('mod-loading'));
+		this.sbbuttons();
 	},
 	toggleSection: function(section,bttn) {
 		var section = document.getElementById(section),
@@ -24,8 +24,8 @@ var $App = {
 		console.log(cnapi)
 	},
 	apprun: function(brun) {
-		cnapi.initialize(this.onready.bind(this));
-		brun.onclick = function(){};
+		//this.initialize();
+		//brun.onclick = function(){};
 	},
 	onready: function(playlist) {
 
@@ -55,6 +55,9 @@ var $App = {
 		bttn = document.getElementById('apinfo');
 		bttn.onclick = this.apinfo.bind(this,bttn);
 		
+		bttn = document.getElementById('reload');
+		bttn.onclick = this.reload.bind(this,bttn);
+		
 		bttn = document.getElementById('chlist');
 		bttn.onclick = this.toggleSection.bind(this,'mod-channels',bttn);
 		//bttn.onclick();
@@ -62,6 +65,9 @@ var $App = {
 		bttn = document.getElementById('schdle');
 		bttn.onclick = this.toggleSection.bind(this,'mod-schedule',bttn);
 		//bttn.onclick();
+	},
+	reload: function() {
+		document.location.reload(true);
 	},
 	informers: function() {
 		var provlogo = document.getElementById('inf-provlogo'),

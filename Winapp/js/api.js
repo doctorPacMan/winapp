@@ -54,8 +54,8 @@ var cnapi = {
 			if(v.type=='media_locator') mlocators[pid] = uri;
 			if(v.type=='iptv') playlists[pid] = uri;
 		});
-		//playlists = {'x':'/data/playlist.xspf'};
-		playlists['x'] = '/data/playlist.xspf';
+		//playlists = {'x':HOST+'/data/playlist.xspf'};
+		//playlists['x'] = HOST+'/data/playlist.xspf';
 		this._temp_playlists = playlists;
 		this.apis = apislist;
 		this.apis.medialocator = mlocators;

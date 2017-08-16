@@ -74,7 +74,7 @@ ChannelsPlaylist.prototype = {
 			cids[cha.cid] = cha;
 			list.push(cha);
 		}
-		//console.log('parseXSPF result '+list.length+' of '+lines.length);
+		console.log('parseXSPF result '+list.length+' of '+lines.length);
 		return list;
 	},
 	parseM3U8: function(playlist) {
@@ -115,7 +115,7 @@ ChannelsPlaylist.prototype = {
 			cids[cha.cid] = cha;
 			list.push(cha);
 		}
-		//console.log('parseM3U8 result '+list.length+' of '+lines.length);
+		console.log('parseM3U8 result '+list.length+' of '+lines.length);
 		return list;
 	}
 };

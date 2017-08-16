@@ -1,5 +1,8 @@
 ﻿"use strict";
-if(!window.Windows) document.addEventListener('DOMContentLoaded',$App.initialize.bind($App));
+if(!window.Windows) {
+	window.HOST = '//'+window.location.host;
+	document.addEventListener('DOMContentLoaded',$App.initialize.bind($App));
+}
 else (function () {
 /*
 	var basejs = document.createElement('script');
@@ -8,6 +11,9 @@ else (function () {
 	basejs.onerror = function(){console.log('ERROR', basejs.src)};
 	document.getElementsByTagName('head')[0].appendChild(basejs);
 */
+
+	window.HOST = 'ms-appx://dev.peers.tv';
+
 	var app = WinJS.Application,
 		activation = Windows ? Windows.ApplicationModel.Activation : null;
 

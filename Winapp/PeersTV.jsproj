@@ -86,12 +86,16 @@
     <Content Include="Assets\Square71x71Logo.scale-200.png" />
     <Content Include="Assets\StoreLogo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
+    <Content Include="css\appstyles.css" />
     <Content Include="css\css.css" />
     <Content Include="css\mod_playlist.css" />
     <Content Include="css\mod_schedule.css" />
     <Content Include="css\mod_titlebar.css" />
     <Content Include="css\mod_tvplayer.css" />
+    <Content Include="css\normalize.css" />
+    <Content Include="css\sidebar.css" />
     <Content Include="css\_fonts.css" />
+    <Content Include="data\playlist.xspf" />
     <Content Include="default.html" />
     <Content Include="fonts\OpenSansItalic.ttf" />
     <Content Include="fonts\OpenSansLight.ttf" />
@@ -130,6 +134,7 @@
     <Content Include="js\js.js" />
     <Content Include="js\mod.js" />
     <Content Include="js\mod_channels.js" />
+    <Content Include="js\mod_loading.js" />
     <Content Include="js\mod_schedule.js" />
     <Content Include="js\mod_titlebar.js" />
     <Content Include="js\mod_tvplayer.js" />
@@ -144,9 +149,6 @@
     <Content Include="WinJS\js\base.js" />
     <Content Include="WinJS\js\ui.js" />
     <None Include="Winapp_TemporaryKey.pfx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="data\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\$(WMSJSProjectDirectory)\Microsoft.VisualStudio.$(WMSJSProject).targets" />
   <!-- To modify your build process, add your task inside one of the targets below then uncomment

@@ -37,3 +37,6 @@ aside.sidebar {
 	content: '\EC05';
 	font-size: 25px;
 }
+.sidebar > a#reload:before {
+	content: '\E72C';
+}
