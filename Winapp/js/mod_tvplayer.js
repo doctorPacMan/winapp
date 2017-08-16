@@ -1,4 +1,8 @@
 var modTvplayer = extendModule({
+	STATE_IDLE: 'idle',
+	STATE_LOAD: 'load',
+	STATE_VIEW: 'view',
+	STATE_FAIL: 'fail',
 	initialize: function(node_id) {
 		this.node = document.getElementById(node_id);
 		//this.listen('telecastView',this.onTelecastView.bind(this));
@@ -11,18 +15,21 @@ var modTvplayer = extendModule({
 		this._sauce = this.node.querySelector('video > source[type="application/x-mpegURL"]');
 		this._hlsPlayType = this.hlsPlayType(this._video);
 		
+		this.state(this.STATE_IDLE);
 		this._button = this.node.querySelector('button');
 		this._button.onclick = this.click.bind(this);
 
 		//this.fitinWidth();
 		this.fitinHeight(4/3);
 		this.initVideo(this._video);
-
-		this._hlsjs = this.attachHlsjs(this._video);
+		this.initControls(this.node.querySelector('div.tvcntrls'));
 		
 		console.log('modTvplayer initialize');
+		this._hlsjs = this.attachHlsjs(this._video);
 		this._ntype.innerText = this._hlsjs ? 'hlsjs' : (this._hlsPlayType || 'video');
 		
+		this.mute(true);
+
 		//this.onTelecastView({detail:{id:100435894}});
 		//this._video.setAttribute('autoplay','');
 		var view_movie = this.play.bind(this,'http://www.cn.ru/data/files/test/countdown.mp4');
@@ -31,7 +38,7 @@ var modTvplayer = extendModule({
 		//setTimeout(view_movie,0);
 		//setTimeout(view_record,4000);
 		//setTimeout(view_stream,8000);
-		this._wrppr.classList.add('load');
+		//this._wrppr.classList.add('load');
 	},
 	poster: function(src) {
 		this._posta.style.display = src===false?'none':'block';
@@ -39,6 +46,25 @@ var modTvplayer = extendModule({
 	},
 	click: function() {
 		console.log(this._video.readyState);
+	},
+	mute: function(st) {
+		var muted = this._video.getAttribute('muted'),
+			muted = (!!muted || muted==''),
+			mute = !muted;
+		
+		if(typeof(st)=='boolean') mute = st;
+		
+		if(mute)this._video.setAttribute('muted','');
+		else this._video.removeAttribute('muted','');
+		
+		return this._video.muted = mute;
+		//console.log(this._video.muted, mute);
+	},
+	initControls: function(cwrp) {
+		var batons = cwrp.getElementsByTagName('button');
+		batons[2].addEventListener('click',this.mute.bind(this,null));
+		
+		console.log(cwrp);
 	},
 	initVideo: function(video) {
 
@@ -48,6 +74,7 @@ var modTvplayer = extendModule({
 
 		video.addEventListener('playing',this._event_playstart.bind(this,false));
 		video.addEventListener('loadstart',this._event_playstart.bind(this,true));
+		video.addEventListener('error',this.error.bind(this));
 
 		var event_ended = function(e){console.log('ENDS',e)};
 		video.addEventListener('ended',event_ended.bind(this));
@@ -55,16 +82,14 @@ var modTvplayer = extendModule({
 		var event_cnplay = function(e){console.log('CNPL',e)};
 		//video.addEventListener('canplay',event_cnplay.bind(this));
 
-		var event_error = function(e){console.log('EROR',e)};
-		video.addEventListener('error',event_error.bind(this));
-
 		// observe buffering state
 		var waiting_state = false,
-			event_waiting = function(st){
+			event_waiting = function(st,e){
 				if(!this._sauce.src) st=false;
 				if(waiting_state===st) return;
-				this._wrppr.classList[st?'add':'remove']('load');
-				waiting_state = st;//console.log('BUFF',st);
+				//console.log('BUFF',st,(e?e.type:''));
+				this._wrppr.classList[st?'add':'remove']('loading');
+				waiting_state = st;
 			};
 		video.addEventListener('waiting',event_waiting.bind(this,true));
 		video.addEventListener('loadstart',event_waiting.bind(this,true));
@@ -78,6 +103,7 @@ var modTvplayer = extendModule({
 		else if(this._playstart) return null;
 		else this._playstart = true;
 		
+		this.state(this.STATE_VIEW);
 		var vw = this._video.videoWidth || 600,
 			vh = this._video.videoHeight || 450;
 		console.log('playstart', e.type, vw+'x'+vh,this._sauce.src);
@@ -168,6 +194,7 @@ var modTvplayer = extendModule({
 		this._sauce.removeAttribute('type');
 		this._sauce.removeAttribute('src');
 		this._video.load();
+		this.state(this.STATE_IDLE);
 		this.poster(false);
 		//var so = Array.prototype.slice.call(this._video.querySelectorAll('source'));
 		//while(so.length) this._video.removeChild(so.pop());
@@ -191,14 +218,23 @@ var modTvplayer = extendModule({
 		if(hls && hpt) this._sauce.setAttribute('type', hpt);
 		else this._sauce.removeAttribute('type');
 
-			console.log('LOAD', src, (!hls||!this._hlsjs), this._video)
-
-this._video.setAttribute('autoplay','')
+		console.log('LOAD', src);
 		if(!hls || !this._hlsjs) this._video.load();
 		else setTimeout(function(){
 			this._hlsjs.loadSource(src);
 			this._hlsjs.attachMedia(this._video);
 		}.bind(this),250);
+	},
+	error: function(error) {
+		this.stop();
+		this.state(this.STATE_FAIL);
+		console.log(error);
+	},
+	state: function(state) {
+		if(!this._state) this._state = this.STATE_IDLE;
+		this._wrppr.classList.remove('st-'+this._state);
+		this._wrppr.classList.add('st-'+state);
+		this._state = state;
 	},
 	fitinWidth: function(pp) {
 		var prop = pp || (4/3),

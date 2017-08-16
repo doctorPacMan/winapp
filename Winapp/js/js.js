@@ -2,7 +2,9 @@ var $App = {
 	initialize: function() {
 
 		//var tp = new modTvplayer('mod-tvplayer');
-		//tp.load('http://hls.peers.tv/streaming/cam_krylova-krasny/16/variable.m3u8');
+		//return tp.state('fail');
+		//return tp.load('http://hls.peers.tv/streaming/1kanal_hd/16/copy/playlist.m3u8?token=c1a56a57663a0e7c3a117ed9f3d6b43d');
+		//return tp.load('http://hls.peers.tv/streaming/cam_krylova-krasny/16/variable.m3u8');
 		//return tp.load('http://www.cn.ru/data/files/test/countdown.mp4');
 
 		console.info('$App initialize');
@@ -15,13 +17,13 @@ var $App = {
 	toggleSection: function(section,bttn) {
 		var section = document.getElementById(section),
 			st = !section.classList.contains('hidden');
-		console.log(section, st, bttn);
+		//console.log(section, st, bttn);
 		section.classList[st?'add':'remove']('hidden');
-		bttn.classList[!st?'add':'remove']('active');
+		if(bttn) bttn.classList[!st?'add':'remove']('active');
 	},
 	apinfo: function(brun) {
 		//alert('INFO');
-		console.log(cnapi)
+		console.log(cnapi);
 	},
 	apprun: function(brun) {
 		//this.initialize();

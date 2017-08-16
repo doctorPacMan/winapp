@@ -27,57 +27,35 @@
 	top:0;height: 100%;
 	margin: 0 auto;
 }
-
-
-.mod-tvplayer > div.load:before,
-.mod-tvplayer > div.load:after {
-	content:'';
+.mod-tvplayer > div:before,
+.mod-tvplayer > div:after {
+	z-index: 1;
+	text-align: center;
 	position: absolute;
 	left:50%;width:36px;
 	top:50%;height:36px;
-	margin: -20px 0 0 -20px;
-	border: 4px solid darkorange;
+	margin: -18px 0 0 -18px;
 	border-radius: 50%;
+}
+.mod-tvplayer > div.loading:after {
+	content:'';
+	margin: -22px 0 0 -22px;
+	border: 4px solid darkorange;
 	border-top-color: transparent;
-	box-shadow: 0 0 0 0px green;
 	animation: loadspin .6s linear 0s infinite reverse;
 }
-.mod-tvplayer > div.load:before {
-	content: none;
-	animation: none;
-	z-index: 20;
-	border: 0;
-	padding: 4px;
+.mod-tvplayer > div.st-fail:before {
+	left:50%;width:48px;
+	top:50%;height:48px;
+	margin: -24px 0 0 -24px;
+	border: 0px solid darkorange;
+	font: 48px/48px 'Segoe';
+	content: '\E25B';
+	color: tomato;
+	background: rgba(255,255,255,.25);
+	box-shadow: 0 0 16px 0px black;
 }
-.mod-tvplayer button {
-	display: inline-block;
-	display: none;
-	position: absolute;
-	left:50%;width:64px;
-	top:50%;height:64px;
-	margin: -32px 0 0 -32px;
-	padding: 0;
-	outline: 0;
-	background: rgba(60,60,60,.75);
-	border: 3px solid white;
-	color: white;
-	border-radius: 50%;
-	box-shadow: 0 0 8px black;
-}
-.mod-tvplayer button:before {
-	font: 42px/50px 'Segoe';
-}
-.mod-tvplayer button.play:before {
-	content: '\E768';
-	padding-left: 3px;
-}
-.mod-tvplayer button.pause:before {
-	content: '\E769';
-}
-.mod-tvplayer button.stop:before {
-	content: '\E71A';
-	font-size: 32px;
-}
+
 .mod-tvplayer > div > p {
 	margin: 0;
 	position: absolute;
@@ -123,3 +101,70 @@
 	left:50%;width: 480px;
 	top:50%;height: 360px;
 }
+
+.mod-tvplayer > div.tvcntrls {
+	background: rgba(255,255,255,.5);
+	top: auto;
+	bottom: 0;
+	left: 50%;
+	width: 250px;
+	height: 48px;
+	margin: 0 0 48px -125px;
+}
+.tvcntrls > button {
+	position: relative;
+	float: left;
+	width: 48px;
+	height: 100%;
+	margin: 0 0 0 1px;
+	border: 0;
+	color: black;
+	border: 2px solid white;
+	border-radius: 50%;
+}
+.tvcntrls > button:after {
+	color: white;
+	font: 24px/48px 'Segoe';
+	position: absolute;
+	left:50%;width:48px;
+	top:50%;height:48px;
+	margin: -24px;
+}
+.tvcntrls > button#tvc-play:after {content: '\E768'}
+.tvcntrls > button#tvc-play:hover:after {content: '\E769'}
+.tvcntrls > button#tvc-stop:after {content: '\E768'}
+.tvcntrls > button#tvc-stop:hover:after {content: '\E71A'}
+.tvcntrls > button#tvc-mute:after {content: '\E767'}
+.tvcntrls > button#tvc-mute:hover:after {content: '\E74F'}
+
+/*
+.mod-tvplayer button {
+	display: inline-block;
+	display: none;
+	position: absolute;
+	left:50%;width:64px;
+	top:50%;height:64px;
+	margin: -32px 0 0 -32px;
+	padding: 0;
+	outline: 0;
+	background: rgba(60,60,60,.75);
+	border: 3px solid white;
+	color: white;
+	border-radius: 50%;
+	box-shadow: 0 0 8px black;
+}
+.mod-tvplayer button:before {
+	font: 42px/50px 'Segoe';
+}
+.mod-tvplayer button.play:before {
+	content: '\E768';
+	padding-left: 3px;
+}
+.mod-tvplayer button.pause:before {
+	content: '\E769';
+}
+.mod-tvplayer button.stop:before {
+	content: '\E71A';
+	font-size: 32px;
+}
+*/
