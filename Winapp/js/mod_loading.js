@@ -29,7 +29,7 @@ var modLoading = extendModule({
 	progress: function(v, state) {
 		var cn = 'idle';
 		switch(state) {
-			case 0: cn = 'load';break;
+			case null: cn = 'load';break;
 			case false: cn = 'fail';break;
 			case true: cn = 'okay';break;
 		}

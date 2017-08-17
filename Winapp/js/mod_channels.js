@@ -12,27 +12,40 @@ var modChannels = extendModule({
 		this.listen('channelView',this.onChannelView.bind(this));
 //		console.log('MC init', this.node);
 
-		var cb = this.node.querySelectorAll('a.chatile');
-		for(var i=0;i<cb.length;i++) {
-			//cb[i].onclick = this.clickChannel.bind(this,cb[i]);
-			//cb[i].onclick = function(e){console.log(e)};
+		if(true) this.list.innerHTML = '';
+		else {
+			var cb = this.node.querySelectorAll('a.chatile');
+			for(var i=0;i<cb.length;i++) {}
 		}
-
 	},
 	update: function(channels) {
 
 		var df = document.createDocumentFragment(),
+			fs = document.createDocumentFragment(),
 			li = document.createElement('li'),
 			ch, ct;
 
+		var top = ['51074087','40307207','26957011','10338194'],
+			df_top = document.createDocumentFragment();// just for top
+		
+		var scl = ['10338227','22615442'],
+			df_scl = document.createDocumentFragment();// wrong scale channels
+
 		for(var id in channels) {
+
 			ct = this.getTile(channels[id]);
 			li = li.cloneNode(false);
 			li.appendChild(ct);
-			df.appendChild(li);
+
+			if(top.indexOf(id)>=0) df_top.appendChild(li);
+			else if(scl.indexOf(id)>=0) df_scl.appendChild(li);
+			else df.appendChild(li);
+			
 			ct.addEventListener('click',this.onChannelClick.bind(this,id),false);
 			this._tiles[id] = li;
 		}
+		this.list.appendChild(df_top);
+		this.list.appendChild(df_scl);
 		this.list.appendChild(df);
 //		console.log('MCupdate',channels[34498202]);
 	},

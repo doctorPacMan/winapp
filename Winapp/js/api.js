@@ -1,23 +1,26 @@
 var cnapi = {
 	apiurl: 'http://api.peers.tv',
 	//apiurl: 'http://a.trunk.ptv.bender.inetra.ru',
+	_data: {},
 	token: null,
 	location: null,
 	provider: null,
 	initialize: function(callback, monitor) {
 		this._onready = callback;
 		this._monitor = monitor.progress.bind(monitor);
-		this._monitor('whereami',0);
 
+		this._monitor('whereami',null);
 		var apiurl = this.apiurl+'/registry/2/whereami.json',
 			colbek = this._handler_whereami.bind(this);
 		$Ajax(apiurl,colbek,null,true);
 	},
 	_handler_whereami: function(data, xhr) {
 
-		console.log('Whereami',data);
+		console.log('Whereami', !!xhr, data);
 		if(data===false) return this._monitor('whereami',false);
 		else this._monitor('whereami',true);
+
+		localStorage.setItem('data_whereami',JSON.stringify(data));
 
 		var terr = data.territories[0];
 		this.location = terr.territoryId;
@@ -74,7 +77,7 @@ var cnapi = {
 			var apiurl = this.apis.auth+'token',
 				params = {'grant_type':'inetra:anonymous','client_id':'demoapp','client_secret':'demoapp'};
 			$Ajax(apiurl,this._handler_acstoken.bind(this),params);
-			this._monitor('authtoken',0);
+			this._monitor('authtoken',null);
 		}
 	},
 	_handler_acstoken: function(data) {
@@ -100,7 +103,7 @@ var cnapi = {
 		var playlists = this._temp_playlists;
 		delete this._temp_playlists;
 
-		this._monitor('playlist',0);
+		this._monitor('playlist',null);
 		
 		var progress = {},
 			channels = new ChannelsPlaylist(),

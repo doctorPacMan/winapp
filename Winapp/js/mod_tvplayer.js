@@ -16,7 +16,7 @@ var modTvplayer = extendModule({
 		this._hlsPlayType = this.hlsPlayType(this._video);
 		
 		this.state(this.STATE_IDLE);
-		this._button = this.node.querySelector('button');
+		this._button = this.node.querySelector('button#playbttn');
 		this._button.onclick = this.click.bind(this);
 
 		//this.fitinWidth();
@@ -44,8 +44,15 @@ var modTvplayer = extendModule({
 		this._posta.style.display = src===false?'none':'block';
 		if(src) this._posta.style.backgroundImage = 'url("'+src+'")';
 	},
-	click: function() {
-		console.log(this._video.readyState);
+	size: function(st) {
+
+		var vw = this._video.videoWidth || 0,
+			vh = this._video.videoHeight || 0,
+			pp = (vw>0 && vh>0) ? (vw/vh) : (4/3);
+		
+		console.log(vw+'x'+vh, pp);
+		if('height'==this._fitin) this.fitinWidth(pp);
+		else this.fitinHeight(pp);
 	},
 	mute: function(st) {
 		var muted = this._video.getAttribute('muted'),
@@ -63,6 +70,8 @@ var modTvplayer = extendModule({
 	initControls: function(cwrp) {
 		var batons = cwrp.getElementsByTagName('button');
 		batons[2].addEventListener('click',this.mute.bind(this,null));
+		
+		batons[3].addEventListener('click',this.size.bind(this,null));
 		
 		console.log(cwrp);
 	},
@@ -87,18 +96,27 @@ var modTvplayer = extendModule({
 			event_waiting = function(st,e){
 				if(!this._sauce.src) st=false;
 				if(waiting_state===st) return;
-				//console.log('BUFF',st,(e?e.type:''));
+				console.log('BUFF',st,(e?e.type:''));
 				this._wrppr.classList[st?'add':'remove']('loading');
 				waiting_state = st;
 			};
 		video.addEventListener('waiting',event_waiting.bind(this,true));
 		video.addEventListener('loadstart',event_waiting.bind(this,true));
 		var buffering_done = event_waiting.bind(this,false),
-			bufdone_events = ['playing','suspend','emptied','seeked','error'];
+			bufdone_events = ['canplay','playing','suspend','emptied','seeked','error'];
 		bufdone_events.forEach(function(en){video.addEventListener(en,buffering_done)});
 
+		video.addEventListener('play',this._event_pause.bind(this,false),false);
+		video.addEventListener('pause',this._event_pause.bind(this,true),false);
 	},
-	_event_playstart:function(reset, e) {
+	_event_pause: function(st, e) {
+		var paused = this._video.paused,
+			stoped = (this._video.readyState<2);
+		console.log('event_pause','stoped:'+stoped,'paused:'+paused,'st:'+st);
+		this._wrppr.classList[paused?'add':'remove']('ps-paused');
+		this._wrppr.classList[paused?'remove':'add']('ps-played');
+	},
+	_event_playstart: function(reset, e) {
 		if(reset===true) return this._playstart = false;
 		else if(this._playstart) return null;
 		else this._playstart = true;
@@ -109,7 +127,8 @@ var modTvplayer = extendModule({
 		console.log('playstart', e.type, vw+'x'+vh,this._sauce.src);
 		this._video.setAttribute('width',vw);
 		this._video.setAttribute('height',vh);
-		this.fitinWidth(vw/vh);
+		//this.fitinWidth(vw/vh);
+		this.fitinHeight(vw/vh);
 	},
 	attachHlsjs: function(video) {
 
@@ -125,14 +144,28 @@ var modTvplayer = extendModule({
 		hlsjs.on(Hls.Events.MEDIA_DETACHED,function(event,data){
 			//console.log('detach');this._video.load();
 		}.bind(this));
+
+		hlsjs.on(Hls.Events.ERROR, this.error.bind(this));
+
 		video.className = 'hlsjs';
 		return hlsjs;
 	},
 	onChannelView: function(event) {
 		var id = event.detail.channelId,
-			cha = $App.getChannelById(id);
-		console.log('onChannelView',cha);
+			cha = $App.getChannelById(id),
+			scale = false;
+		
+
+		console.log('onChannelView', scale, cha);
+
 		this.play(cha.stream);
+		
+		scale = ([22301705,22615442,10338208,10338227,26424387].indexOf(cha.cid)>=0);
+		if(scale) this.scale();
+	},
+	scale: function() {
+		//this._video.style.transform = 'scale(1.25, 1)';
+		this._video.style.transform = 'scale(1, 0.75)';
 	},
 	onTelecastView: function(event) {
 		var id = event.detail.id,
@@ -179,6 +212,32 @@ var modTvplayer = extendModule({
 		};
 		return cp;
 	},
+	click: function() {
+		//console.log(this._video.readyState);
+		this.pause();
+	},
+	pause: function(st) {
+
+		var paused = this._video.paused,
+			stoped = (this._video.readyState<2);
+		
+		var st = (typeof st == 'boolean') ? st : !paused;
+
+		console.log('PAUSE','paused:'+paused, 'stoped:'+stoped, 'st:'+st);
+		
+		//if(st) this._video.play();
+		//else this._video.pause();
+
+		this._video[st ? 'pause' : 'play']();
+		
+
+		//if(stoped && st === false) this.stop(false);
+		//else this._video[st ? 'pause' : 'play']();
+
+		//if(st) this._video.play();
+		//else this._video.pause();
+	
+	},
 	stop: function() {
 
 		if(this._hlsjs) {
@@ -188,6 +247,7 @@ var modTvplayer = extendModule({
 
 		//this._video.pause();
 		//this._video.currentTime = 0;
+		this._video.removeAttribute('style');
 		this._video.removeAttribute('src');
 		this._video.removeAttribute('poster');
 		this._video.removeAttribute('autoplay');
@@ -248,6 +308,7 @@ var modTvplayer = extendModule({
 		this._video.style.height = vh+'px';
 		this._video.style.marginTop = (ch - vh)/2 + 'px';
 		this._video.style.marginLeft = '0px';
+		this._fitin = 'width';
 	},
 	fitinHeight: function(pp) {
 		var prop = pp || (4/3),
@@ -261,5 +322,6 @@ var modTvplayer = extendModule({
 		this._video.style.height = vh+'px';
 		this._video.style.marginTop = '0px';
 		this._video.style.marginLeft = (cw - vw)/2 + 'px';
+		this._fitin = 'height';
 	}
 });
