@@ -1,8 +1,8 @@
 var modTvplayer = extendModule({
 	STATE_IDLE: 'idle',
 	STATE_LOAD: 'load',
-	STATE_VIEW: 'view',
 	STATE_FAIL: 'fail',
+	STATE_VIEW: 'view',
 	initialize: function(node_id) {
 		this.node = document.getElementById(node_id);
 		//this.listen('telecastView',this.onTelecastView.bind(this));
@@ -69,11 +69,24 @@ var modTvplayer = extendModule({
 	},
 	initControls: function(cwrp) {
 		var batons = cwrp.getElementsByTagName('button');
-		batons[2].addEventListener('click',this.mute.bind(this,null));
-		
-		batons[3].addEventListener('click',this.size.bind(this,null));
-		
+		this._button_play = batons[0];
+		this._button_mute = batons[1];
+		this._button_size = batons[2];
+		this._button_play.addEventListener('click',this.pause.bind(this,null));
+		this._button_mute.addEventListener('click',this.mute.bind(this,null));
+		this._button_size.addEventListener('click',this.size.bind(this,null));
 		console.log(cwrp);
+	},
+	pausechange: function(paused, event) {
+		this._wrppr.classList[paused?'add':'remove']('ps-paused');
+		//this._wrppr.classList[paused?'remove':'add']('ps-played');
+		//console.log('PAUSED',paused+' ('+event.type+')');
+	},
+	statechange: function(newstate, oldstate, event) {
+		console.log('STATE',oldstate+' > '+newstate+' ('+event.type+')');
+		this._wrppr.classList.remove('st-'+oldstate);
+		this._wrppr.classList.add('st-'+newstate);
+		//this._wrppr.className = 'st-'+newstate;
 	},
 	initVideo: function(video) {
 
@@ -83,13 +96,23 @@ var modTvplayer = extendModule({
 
 		video.addEventListener('playing',this._event_playstart.bind(this,false));
 		video.addEventListener('loadstart',this._event_playstart.bind(this,true));
-		video.addEventListener('error',this.error.bind(this));
+		//video.addEventListener('error',this.error.bind(this));
 
 		var event_ended = function(e){console.log('ENDS',e)};
 		video.addEventListener('ended',event_ended.bind(this));
 
-		var event_cnplay = function(e){console.log('CNPL',e)};
-		//video.addEventListener('canplay',event_cnplay.bind(this));
+		// observe loading state
+		var loading_callback = this.statechange.bind(this),
+			loading_state = this.STATE_IDLE,
+			event_loading = function(state, e) {return function(e){
+				if(loading_state === state) return;
+				var oldstate = loading_state,
+					newstate = loading_state = state;
+				loading_callback(newstate, oldstate, e);
+			}};
+		video.addEventListener('loadstart',event_loading(this.STATE_LOAD));
+		video.addEventListener('canplay',event_loading(this.STATE_VIEW));
+		video.addEventListener('error',event_loading(this.STATE_FAIL));
 
 		// observe buffering state
 		var waiting_state = false,
@@ -97,17 +120,25 @@ var modTvplayer = extendModule({
 				if(!this._sauce.src) st=false;
 				if(waiting_state===st) return;
 				console.log('BUFF',st,(e?e.type:''));
-				this._wrppr.classList[st?'add':'remove']('loading');
+				this._wrppr.classList[st?'add':'remove']('ls-waiting');
 				waiting_state = st;
 			};
 		video.addEventListener('waiting',event_waiting.bind(this,true));
-		video.addEventListener('loadstart',event_waiting.bind(this,true));
 		var buffering_done = event_waiting.bind(this,false),
 			bufdone_events = ['canplay','playing','suspend','emptied','seeked','error'];
 		bufdone_events.forEach(function(en){video.addEventListener(en,buffering_done)});
 
-		video.addEventListener('play',this._event_pause.bind(this,false),false);
-		video.addEventListener('pause',this._event_pause.bind(this,true),false);
+		// observe paused state
+		var paused_state = false,
+			event_paused = function(st,e) {
+				var paused = this._video.paused,
+					stoped = (this._video.readyState<2);
+				console.log('PAUSED','stoped:'+stoped,'paused:'+paused,'st:'+st);
+				this.pausechange(paused, e);
+			};
+		video.addEventListener('play',event_paused.bind(this,false),false);
+		video.addEventListener('pause',event_paused.bind(this,true),false);
+
 	},
 	_event_pause: function(st, e) {
 		var paused = this._video.paused,
@@ -121,7 +152,6 @@ var modTvplayer = extendModule({
 		else if(this._playstart) return null;
 		else this._playstart = true;
 		
-		this.state(this.STATE_VIEW);
 		var vw = this._video.videoWidth || 600,
 			vh = this._video.videoHeight || 450;
 		console.log('playstart', e.type, vw+'x'+vh,this._sauce.src);
@@ -145,7 +175,10 @@ var modTvplayer = extendModule({
 			//console.log('detach');this._video.load();
 		}.bind(this));
 
-		hlsjs.on(Hls.Events.ERROR, this.error.bind(this));
+		//hlsjs.on(Hls.Events.ERROR, this.error.bind(this));
+		hlsjs.on(Hls.Events.ERROR,(function(){
+			video.dispatchEvent(new CustomEvent('hlserror',{'detail':0}));
+		}).bind(this));
 
 		video.className = 'hlsjs';
 		return hlsjs;
@@ -217,26 +250,11 @@ var modTvplayer = extendModule({
 		this.pause();
 	},
 	pause: function(st) {
-
 		var paused = this._video.paused,
 			stoped = (this._video.readyState<2);
-		
 		var st = (typeof st == 'boolean') ? st : !paused;
-
-		console.log('PAUSE','paused:'+paused, 'stoped:'+stoped, 'st:'+st);
-		
-		//if(st) this._video.play();
-		//else this._video.pause();
-
-		this._video[st ? 'pause' : 'play']();
-		
-
-		//if(stoped && st === false) this.stop(false);
-		//else this._video[st ? 'pause' : 'play']();
-
-		//if(st) this._video.play();
-		//else this._video.pause();
-	
+		//console.log('PAUSE','paused:'+paused, 'stoped:'+stoped, 'st:'+st);
+		this._video[st ? 'pause' : 'play']();		
 	},
 	stop: function() {
 
@@ -254,7 +272,6 @@ var modTvplayer = extendModule({
 		this._sauce.removeAttribute('type');
 		this._sauce.removeAttribute('src');
 		this._video.load();
-		this.state(this.STATE_IDLE);
 		this.poster(false);
 		//var so = Array.prototype.slice.call(this._video.querySelectorAll('source'));
 		//while(so.length) this._video.removeChild(so.pop());
