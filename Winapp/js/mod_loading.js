@@ -1,3 +1,4 @@
+﻿"use strict";
 var modLoading = extendModule({
 	initialize: function(node_id) {
 		this.node = document.getElementById(node_id);

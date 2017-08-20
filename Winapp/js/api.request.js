@@ -1,4 +1,5 @@
-cnapi.request = {}
+﻿"use strict";
+cnapi.request = {};
 cnapi.request.schedule = function(cid,day,onComplete) {
 	
 	var day = day ? new Date(day) : new Date,

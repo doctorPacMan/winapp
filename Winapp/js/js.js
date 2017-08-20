@@ -1,19 +1,21 @@
+﻿"use strict";
 var $App = {
 	initialize: function() {
-
-		//var tp = new modTvplayer('mod-tvplayer');
-		//return tp.state('fail');
-		//return tp.load('http://hls.peers.tv/streaming/1kanal_hd/16/copy/playlist.m3u8?token=fd7dd8de64e65b43f2107d011c851a71');
-		//return tp.load('http://hls.peers.tv/streaming/cam_krylova-krasny/16/variable.m3u8');
-		//return tp.load('http://archive2.peers.tv/archive/101354016/101354016.m3u8');
-		//return tp.load('http://www.cn.ru/data/files/test/countdown.mp4');
-
+		//return this.test_modTvplayer();
 		console.info('$App initialize');
 		this._telecast = {};
 		this._channels = {};
 
 		cnapi.initialize(this.onready.bind(this),new modLoading('mod-loading'));
 		this.sbbuttons();
+	},
+	test_modTvplayer: function() {
+		var tp = new modTvplayer('mod-tvplayer');
+		//return tp.state('fail');
+		//return tp.load('http://hls.peers.tv/streaming/1kanal_hd/16/copy/playlist.m3u8?token=fd7dd8de64e65b43f2107d011c851a71');
+		return tp.load('http://hls.peers.tv/streaming/cam_krylova-krasny/16/variable.m3u8');
+		//return tp.load('http://archive2.peers.tv/archive/101354016/101354016.m3u8');
+		//return tp.load('http://www.cn.ru/data/files/test/countdown.mp4');
 	},
 	toggleSection: function(section,bttn) {
 		var section = document.getElementById(section),

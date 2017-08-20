@@ -1,3 +1,4 @@
+﻿"use strict";
 var modTitlebar = extendModule({
 	initialize: function(node_id) {
 		//console.log('modTitlebar initialize',node_id);

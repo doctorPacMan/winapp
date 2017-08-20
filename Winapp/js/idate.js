@@ -1,3 +1,4 @@
+﻿"use strict";
 var iDate = function() {return this.initialize.apply(this,arguments)};
 iDate.prototype = {
 	initialize: function() {
@@ -152,6 +153,7 @@ Date.prototype.format = function(f) {
     );
 };
 /* ................................... Server Date */
+/*
 Date_UsernameDelay = function(servertime) {
 	Date.prototype.server_time_delay = (new Date(servertime) - new Date());
 };
@@ -161,3 +163,4 @@ Date.prototype.getFixed = function() {
 
   return this;
 };
+*/

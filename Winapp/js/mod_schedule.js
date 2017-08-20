@@ -1,3 +1,4 @@
+﻿"use strict";
 var modSchedule = extendModule({
 	initialize: function(node_id) {
 		//console.log('modSchedule initialize');
@@ -6,7 +7,7 @@ var modSchedule = extendModule({
 		this.node = document.getElementById(node_id);
 		this.container = this.node.querySelector('.mod-schedule-dayz > div');
 		//this.dayzFill(this.node.querySelectorAll('.mod-schedule-dayz time'));
-		this.listen('channelView',this.onChannelView.bind(this));
+		//this.listen('channelView',this.onChannelView.bind(this));
 		this.node.style.display = 'block';
 		
 		//this.onChannelView({detail:{channelId:10338251}});

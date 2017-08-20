@@ -1,4 +1,4 @@
-@keyframes loadspin {
+﻿@keyframes loadspin {
 	0% {transform: rotate(360deg)}
 	100% {transform: rotate(0deg)}
 }
@@ -8,20 +8,60 @@
 	top:0px; bottom:0px;
 	overflow: hidden;
 }
-.mod-tvplayer > div {
+.mod-tvplayer > div.tvplayer {
 	position: absolute;
 	left:0;width:100%;
 	top:0;height:100%;
 	margin: 0;
 }
-.mod-tvplayer > div > video {
+.tvplayer > div {
+	box-shadow: inset 0 0 0 0px cyan;
+	position: absolute;
+	left:0;width: 100%;
+	top:0;height: 100%;
+}
+
+.tvplayer > i {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	width: 400px;
+	margin-left:-200px;
+	color: white;
+	text-align: center;
+	pointer-events: none;
+	padding: 4px 0;
+	font: normal normal 12px monospace;
+	background: black;
+}
+.player-video > s {
+	position: absolute;
+	left:0; width:100%;
+	top:0; height:100%;
+	background: transparent none repeat-x 0 0;
+	background-image: repeating-linear-gradient(135deg, rgba(255,255,255,.05) 20px, rgba(255,255,255,.05) 40px, transparent 40px, transparent 60px);
+	pointer-events: none;
+	display: none;
+}
+.player-video > s:before,
+.player-video > s:after {
+	content: '';
+	position: absolute;
+	left:50%;width:0px;
+	top:50%;height:0px;
+	margin: -1px;
+	border: 1px solid cyan;
+}
+.player-video > s:before {left:0;width:100%}
+.player-video > s:after {top:0;height:100%}
+
+.tvplayer > div.player-video > video {
 	display: block;
 	position: relative;
 	left:0;width: 100%;
 	top:0;height: 100%;
 	margin: 0 auto;
 }
-
 div.player-video:after,
 div.player-video:before {
 	z-index: 1;	
@@ -48,24 +88,28 @@ div.player-video.ls-waiting:after {
 	animation: loadspin .6s linear 0s infinite reverse;
 }
 div.player-video:before {}
-div.player-video.st-idle:before {content: 'idle'}
-div.player-video.st-load:before {animation: loadspin .6s linear 0s infinite}
-div.player-video.st-fail:before {
+.st-idle div.player-video:before {content: 'idle'}
+.st-load div.player-video:before {animation: loadspin .6s linear 0s infinite}
+.st-fail div.player-video:before {
 	content: 'error';
 	border-color: tomato;
 	color: tomato;
 }
-div.player-video.st-view:before {content: none}
+.st-view div.player-video:before {content: none}
+
 /* ============================================================== */
-.mod-tvplayer > div > div.tvcntrls {
+.tvplayer > div.tvcntrls {
 	position: absolute;
+	top: auto;
 	bottom:0;height:40px;
 	left:0px; width:100%;
-	padding: 12px 6px;
+	padding: 4px 8px 4px;
 	background: rgba(255,255,255,0);
 	background-image: linear-gradient(0deg, rgba(0,0,0,.75) 0%, rgba(0,0,0,.25) 75%, transparent);
-	margin-bottom: 32px;
 }
+.tvplayer > div.tvcntrls {bottom:-64px; transition: bottom .25s ease-in-out 0s}
+.tvplayer.hover > div.tvcntrls {bottom:0}
+
 .tvcntrls > button {
 	position: relative;
 	float: left;
@@ -85,8 +129,9 @@ div.player-video.st-view:before {content: none}
 	top:50%;height:48px;
 	margin: -24px;
 }
-.tvcntrls > button#tvc-play:after {content: '\E769'}
-.ps-paused .tvcntrls > button#tvc-play:after {content: '\E768'}
+.ps-standby .tvcntrls > button#tvc-play:after {content: '\E7E8'}
+.ps-playing .tvcntrls > button#tvc-play:after {content: '\E769'}
+.ps-onpause .tvcntrls > button#tvc-play:after {content: '\E768'}
 
 .tvcntrls > button#tvc-mute:after {content: '\E767'}
 .tvcntrls > button#tvc-mute:hover:after {content: '\E74F'}
@@ -96,27 +141,7 @@ div.player-video.st-view:before {content: none}
 .tvcntrls > button#tvc-stop:after {content: '\E768'}
 .tvcntrls > button#tvc-stop:hover:after {content: '\E71A'}
 
-
-
-/*
-.mod-tvplayer > div.loading:after {
-	content:'';
-	margin: -22px 0 0 -22px;
-	border: 4px solid darkorange;
-	border-top-color: transparent;
-	animation: loadspin .6s linear 0s infinite reverse;
-}
-.mod-tvplayer > div.st-fail:before {
-	left:50%;width:48px;
-	top:50%;height:48px;
-	margin: -24px 0 0 -24px;
-	border: 0px solid darkorange;
-	font: 48px/48px 'Segoe';
-	content: '\E25B';
-	color: tomato;
-	background: rgba(255,255,255,.25);
-	box-shadow: 0 0 16px 0px black;
-}
+/* ============================================================== */
 
 .mod-tvplayer > div > p {
 	margin: 0;
@@ -139,30 +164,41 @@ div.player-video.st-view:before {content: none}
 		linear-gradient(180deg, transparent 0%, transparent 50%, rgb(30,40,70) 50%, rgb(30,40,70));
 	background-size: 2px 2px;
 }
-.mod-tvplayer > div > i {
-	position: absolute;
-	left: 0;right:0;
-	top: 0;
-	color: white;
-	text-align: center;
-	pointer-events: none;
-	padding: 2px 12px;
-	font: normal normal 12px 'Ubuntu';
-}
-.mod-tvplayer video {
+.mod-tvplayer > div > video {
 	display: block;
 	background: rgb(53,53,53);
 	position: absolute;
 	left:0;width: 100%;
 	top:0;height: 100%;
 }
-.mod-tvplayer video.hlsjs {background-color: darkslategray}
-
-.mod-tvplayer xvideo {
-	margin: -180px 0 0 -240px;
-	left:50%;width: 480px;
-	top:50%;height: 360px;
+.mod-tvplayer > div > video {background-color: black}
+.mod-tvplayer > div > video.hlsjs {background-color: darkslategray}
+.mod-tvplayerXX > div > video {
+	margin: -180px 0 0 -240px !important;
+	left:50%;width: 480px !important;
+	top:50%;height: 360px !important;
 }
+
+/*
+.mod-tvplayer > div.loading:after {
+	content:'';
+	margin: -22px 0 0 -22px;
+	border: 4px solid darkorange;
+	border-top-color: transparent;
+	animation: loadspin .6s linear 0s infinite reverse;
+}
+.mod-tvplayer > div.st-fail:before {
+	left:50%;width:48px;
+	top:50%;height:48px;
+	margin: -24px 0 0 -24px;
+	border: 0px solid darkorange;
+	font: 48px/48px 'Segoe';
+	content: '\E25B';
+	color: tomato;
+	background: rgba(255,255,255,.25);
+	box-shadow: 0 0 16px 0px black;
+}
+
 
 
 #playbttn {
@@ -200,7 +236,7 @@ div.player-video.st-view:before {content: none}
 	height: 100%;
 	padding: 0;
 }
-.ps-paused #playbttn:before {
+.ps-onpause #playbttn:before {
 	content: '\E768';
 	padding-left: .075em;
 }

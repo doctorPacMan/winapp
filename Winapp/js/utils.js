@@ -1,4 +1,5 @@
-Utils = {};
+﻿"use strict";
+var Utils = {};
 Utils.parseM3UPlaylist = function(playlist) {
 
 		if(typeof(playlist)!='string') {

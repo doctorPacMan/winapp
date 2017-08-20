@@ -1,4 +1,4 @@
-@keyframes listAppear {
+﻿@keyframes listAppear {
   from {opacity: .25}
   to {opacity: 1}
 }

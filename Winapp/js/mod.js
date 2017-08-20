@@ -1,3 +1,4 @@
+﻿"use strict";
 var extendModule = function(extension) {
 	//console.log('extendModule', extension);
 

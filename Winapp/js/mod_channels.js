@@ -1,3 +1,4 @@
+﻿"use strict";
 var modChannels = extendModule({
 	initialize: function(node_id, channels) {
 		

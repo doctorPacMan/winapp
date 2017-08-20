@@ -1,3 +1,4 @@
+﻿"use strict";
 var TvShow = function(){return this.initialize.apply(this,arguments)};
 TvShow.prototype = {
 	initialize: function(json) {

@@ -1,3 +1,4 @@
+﻿"use strict";
 var cookie = {
 	set : function(name, value, expires, path, domain, secure) {
 		var curCookie = escape(name) + "=" + escape(value) +

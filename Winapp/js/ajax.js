@@ -1,3 +1,4 @@
+﻿"use strict";
 var $Ajax = function(url,onComplete,params,async) {
 
 		var async = async===false ? false : true;

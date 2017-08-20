@@ -1,3 +1,4 @@
+﻿"use strict";
 var ChannelsPlaylist = function(data) {
 	this.channels = {};
 	this.cids = [];

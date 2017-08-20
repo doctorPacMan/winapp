@@ -53,20 +53,23 @@
 	</div>
 
 	<div class="mod-tvplayer" id="mod-tvplayer">
-		<div class="player-video st-idle ps-paused">
+	<div class="tvplayer st-idle ps-standby">
+		<div class="player-video">
 			<video poster="img/poster16x9.jpg" controls muted preload="none" width="480" height="270">
 			<source src="http://hls.peers.tv/streaming/cam_krylova-krasny/16/variable.m3u8" type="application/x-mpegURL">
 			<!-- <source src="http://www.cn.ru/data/files/test/countdown.mp4" type="video/mp4"> -->
 			</video>
-			<i>video</i>
-			<p style="background-image:url('http://peers.tv/data/images/imgs/2017/07/27/100763/100763159.jpg');display:none">poster</p>
-			<button id="playbttn"></button>
-			<div class="tvcntrls">
-				<button id="tvc-play">Play</button>
-				<button id="tvc-mute">Mute</button>
-				<button id="tvc-size">Size</button>
-			</div>
+			<s></s>
 		</div>
+		<i>video</i>
+		<p style="background-image:url('http://peers.tv/data/images/imgs/2017/07/27/100763/100763159.jpg');display:none">poster</p>
+		<button id="playbttn"></button>
+		<div class="tvcntrls">
+			<button id="tvc-play">Play</button>
+			<button id="tvc-mute">Mute</button>
+			<button id="tvc-size">Size</button>
+		</div>
+	</div>
 	</div>
 
 	<aside class="sidebar">
