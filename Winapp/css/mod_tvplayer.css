@@ -20,7 +20,7 @@
 	left:0;width: 100%;
 	top:0;height: 100%;
 }
-
+.tvplayer > u,
 .tvplayer > i {
 	position: absolute;
 	top: 0;
@@ -32,7 +32,11 @@
 	pointer-events: none;
 	padding: 4px 0;
 	font: normal normal 12px monospace;
+	text-decoration: none;
 	background: black;
+}
+.tvplayer > u {
+	top: 50px;
 }
 .player-video > s {
 	position: absolute;
@@ -61,6 +65,16 @@
 	left:0;width: 100%;
 	top:0;height: 100%;
 	margin: 0 auto;
+}
+.tvplayer > div.player-video > video.screen {
+	position: absolute;
+	left:50% !important;
+	top:50% !important;
+	width:640px !important;
+	height:480px !important;
+	margin: -240px 0 0 -320px !important;
+	background: maroon;
+	box-shadow: 0 0 0 1px cyan;
 }
 div.player-video:after,
 div.player-video:before {

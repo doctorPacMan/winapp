@@ -101,7 +101,7 @@ var modTvplayer = extendModule({
 		this._button_play.addEventListener('click',this.pause.bind(this,null));
 		this._button_mute.addEventListener('click',this.mute.bind(this,null));
 		this._button_size.addEventListener('click',this.size.bind(this,null));
-		console.log(cwrp);
+		//console.log(cwrp);
 	},
 	pausechange: function(paused, event) {
 		this._wrppr.classList[paused?'add':'remove']('ps-onpause');
@@ -114,6 +114,32 @@ var modTvplayer = extendModule({
 		this._wrppr.classList.remove('st-'+oldstate);
 		this._wrppr.classList.add('st-'+newstate);
 		//this._wrppr.className = 'st-'+newstate;
+	},
+	_state_observe:function(video) {
+		video.setAttribute('controls','');
+		video.classList.add('screen');
+		var u = this._wrppr.querySelector('u');
+		//console.log(u);
+		var ea = [
+			//'readystatechange',
+			//'durationchange',
+			'emptied','loadstart','loadedmetadata',
+			'loadeddata','canplay','canplaythrough',
+			'playing','ended',
+			//'progress','stalled',
+			'suspend',
+			'waiting',
+			'error'];
+		
+		var callback = function(event) {
+			console.log(event.type, event);
+			u.innerText = event.type;
+		};
+
+		while(ea.length) {
+			var e = ea.shift();
+			video.addEventListener(e,callback,false);
+		}
 	},
 	initVideo: function(video) {
 		video.removeAttribute('controls');
@@ -130,8 +156,9 @@ var modTvplayer = extendModule({
 		var event_ended = function(e){console.log('ENDS',e)};
 		video.addEventListener('ended',event_ended.bind(this));
 
-this._hover_observe();
-
+		this._state_observe(video);
+		//this._hover_observe();
+		
 		// observe loading state
 		var loading_callback = this.statechange.bind(this),
 			loading_state = this.STATE_IDLE,
@@ -205,7 +232,7 @@ this._hover_observe();
 			video.dispatchEvent(new CustomEvent('hlserror',{'detail':0}));
 		}).bind(this));
 
-		video.className = 'hlsjs';
+		video.classList.add('hlsjs');
 		return hlsjs;
 	},
 	onChannelView: function(event) {
