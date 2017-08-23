@@ -1,0 +1,95 @@
+.appconfig {
+	z-index: 3;
+	position: absolute;
+	right:0;width:auto;
+	top: 0px; bottom:0;
+	margin: 0 0 0px;
+	overflow: hidden;
+	background: rgba(42,48,57,.82);
+	border-left: 1px solid rgba(255,255,255,.125);
+	box-shadow: 0 0 5px black;
+	width: 240px;
+	transition: right .2s ease-out 0s;
+}
+.appconfig.hidden {
+	right: -240px;
+	box-shadow: none;
+}
+.appconfig > h2 {
+	padding: 11px 10px 12px;
+	font-size: 24px;
+	font-weight: 200;
+	line-height: 24px;
+	border-bottom: 1px solid dodgerblue;
+	box-shadow: 0 0 12px black;
+	background: rgba(42,48,57,1);
+}
+.appconfig > form {
+	margin: 0;
+	padding: 12px;
+}
+.appconfig > form > span.cbox {
+	margin: 0 0 12px;
+}
+span.cbox {
+	display: block;
+	outline: 0px solid darkcyan;
+	height: 36px;
+	position: relative;
+	overflow: hidden;
+	font-size: 16px;
+	line-height: 20px;
+	white-space: nowrap;
+}
+span.cbox > input {
+	pointer-events: none;
+	position: absolute;
+	right: 0px;
+	top: -50px;
+}
+span.cbox label {
+	position: relative;
+	left:0; width:auto;
+	top:0; height:100%;
+	height: 20px;
+	padding: 8px 0;
+	display: inline-block;
+	cursor: pointer;
+}
+span.cbox label:hover {}
+span.cbox label b {
+	float: left;
+	width: 48px;
+	height: 20px;
+	margin-right: .7em;
+	position: relative;
+}
+span.cbox label b:after,
+span.cbox label b:before {
+	content: '';
+	position: absolute;
+	left:0;top:0;
+	border-radius: 10px;
+	height: 20px;
+	z-index: 1;
+	line-height: 1;	
+}
+span.cbox label b:before {
+    width: 100%;
+    background-color: rgba(90,90,90,.75);
+    box-shadow: inset 0 -1px 1px 0 rgba(255,255,255,.125);
+	transition: background-color ease .2s;
+}
+span.cbox label b:after {
+	left:1px;top:1px;
+	height: 18px;
+	width: 18px;
+	border-radius: 9px;
+	background: whitesmoke;
+	transition: left ease .2s;
+}
+span.cbox > input:checked + label b:after {left: 29px}
+span.cbox > input:checked + label b:before {
+
+	background-color: rgb(55,116,186);
+}

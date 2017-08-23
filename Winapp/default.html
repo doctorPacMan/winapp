@@ -28,6 +28,7 @@
 	<script src="js/mod_schedule.js"></script>
 	<script src="js/mod_titlebar.js"></script>
 	<script src="js/mod_tvplayer.js"></script>
+	<script src="js/mod_settings.js"></script>
 	
 	<script src="js/cookie.js"></script>
 	<script src="js/idate.js"></script>
@@ -59,7 +60,7 @@
 			<source src="http://hls.peers.tv/streaming/cam_krylova-krasny/16/variable.m3u8" type="application/x-mpegURL">
 			<!-- <source src="http://www.cn.ru/data/files/test/countdown.mp4" type="video/mp4"> -->
 			</video>
-			<s></s>
+			<s><!-- layer over --></s>
 		</div>
 		<p style="background-image:url('http://peers.tv/data/images/imgs/2017/07/27/100763/100763159.jpg');display:none">poster</p>
 		<button id="playbttn"></button>
@@ -76,15 +77,26 @@
 	<aside class="sidebar">
 		<span id="inf-provlogo" title="Unknown provider">?</span>
 		<img src="img/logo120x120.png">
-		<a id="runapp" href="#">run</a>
 		<a id="chlist" href="#"></a>
 		<a id="schdle" href="#"></a>
 		<a id="apinfo" href="#"></a>
 		<a id="reload" href="#"></a>
+		<a id="stopit" href="#"></a>
 		<a href="#"></a>
+		<a id="config"></a>
 	</aside>
 
 	<aside class="rside" style="display:none">RS</aside>
+
+	<section class="appconfig" id="mod-settings">
+		<h2>Settings</h2>
+		<form>
+			<span class="cbox">
+				<input type="checkbox" id="cfg_autoplay" name="cfg_autoplay">
+				<label for="cfg_autoplay"><b></b><span>Autoplay</span></label>
+			</span>
+		</form>
+	</section>
 
 	<header id="mod-titlebar" class="masthead">
 		<time>00:00</time>

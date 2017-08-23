@@ -32,6 +32,7 @@ var modTvplayer = extendModule({
 		this.node = document.getElementById(node_id);
 		//this.listen('telecastView',this.onTelecastView.bind(this));
 		this.listen('channelView',this.onChannelView.bind(this));
+		this.listen('configChange',this.onConfigChange.bind(this));
 		
 		this._wrppr = this.node.querySelector('div');
 		this._posta = this.node.querySelector('p');
@@ -55,7 +56,8 @@ var modTvplayer = extendModule({
 		
 		this.mute(true);
 		this.poster('/img/poster.jpg');
-
+		this._state_observe(this._video);
+		
 		//this.onTelecastView({detail:{id:100435894}});
 		//this._video.setAttribute('autoplay','');
 		var view_movie = this.play.bind(this,'http://www.cn.ru/data/files/test/countdown.mp4');
@@ -115,7 +117,7 @@ var modTvplayer = extendModule({
 		this._wrppr.classList.add('st-'+newstate);
 		//this._wrppr.className = 'st-'+newstate;
 	},
-	_state_observe:function(video) {
+	_state_observe: function(video) {
 		video.setAttribute('controls','');
 		video.classList.add('screen');
 		var u = this._wrppr.querySelector('u');
@@ -124,22 +126,23 @@ var modTvplayer = extendModule({
 			//'readystatechange',
 			//'durationchange',
 			'emptied','loadstart','loadedmetadata',
-			'loadeddata','canplay','canplaythrough',
+			'loadeddata','canplay',//'canplaythrough',
 			'playing','ended',
 			//'progress','stalled',
 			'suspend',
 			'waiting',
 			'error'];
 		
-		var callback = function(event) {
-			console.log(event.type, event);
-			u.innerText = event.type;
-		};
+		var prestate = 'standby',
+			oldstate = 'emptied',
+			callback = function(event) {
+				//console.log(event.type, event);
+				u.innerText = prestate+' > '+oldstate+' > '+event.type;
+				prestate = oldstate;
+				oldstate = event.type;
+			};
 
-		while(ea.length) {
-			var e = ea.shift();
-			video.addEventListener(e,callback,false);
-		}
+		while(ea.length) video.addEventListener(ea.shift(),callback,false);
 	},
 	initVideo: function(video) {
 		video.removeAttribute('controls');
@@ -156,8 +159,7 @@ var modTvplayer = extendModule({
 		var event_ended = function(e){console.log('ENDS',e)};
 		video.addEventListener('ended',event_ended.bind(this));
 
-		this._state_observe(video);
-		//this._hover_observe();
+		this._hover_observe();
 		
 		// observe loading state
 		var loading_callback = this.statechange.bind(this),
@@ -235,17 +237,25 @@ var modTvplayer = extendModule({
 		video.classList.add('hlsjs');
 		return hlsjs;
 	},
+	onConfigChange: function(event) {
+		var data = event.detail;
+
+		if(data.name=='autoplay') {
+			this._autoplay = (data.newvalue===true);
+			console.log('autoplay', this._autoplay);
+		}
+	},
 	onChannelView: function(event) {
 		var id = event.detail.channelId,
 			cha = $App.getChannelById(id),
+			autoplay = this._autoplay===true,
 			scale = false;
 		
-
-		console.log('onChannelView', scale, cha);
-
-		this.play(cha.stream);
-		
 		scale = ([22301705,22615442,10338208,10338227,26424387].indexOf(cha.cid)>=0);
+		
+		console.log('onChannelView', autoplay, scale, cha);
+		
+		this.load(cha.stream,autoplay);
 		if(scale) this.scale();
 	},
 	scale: function() {
@@ -310,24 +320,24 @@ var modTvplayer = extendModule({
 	},
 	stop: function() {
 
-		if(this._hlsjs) {
-			this._hlsjs.stopLoad();
-			this._hlsjs.detachMedia(this._video);
-		}
-
-		//this._video.pause();
-		//this._video.currentTime = 0;
+		this._video.pause();
+		this._video.currentTime = 0;
 		this._video.removeAttribute('style');
 		this._video.removeAttribute('src');
+		this._video.removeAttribute('muted');
 		this._video.removeAttribute('poster');
 		this._video.removeAttribute('autoplay');
 		this._sauce.removeAttribute('type');
 		this._sauce.removeAttribute('src');
-		this._video.load();
+
+		if(!this._hlsjs) this._video.load();
+		else {
+			this._hlsjs.stopLoad();
+			this._hlsjs.detachMedia(this._video);
+		}
 		//this.poster(false);
 		//var so = Array.prototype.slice.call(this._video.querySelectorAll('source'));
 		//while(so.length) this._video.removeChild(so.pop());
-
 	},
 	play: function(src) {
 
@@ -336,7 +346,9 @@ var modTvplayer = extendModule({
 	},
 	load: function(src, autoplay) {
 
+		if(this._autoplay===true) autoplay = true;
 		this.stop();
+		
 		if(autoplay===true) this._video.setAttribute('autoplay','');
 		else this._video.removeAttribute('autoplay');
 

@@ -10,10 +10,15 @@ var $App = {
 		this.sbbuttons();
 	},
 	test_modTvplayer: function() {
-		var tp = new modTvplayer('mod-tvplayer');
+		
+		new modSettings('mod-settings');
+		//return;
+
+		this.sbbuttons();
+		var tp = this.modTvplayer = new modTvplayer('mod-tvplayer');
 		//return tp.state('fail');
 		//return tp.load('http://hls.peers.tv/streaming/1kanal_hd/16/copy/playlist.m3u8?token=fd7dd8de64e65b43f2107d011c851a71');
-		return tp.play('http://hls.peers.tv/streaming/cam_krylova-krasny/16/variable.m3u8');
+		//return tp.play('http://hls.peers.tv/streaming/cam_krylova-krasny/16/variable.m3u8');
 		//return tp.load('http://archive2.peers.tv/archive/101354016/101354016.m3u8');
 		//return tp.load('http://www.cn.ru/data/files/test/countdown.mp4');
 	},
@@ -28,9 +33,10 @@ var $App = {
 		//alert('INFO');
 		console.log(cnapi);
 	},
-	apprun: function(brun) {
+	stopit: function(brun) {
 		//this.initialize();
 		//brun.onclick = function(){};
+		this.modTvplayer.stop();
 	},
 	onready: function(playlist) {
 
@@ -43,28 +49,32 @@ var $App = {
 		//return cnapi.request.schedule(10338262);
 		//return cnapi.request.sauce(101613384);
 		
-		this._playlist = playlist;
+		this.modSettings = new modSettings('mod-settings');
 		this.modChannels = new modChannels('mod-channels');
-		this.modChannels.update(playlist.channels);
-
 		this.modTvplayer = new modTvplayer('mod-tvplayer');
 		this.modTitlebar = new modTitlebar('mod-titlebar');
 		this.modSchedule = new modSchedule('mod-schedule');
 
+		this._playlist = playlist;
+		this.modChannels.update(playlist.channels);
+
 		return;		
 	},
 	sbbuttons: function() {
-		var bttn = document.getElementById('runapp');
-		bttn.onclick = this.apprun.bind(this,bttn);
+		var bttn = document.getElementById('stopit');
+		bttn.onclick = this.stopit.bind(this,bttn);
 		
+		bttn = document.getElementById('chlist');
+		bttn.onclick = this.toggleSection.bind(this,'mod-channels',bttn);
+
 		bttn = document.getElementById('apinfo');
 		bttn.onclick = this.apinfo.bind(this,bttn);
 		
 		bttn = document.getElementById('reload');
 		bttn.onclick = this.reload.bind(this,bttn);
 		
-		bttn = document.getElementById('chlist');
-		bttn.onclick = this.toggleSection.bind(this,'mod-channels',bttn);
+		bttn = document.getElementById('config');
+		bttn.onclick = this.toggleSection.bind(this,'mod-settings',bttn);
 		//bttn.onclick();
 
 		bttn = document.getElementById('schdle');
