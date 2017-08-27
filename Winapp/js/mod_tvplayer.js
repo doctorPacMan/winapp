@@ -210,8 +210,8 @@ var modTvplayer = extendModule({
 		console.log('playstart', e.type, vw+'x'+vh,this._sauce.src);
 		this._video.setAttribute('width',vw);
 		this._video.setAttribute('height',vh);
+		this.fitinHeight();
 		//this.fitinWidth(vw/vh);
-		this.fitinWidth(vw/vh);
 		this.poster(false);
 	},
 	attachHlsjs: function(video) {
@@ -256,11 +256,7 @@ var modTvplayer = extendModule({
 		console.log('onChannelView', autoplay, scale, cha);
 		
 		this.load(cha.stream,autoplay);
-		if(scale) this.scale();
-	},
-	scale: function() {
-		//this._video.style.transform = 'scale(1.25, 1)';
-		this._video.style.transform = 'scale(1, 0.75)';
+		if(scale) this.scale(.75);
 	},
 	onTelecastView: function(event) {
 		var id = event.detail.id,
@@ -340,9 +336,8 @@ var modTvplayer = extendModule({
 		//while(so.length) this._video.removeChild(so.pop());
 	},
 	play: function(src) {
-
 		this.load(src, true);
-
+		this.scale(.75);
 	},
 	load: function(src, autoplay) {
 
@@ -377,6 +372,23 @@ var modTvplayer = extendModule({
 		this._wrppr.classList.add('st-'+state);
 		this._state = state;
 	},
+	scale: function(sy) {
+
+		var style = window.getComputedStyle(this._video),
+    		trans = !style ? false : style.getPropertyValue('transform'),
+    		trans = !trans ? false : trans.replace('matrix(','').replace(')','').split(', '),
+			scaleX = !trans ? 1 : parseFloat(trans[2]), scaleX = (scaleX>0 ? scaleX : 1),
+			scaleY = !trans ? 1 : parseFloat(trans[3]), scaleY = (scaleY>0 ? scaleY : 1);
+
+		if(!sy) return scaleY;
+		
+		var sx = 1,
+			sy = parseFloat(sy);
+		sy = isNaN(sy) ? 1 : sy;
+
+    	this._video.style.transform = 'scale('+sx+', '+sy+')';
+		return sy;
+	},
 	fitinWidth: function(pp) {
 		var prop = pp || (4/3),
 			cont = this._wrppr,
@@ -392,17 +404,26 @@ var modTvplayer = extendModule({
 		this._fitin = 'width';
 	},
 	fitinHeight: function(pp) {
-		var prop = pp || (4/3),
+		
+		var scaleY = this.scale(),
 			cont = this._wrppr,
 			cw = cont.offsetWidth,
 			ch = cont.offsetHeight,
-			vh = ch, vw = Math.ceil(vh*prop);
+			vw = this._video.videoWidth,
+			vh = this._video.videoHeight,
+			sy = (scaleY || 1),
+			prop = pp || (vw/(vh*scaleY)) || (4/3),
+			sh = Math.floor(ch * 1/scaleY),
+			sw = Math.ceil(sh*prop),
+			m_top = (ch - sh)/2,
+			m_lft = (cw - sw)/2;
 
-		//console.log('video', vw+'x'+vh, this._video.videoWidth+'x'+this._video.videoHeight);
-		this._video.style.width = vw+'px';
-		this._video.style.height = vh+'px';
-		this._video.style.marginTop = '0px';
-		this._video.style.marginLeft = (cw - vw)/2 + 'px';
+		console.log(pp, 'video:'+vw+'x'+vh, 'cont:'+cw+'x'+ch, sw+'x'+sh, m_top, m_lft);
+		
+		this._video.style.width = sw+'px';
+		this._video.style.height = sh+'px';
+		this._video.style.marginTop = m_top+'px';
+		this._video.style.marginLeft = m_lft+'px';
 		this._fitin = 'height';
 	}
 });
