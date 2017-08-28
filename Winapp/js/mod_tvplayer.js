@@ -267,17 +267,27 @@ var modTvplayer = extendModule({
 		var id = event.detail.channelId,
 			cha = $App.getChannelById(id),
 			scale = false;
-		
-		scale = ([22301705,22615442,10338208,10338227,26424387].indexOf(cha.cid)>=0);
-		
+
 		console.log('onChannelView', scale, cha);
 		
 		this.load(cha.stream);
-		if(scale) this.scale();
+		if(cha.squeeze) this.squeeze(.75);
 	},
-	scale: function() {
-		//this._video.style.transform = 'scale(1.25, 1)';
-		this._video.style.transform = 'scale(1, 0.75)';
+	squeeze: function(sy) {
+		var style = window.getComputedStyle(this._video),
+			trans = !style ? false : style.getPropertyValue('transform'),
+			trans = !trans ? false : trans.replace('matrix(','').replace(')','').split(', '),
+			scaleX = !trans ? 1 : parseFloat(trans[2]), scaleX = (scaleX>0 ? scaleX : 1),
+			scaleY = !trans ? 1 : parseFloat(trans[3]), scaleY = (scaleY>0 ? scaleY : 1);
+
+		if(!sy) return scaleY;
+
+		var sx = 1,
+			sy = parseFloat(sy);
+		sy = isNaN(sy) ? 1 : sy;
+
+		this._video.style.transform = 'scale('+sx+', '+sy+')';
+		return sy;
 	},
 	onTelecastView: function(event) {
 		var id = event.detail.id,
@@ -416,17 +426,25 @@ var modTvplayer = extendModule({
 		this._fitin = 'width';
 	},
 	fitinHeight: function(pp) {
-		
+		var scaleY = this.squeeze();
+
 		var prop = pp || this.getVideoSize() || (4/3),
 			cont = this._wrppr,
 			cw = cont.offsetWidth,
 			ch = cont.offsetHeight,
-			vh = ch, vw = Math.ceil(vh*prop);
-		//console.log('fitinHgt', prop, vw+'x'+vh, this._video.videoWidth+'x'+this._video.videoHeight);
-		this._video.style.width = vw+'px';
-		this._video.style.height = vh+'px';
-		this._video.style.marginTop = '0px';
-		this._video.style.marginLeft = (cw - vw)/2 + 'px';
-		this._fitin = 'height';
+			vw = this._video.videoWidth,
+			vh = this._video.videoHeight,
+			sy = (scaleY || 1),
+			prop = pp || (vw/(vh*scaleY)) || (4/3),
+			sh = Math.floor(ch * 1/scaleY),
+			sw = Math.ceil(sh*prop),
+			m_top = (ch - sh)/2,
+			m_lft = (cw - sw)/2;
+
+console.log(pp, 'video:'+vw+'x'+vh, 'cont:'+cw+'x'+ch, sw+'x'+sh, m_top, m_lft);
+		this._video.style.width = sw+'px';
+		this._video.style.height = sh+'px';
+		this._video.style.marginTop = m_top+'px';
+		this._video.style.marginLeft = m_lft+'px';		
 	}
 });

@@ -22,6 +22,8 @@ TvChannel.prototype = {
 		});
 		this.scheduledDates = scheduledDates;
 
+		this.squeeze = ([22301705,22615442,10338208,10338227,26424387,47803193].indexOf(this.cid)>=0);
+
 		this._data = data;
 		this._json = json;
 		//if(cid==24646020) console.log(data);//HD
