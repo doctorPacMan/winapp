@@ -66,7 +66,7 @@
 	top:0;height: 100%;
 	margin: 0 auto;
 }
-.xtvplayer > div.player-video > video.screen {
+.tvplayer.testmode > div.player-video > video {
 	position: absolute;
 	left:50% !important;
 	top:50% !important;
@@ -76,6 +76,17 @@
 	background: maroon;
 	box-shadow: 0 0 0 1px cyan;
 }
+.tvplayer.testmode > p {
+	left:50% !important;
+	top:50% !important;
+	width:640px !important;
+	height:480px !important;
+	margin: -240px 0 0 -320px !important;
+	background: maroon;
+	box-shadow: 0 0 0 1px tomato;
+}
+
+
 div.player-video:after,
 div.player-video:before {
 	z-index: 1;	
@@ -123,6 +134,21 @@ div.player-video:before {}
 }
 .tvplayer > div.tvcntrls {bottom:-64px; transition: bottom .25s ease-in-out 0s}
 .tvplayer.hover > div.tvcntrls {bottom:0}
+
+.tvcntrls > s,
+.tvcntrls > i {
+	font: normal normal 12px/19px monospace;
+	text-decoration: none;
+	pointer-events: none;
+	white-space: nowrap;
+	background: rgba(0,0,0,.75);
+	color: lightgreen;
+	padding: 0 6px 1px;
+	position: absolute;
+	bottom:100%;left:0;
+	margin-left: 1px;
+}
+.tvcntrls > i {margin-bottom: 21px}
 
 .tvcntrls > button {
 	position: relative;

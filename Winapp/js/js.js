@@ -1,7 +1,11 @@
 ﻿"use strict";
 var $App = {
 	initialize: function() {
-		return this.test_modTvplayer();
+		var settings = new modSettings('mod-settings');
+		this.settings = settings.get.bind(settings);
+
+		//return this.test_modTvplayer();
+		
 		console.info('$App initialize');
 		this._telecast = {};
 		this._channels = {};
@@ -11,16 +15,18 @@ var $App = {
 	},
 	test_modTvplayer: function() {
 		
-		//new modSettings('mod-settings');
 		//return;
 
 		this.sbbuttons();
 		var tp = this.modTvplayer = new modTvplayer('mod-tvplayer');
+		tp._video.setAttribute('controls','');
+		tp._wrppr.classList.add('testmode');
+		tp.poster(false);
+
 		//return tp.state('fail');
-		
-		return tp.play('http://tv.novotelecom.ru/channel/nstv/357/playlist.m3u8?sid=476b07f26e0444beda499e09248f4ba0');
 		//return tp.load('http://hls.peers.tv/streaming/1kanal_hd/16/copy/playlist.m3u8?token=fd7dd8de64e65b43f2107d011c851a71');
-		//return tp.play('http://hls.peers.tv/streaming/cam_krylova-krasny/16/variable.m3u8');
+		return tp.load('http://hls.peers.tv/streaming/cam_lenina_sq_2/16/variable.m3u8?token=26ebf17e6bb2b323fb1b3f0d2c0290bc');
+		//return tp.load('http://hls.peers.tv/streaming/cam_krylova-krasny/16/variable.m3u8');
 		//return tp.load('http://archive2.peers.tv/archive/101354016/101354016.m3u8');
 		//return tp.load('http://www.cn.ru/data/files/test/countdown.mp4');
 	},
