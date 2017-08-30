@@ -70,7 +70,7 @@
     <MinimumVisualStudioVersion>$(VersionNumberMajor).$(VersionNumberMinor)</MinimumVisualStudioVersion>
     <DefaultLanguage>ru</DefaultLanguage>
     <PackageCertificateKeyFile>PeersTV_StoreKey.pfx</PackageCertificateKeyFile>
-    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundle>Never</AppxBundle>
     <PackageCertificateThumbprint>25558BE218A2D4E2E69725E85F58B4808D5A00E8</PackageCertificateThumbprint>
   </PropertyGroup>
@@ -90,6 +90,7 @@
     <Content Include="css\css.css" />
     <Content Include="css\mod_playlist.css" />
     <Content Include="css\mod_schedule.css" />
+    <Content Include="css\mod_settings.css" />
     <Content Include="css\mod_titlebar.css" />
     <Content Include="css\mod_tvplayer.css" />
     <Content Include="css\normalize.css" />
@@ -138,6 +139,7 @@
     <Content Include="js\mod_channels.js" />
     <Content Include="js\mod_loading.js" />
     <Content Include="js\mod_schedule.js" />
+    <Content Include="js\mod_settings.js" />
     <Content Include="js\mod_titlebar.js" />
     <Content Include="js\mod_tvplayer.js" />
     <Content Include="js\playlist.js" />

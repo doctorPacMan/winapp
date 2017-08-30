@@ -23,7 +23,8 @@ appModule.prototype = {
 	fire: function(ename,detail) {
 		//var args = Array.prototype.slice.call(arguments);
 		//ename = args.shift();
-		var ce = new CustomEvent(ename,{'detail':(detail||{})});
+		if(undefined===detail) detail = {};
+		var ce = new CustomEvent(ename,{'detail':detail});
 		document.dispatchEvent(ce);
 	}
 };

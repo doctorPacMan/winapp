@@ -13,6 +13,9 @@ var cnapi = {
 		this._monitor('whereami',null);
 		var apiurl = this.apiurl+'/registry/2/whereami.json',
 			colbek = this._handler_whereami.bind(this);
+
+		//var wd = localStorage.getItem('data_whereami');
+		//wd = JSON.parse(wd);this._handler_whereami(wd);
 		$Ajax(apiurl,colbek,null,true);
 	},
 	_handler_whereami: function(data, xhr) {
@@ -27,8 +30,7 @@ var cnapi = {
 		this.location = terr.territoryId;
 		this.timezone = terr.timezone;
 
-		var whrmdate = false;
-		//var whrmdate = xhr.getResponseHeader('Date');
+		var whrmdate = !xhr ? false : xhr.getResponseHeader('Date');
 		if(whrmdate) Date.server(whrmdate);
 		else if(terr.timezone) {
 			var dt = new Date(),

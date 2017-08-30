@@ -135,6 +135,7 @@ div.player-video:before {}
 .tvplayer > div.tvcntrls {bottom:-64px; transition: bottom .25s ease-in-out 0s}
 .tvplayer.hover > div.tvcntrls {bottom:0}
 
+.tvcntrls > u,
 .tvcntrls > s,
 .tvcntrls > i {
 	font: normal normal 12px/19px monospace;
@@ -148,7 +149,8 @@ div.player-video:before {}
 	bottom:100%;left:0;
 	margin-left: 1px;
 }
-.tvcntrls > i {margin-bottom: 21px}
+.tvcntrls > s {margin-bottom: 21px}
+.tvcntrls > i {margin-bottom: 42px}
 
 .tvcntrls > button {
 	position: relative;
@@ -174,7 +176,8 @@ div.player-video:before {}
 .ps-onpause .tvcntrls > button#tvc-play:after {content: '\E768'}
 
 .tvcntrls > button#tvc-mute:after {content: '\E767'}
-.tvcntrls > button#tvc-mute:hover:after {content: '\E74F'}
+.volmuted .tvcntrls > button#tvc-mute:after {content: '\E74F'}
+
 .tvcntrls > button#tvc-size:after {content: '\E73F'}
 .tvcntrls > button#tvc-size:hover:after {content: '\E740'}
 

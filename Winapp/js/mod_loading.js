@@ -25,7 +25,7 @@ var modLoading = extendModule({
 		this._bttn.removeAttribute('disabled');
 		var p = this.node.parentNode;
 		this._bttn.onclick = p.removeChild.bind(p,this.node);
-		setTimeout(this._bttn.onclick.bind(this._bttn),1500);
+		setTimeout(this._bttn.onclick.bind(this._bttn), 500);
 	},
 	progress: function(v, state) {
 		var cn = 'idle';
@@ -47,7 +47,7 @@ var modLoading = extendModule({
 				break;
 			} else if(mv===false) success = false;
 		}
-		if(done) console.log(success);
+		//if(done) console.log(success);
 		if(done) this.onokay();
 		
 		return this;

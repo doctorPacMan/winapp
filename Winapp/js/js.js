@@ -1,8 +1,8 @@
 ﻿"use strict";
 var $App = {
 	initialize: function() {
-		var settings = new modSettings('mod-settings');
-		this.settings = settings.get.bind(settings);
+		this.modSettings = new modSettings('mod-settings');
+		//this.settings = this.modSettings.get.bind(this.modSettings);
 
 		//return this.test_modTvplayer();
 		
@@ -25,12 +25,22 @@ var $App = {
 
 		//return tp.state('fail');
 		//tp.load('http://hls.peers.tv/streaming/1kanal_hd/16/copy/playlist.m3u8?token=fd7dd8de64e65b43f2107d011c851a71');
-		tp.load('http://hls.novotelecom.ru/streaming/russian_roman/16/tvrec/playlist.m3u8');
+		//tp.load('http://hls.novotelecom.ru/streaming/russian_roman/16/tvrec/playlist.m3u8');
 		//tp.load('http://hls.peers.tv/streaming/cam_krylova-krasny/16/variable.m3u8');
 		//tp.load('http://archive2.peers.tv/archive/101354016/101354016.m3u8');
-		//tp.load('http://www.cn.ru/data/files/test/countdown.mp4');
-		tp.squeeze(.75);
+		tp.load('http://www.cn.ru/data/files/test/countdown.mp4');
+		//tp.squeeze(.75);
 		return;
+	},
+	settings: function(name, value) {
+		if(undefined===value) {
+			value = this.modSettings.get(name);
+			//console.log('settings get', name, value);
+			return value;
+		} else {
+			//console.log('settings set', name, value);
+			return this.modSettings.set(name, value);
+		}
 	},
 	toggleSection: function(section,bttn) {
 		var section = document.getElementById(section),
@@ -59,7 +69,6 @@ var $App = {
 		//return cnapi.request.schedule(10338262);
 		//return cnapi.request.sauce(101613384);
 		
-		this.modSettings = new modSettings('mod-settings');
 		this.modChannels = new modChannels('mod-channels');
 		this.modTvplayer = new modTvplayer('mod-tvplayer');
 		this.modTitlebar = new modTitlebar('mod-titlebar');
@@ -67,6 +76,10 @@ var $App = {
 
 		this._playlist = playlist;
 		this.modChannels.update(playlist.channels);
+
+		//cid = 10338227;
+		var cid = this.settings('currentChannel') || playlist.cids[0];
+		this.modSettings.fire('channelView',{channelId:cid});
 
 		return;		
 	},
