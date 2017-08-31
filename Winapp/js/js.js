@@ -4,7 +4,8 @@ var $App = {
 		this.modSettings = new modSettings('mod-settings');
 		//this.settings = this.modSettings.get.bind(this.modSettings);
 
-		//return this.test_modTvplayer();
+		this.modNowonair = new modNowonair('mod-nowonair');
+		return this.test_modTvplayer();
 		
 		console.info('$App initialize');
 		this._telecast = {};
