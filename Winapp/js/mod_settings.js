@@ -27,7 +27,7 @@ var modSettings = extendModule({
 			if(lv===null) this.save(bn, bv);
 			else this._settings[bn] = lv;
 		}
-		console.log('modSettings', this._settings);
+		if(DEBUG) console.log('modSettings', this._settings);
 	},
 	changeCheckbox: function(name, chbox, event) {
 		var bv = chbox.checked;

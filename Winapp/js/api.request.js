@@ -71,6 +71,27 @@ cnapi.request.channels_onload = function(callback, data) {
 	else console.log('CL',clist);
 };
 
+cnapi.request.nowonair = function(ids, onComplete) {
+	var apiurl = cnapi.apis.tvguide+'channels.json?t='+cnapi.location;
+	apiurl += '&fields=channelId,currentTelecast';
+	apiurl += '&channel='+ids;
+	$Ajax(apiurl,this.nowonair_onload.bind(this, onComplete));
+};
+cnapi.request.nowonair_onload = function(callback, data) {
+	if(!data) return console.log('cnapi.request.nowonair fail', data);
+
+	var resp = {};
+	var data = data ? data.channels : data;
+	data.forEach(function(res,k){
+		var tvs = res.currentTelecast;
+		if(!tvs.channel) tvs.channel = {channelId:res.channelId};
+		var tlc = $App.registerTelecast(tvs);
+		resp[res.channelId] = tvs.id;
+	});
+	if(callback) callback(resp);
+	else console.log('NC',resp);
+};
+
 cnapi.request.current = function(cid, onComplete) {
 	var apiurl = cnapi.apis.tvguide+'channels.json?t='+cnapi.location;
 	apiurl += '&fields=channelId,currentTelecast';

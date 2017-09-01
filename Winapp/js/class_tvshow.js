@@ -57,5 +57,55 @@ TvShow.prototype = {
 		else node.className = 'pg-live';
 		
 		return node;
+	},
+	getNodeNowair: function() {
+		var node = document.createElement('a'),
+			img = document.createElement('img'),
+			i = document.createElement('i'),
+			s = document.createElement('strong'),
+			n = document.createElement('span');
+		
+		node.className = 'tvsair tvs-nowair';
+		
+		img.setAttribute('src',this.poster);
+		i.appendChild(img);
+		node.appendChild(i);
+
+		s.innerText = this.channel;
+		node.appendChild(s);
+
+		n.innerText = this.title;
+		node.appendChild(n);
+
+/*
+					<a class="tvsair">
+						<i><img src="img/poster16x9.jpg"></i>
+						<strong>Первый общеобразовательный общеобразовательный</strong>
+						<time>22:22, </time>
+						<span>Первый общеобразовательный телеканал телеканал телеканал</span>
+					</a>
+		var node = document.createElement('a'),
+			titl = document.createElement('strong'),
+			name = document.createElement('span'),
+			time = document.createElement('time'),
+			img = document.createElement('img'),
+			a = document.createElement('a'),
+			i = document.createElement('i');
+		
+
+		time.setAttribute('datetime',this.time.getHtmlTime());
+
+		time.innerText = this.time.format('h:nn');
+		name.innerText = this.title;
+
+		
+		a.appendChild(time);
+		a.appendChild(name);
+		node.appendChild(a);
+
+*/
+
+
+		return node;
 	}
 };

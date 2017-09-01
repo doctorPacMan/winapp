@@ -1,11 +1,10 @@
 ﻿"use strict";
+window.DEBUG = false;
+//window.CHANNELS_LIMIT = 24;
 var $App = {
 	initialize: function() {
 		this.modSettings = new modSettings('mod-settings');
-		//this.settings = this.modSettings.get.bind(this.modSettings);
-
-		this.modNowonair = new modNowonair('mod-nowonair');
-		return this.test_modTvplayer();
+		//return this.test_modTvplayer();
 		
 		console.info('$App initialize');
 		this._telecast = {};
@@ -60,11 +59,11 @@ var $App = {
 		this.modTvplayer.stop();
 	},
 	onready: function(playlist) {
-
-		console.log('READY', playlist);
+		//console.log('READY', playlist);
 		
 		this.informers();
 		this.sbbuttons();
+		//return cnapi.request.nowonair(10338200);
 		//return cnapi.request.current(10338200);
 		//return cnapi.request.idbytitle(['ЛДПР','Jasmin']);
 		//return cnapi.request.schedule(10338262);
@@ -74,9 +73,11 @@ var $App = {
 		this.modTvplayer = new modTvplayer('mod-tvplayer');
 		this.modTitlebar = new modTitlebar('mod-titlebar');
 		this.modSchedule = new modSchedule('mod-schedule');
+		this.modNowonair = new modNowonair('mod-nowonair');
 
 		this._playlist = playlist;
 		this.modChannels.update(playlist.channels);
+		this.modNowonair.update(playlist.channels);
 
 		//cid = 10338227;
 		var cid = this.settings('currentChannel') || playlist.cids[0];

@@ -20,7 +20,7 @@ var cnapi = {
 	},
 	_handler_whereami: function(data, xhr) {
 
-		console.log('Whereami', !!xhr, data);
+		if(DEBUG) console.log('Whereami', !!xhr, data);
 		if(data===false) return this._monitor('whereami',false);
 		else this._monitor('whereami',true);
 
@@ -37,7 +37,7 @@ var cnapi = {
 				dtz = dt.getTimezoneOffset() + terr.timezone/60;
 			Date.server(dt.setMinutes(dt.getMinutes() + dtz));
 		}
-		console.log('Whereami datetime', new Date.server());
+		if(DEBUG) console.log('Whereami datetime', new Date.server());
 		//var dc = new Date(), ds = new Date.server();
 		//console.log('client '+dc.getTime()+' '+dc+'\nserver '+ds.getTime()+' '+ds);
 
@@ -49,7 +49,7 @@ var cnapi = {
 			};
 			if(data.contractor.images) data.contractor.images.forEach(function(v){if(v.profile==1)provider.logo=v.URL});
 		}
-		console.log('Whereami provider', this.provider = provider);
+		if(DEBUG) console.log('Whereami provider', this.provider = provider);
 
 		var playlists = {}, mlocators = {}, apislist = {};
 		data.services.forEach(function(v){
@@ -66,13 +66,15 @@ var cnapi = {
 		this.apis = apislist;
 		this.apis.medialocator = mlocators;
 
-		console.log('Whereami apislist', apislist);
-		console.log('Whereami playlist', playlists);
-		console.log('Whereami mlocator', mlocators);
+		if(DEBUG) {
+			console.log('Whereami apislist', apislist);
+			console.log('Whereami playlist', playlists);
+			console.log('Whereami mlocator', mlocators);
+		}
 
 		//this.setAuthToken('cd4e5a6bee96fec8b50e9831cdac2572');
 		if(this.token = this.getAuthToken()) {
-			console.log('Authtoken restore', this.token);
+			if(DEBUG) console.log('Authtoken restore', this.token);
 			this._monitor('authtoken',true);
 			this._request_playlists();
 		}

@@ -39,7 +39,6 @@ var modTvplayer = extendModule({
 		this.poster('/img/poster.jpg');
 		this._state_observe(this._video);
 
-		console.log('modTvplayer initialize');
 		//this.onTelecastView({detail:{id:100435894}});
 		//this._video.setAttribute('autoplay','');
 		var view_movie = this.play.bind(this,'http://www.cn.ru/data/files/test/countdown.mp4');
