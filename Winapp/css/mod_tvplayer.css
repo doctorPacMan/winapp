@@ -147,10 +147,11 @@ div.player-video:before {}
 	padding: 0 6px 1px;
 	position: absolute;
 	bottom:100%;left:0;
+	margin-bottom: 17px;
 	margin-left: 1px;
 }
-.tvcntrls > s {margin-bottom: 21px}
-.tvcntrls > i {margin-bottom: 42px}
+.tvcntrls > s {margin-bottom: 38px}
+.tvcntrls > i {margin-bottom: 59px}
 
 .tvcntrls > button {
 	position: relative;
@@ -221,101 +222,44 @@ div.player-video:before {}
 	left:50%;width: 480px !important;
 	top:50%;height: 360px !important;
 }
-
-/*
-.mod-tvplayer > div.loading:after {
-	content:'';
-	margin: -22px 0 0 -22px;
-	border: 4px solid darkorange;
-	border-top-color: transparent;
-	animation: loadspin .6s linear 0s infinite reverse;
-}
-.mod-tvplayer > div.st-fail:before {
-	left:50%;width:48px;
-	top:50%;height:48px;
-	margin: -24px 0 0 -24px;
-	border: 0px solid darkorange;
-	font: 48px/48px 'Segoe';
-	content: '\E25B';
-	color: tomato;
-	background: rgba(255,255,255,.25);
-	box-shadow: 0 0 16px 0px black;
-}
-
-
-
+/* ===================== Button play */
 #playbttn {
 	position: absolute;
-	left:50%;width:64px;
-	top:50%;height:64px;
-	margin: -32px 0 0 -32px;
+	left:50%;width:72px;
+	top:50%;height:72px;
+	margin: -36px 0 0 -36px;
 	padding: 0;
 	outline: 0;
 	background: rgba(60,60,60,.75);
 	border: 3px solid white;
 	color: white;
+	cursor: pointer;
 	text-align: center;
-	border-radius: 50%;
+	border-radius: 36px;
 	box-shadow: 0 0 8px black;
-}
-#playbttn:after {
-	content: '';
-	pointer-events: none;
-	position: absolute;
-	left: 0;width: 100%;
-	top:0;height: 100%;
-	border: 3px solid transparent;
-	border-top-color: rgba(0,0,0,.5);
-	border-radius: 50%;
-	margin: -3px;
-	animation: loadspin .6s linear 0s infinite reverse;
+	transition: opacity .2s linear 0s;
 }
 #playbttn:before {
-	box-sizing: border-box;
-	font: 42px/58px 'Segoe';
-	content: '\EDB5';
+	content: '';
 	display: block;
 	width: 100%;
 	height: 100%;
-	padding: 0;
+	font: 42px/66px 'Segoe';
 }
-.ps-onpause #playbttn:before {
+.st-view.ps-onpause #playbttn:before {
 	content: '\E768';
-	padding-left: .075em;
+	padding-left: .05em;
 }
-.ps-played #playbttn:before {
+.st-view.ps-playing #playbttn:before {
 	content: '\E769';
-	padding-left: 0;
+	padding-left: .01em;
 }
-
-/*
-.mod-tvplayer button {
-	display: inline-block;
-	display: none;
-	position: absolute;
-	left:50%;width:64px;
-	top:50%;height:64px;
-	margin: -32px 0 0 -32px;
-	padding: 0;
-	outline: 0;
-	background: rgba(60,60,60,.75);
-	border: 3px solid white;
-	color: white;
-	border-radius: 50%;
-	box-shadow: 0 0 8px black;
+#playbttn {
+	opacity: .0;
+	pointer-events: none;
 }
-.mod-tvplayer button:before {
-	font: 42px/50px 'Segoe';
+.hover #playbttn,
+.st-view.ps-onpause #playbttn {
+	opacity: .75;
+	pointer-events: auto;
 }
-.mod-tvplayer button.play:before {
-	content: '\E768';
-	padding-left: 3px;
-}
-.mod-tvplayer button.pause:before {
-	content: '\E769';
-}
-.mod-tvplayer button.stop:before {
-	content: '\E71A';
-	font-size: 32px;
-}
-*/

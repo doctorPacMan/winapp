@@ -4,7 +4,7 @@ window.DEBUG = false;
 var $App = {
 	initialize: function() {
 		this.modSettings = new modSettings('mod-settings');
-		//return this.test_modTvplayer();
+		//return this.TEST();
 		
 		console.info('$App initialize');
 		this._telecast = {};
@@ -13,13 +13,13 @@ var $App = {
 		cnapi.initialize(this.onready.bind(this),new modLoading('mod-loading'));
 		this.sbbuttons();
 	},
-	test_modTvplayer: function() {
+	TEST: function() {
 		
 		//return;
 
 		this.sbbuttons();
 		var tp = this.modTvplayer = new modTvplayer('mod-tvplayer');
-		tp._video.setAttribute('controls','');
+		//tp._video.setAttribute('controls','');
 		//tp._wrppr.classList.add('testmode');
 		tp.poster(false);
 
@@ -42,12 +42,21 @@ var $App = {
 			return this.modSettings.set(name, value);
 		}
 	},
-	toggleSection: function(section,bttn) {
-		var section = document.getElementById(section),
-			st = !section.classList.contains('hidden');
-		//console.log(section, st, bttn);
-		section.classList[st?'add':'remove']('hidden');
-		if(bttn) bttn.classList[!st?'add':'remove']('active');
+	toggleSection: function(secid) {
+
+		var sec = this._sections[secid];
+		var st = sec.node.classList.contains('hidden');
+		sec.node.classList[!st?'add':'remove']('hidden');
+		sec.bttn.classList[st?'add':'remove']('active');
+		
+		if(this._curr_sec && this._curr_sec!=secid) {
+			sec = this._sections[this._curr_sec]
+			sec.node.classList.add('hidden');
+			sec.bttn.classList.remove('active');
+		}
+
+		this._curr_sec = st ? secid : false;
+		//console.log('toggleSection',secid,st,csc);
 	},
 	apinfo: function(brun) {
 		//alert('INFO');
@@ -86,25 +95,33 @@ var $App = {
 		return;		
 	},
 	sbbuttons: function() {
+		this._sections = {};
+		this._curr_sec = null;
+
 		var bttn = document.getElementById('stopit');
 		bttn.onclick = this.stopit.bind(this,bttn);
 		
-		bttn = document.getElementById('chlist');
-		bttn.onclick = this.toggleSection.bind(this,'mod-channels',bttn);
-
 		bttn = document.getElementById('apinfo');
 		bttn.onclick = this.apinfo.bind(this,bttn);
 		
 		bttn = document.getElementById('reload');
 		bttn.onclick = this.reload.bind(this,bttn);
 		
+		bttn = document.getElementById('chlist');
+		bttn.onclick = this.toggleSection.bind(this,'channels');
+		this._sections['channels'] = {bttn:bttn,node:document.getElementById('mod-channels')}
+
+		bttn = document.getElementById('nowair');
+		bttn.onclick = this.toggleSection.bind(this,'nowonair');
+		this._sections['nowonair'] = {bttn:bttn,node:document.getElementById('mod-nowonair')}
+
 		bttn = document.getElementById('config');
-		bttn.onclick = this.toggleSection.bind(this,'mod-settings',bttn);
-		//bttn.onclick();
+		bttn.onclick = this.toggleSection.bind(this,'settings');
+		this._sections['settings'] = {bttn:bttn,node:document.getElementById('mod-settings')}
 
 		bttn = document.getElementById('schdle');
-		bttn.onclick = this.toggleSection.bind(this,'mod-schedule',bttn);
-		//bttn.onclick();
+		bttn.onclick = this.toggleSection.bind(this,'schedule');
+		this._sections['schedule'] = {bttn:bttn,node:document.getElementById('mod-schedule')}
 	},
 	reload: function() {
 		document.location.reload(true);
@@ -115,7 +132,7 @@ var $App = {
 			location = document.getElementById('inf-location');
 
 		acstoken.innerText = cnapi.getAuthToken();
-		location.innerText = cnapi.location;
+		location.innerText = cnapi.location || '';
 		if(cnapi.provider) {
 			provlogo.style.backgroundImage = cnapi.provider.logo ? 'url("'+cnapi.provider.logo+'")' : null;
 			provlogo.innerText = cnapi.provider.name ? cnapi.provider.name[0] : '?';

@@ -1,4 +1,4 @@
-section.nowonair {
+﻿section.nowonair {
 	z-index: 3;
 	position: absolute;
 	left:0;width:481px;
@@ -11,7 +11,7 @@ section.nowonair {
 	transition: left .25s ease-out 0s;
 }
 section.nowonair.hidden {
-	left: -243px;
+	left: -481px;
 	box-shadow: none;
 }
 section.nowonair > h2 {
@@ -56,7 +56,7 @@ section.nowonair > div {
 .nowonair li.latent:before {
 	font: 48px/48px 'Segoe';
 	color: rgba(222,222,222,.25);
-	content: '\E2AD';
+	content: '\E8FF';
 	position: absolute;
 	width:48px;left:50%;
 	height:48px;top:50%;
@@ -84,29 +84,40 @@ section.nowonair > div {
 	position:absolute;
 	width:100%;left:0;
 	height:100%;top:0;
-	background: linear-gradient(0deg,rgba(0,0,0,.75) 0%,transparent 30%,transparent 80%,rgba(0,0,0,.75));
+	background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,.25) 50%, transparent);
 }
 .nowonair li:hover:after {
-	box-shadow: inset 0 0 0 3px green;
+	box-shadow: inset 0 0 0 0px green;
 }
 .nowonair li > i > img {height:100%;width:auto}
 .nowonair li > strong,
+.nowonair li > span {overflow: hidden}
 .nowonair li > span {
 	left: 3%;
 	width: 94%;
-	overflow: hidden;
-	margin: 6px 0;
-	text-shadow: 0px 1px 1px black;
-	text-overflow: ellipsis;
+	bottom: 12px;
+	font-size: 18px;
+	font-weight: 200;
+	line-height: 21px;
+	max-height: 63px;
+	text-shadow: 0px -1px 1px black;
 }
 .nowonair li > strong {
 	top: 0;
+	width: 97%;
+	height: 36px;
+	line-height: 36px;
 	white-space: nowrap;
+	text-overflow: ellipsis;
+	color: rgba(255,255,255,1);
+	text-shadow: 0px 1px 1px black;
 }
-.nowonair li > span {
-	bottom: 0;
+.nowonair li > strong > img {
+	float:left;
+	height:100%;
+	width: auto;
+	margin-right: .5em;
 }
-
 /*
 .tvsair:before {
 	background: linear-gradient(45deg,rgba(0,0,0,.6) 0%,rgba(255,255,255,0) 100%);

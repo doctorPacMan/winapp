@@ -3,7 +3,7 @@ var modNowonair = extendModule({
 	initialize: function(node_id) {
 		this.node = document.getElementById(node_id);
 		this.cont = this.node.querySelector('.scrollhide > div');
-		console.log('modNowonair',this.node);
+		//console.log('modNowonair',this.node);
 	},
 	onscrollLazyLoad: function() {
 		var list = [];
@@ -33,31 +33,15 @@ var modNowonair = extendModule({
 		sn.addEventListener('scroll',sh,false);
 		onscroll();
 	},
-	getNowonairNode: function(cha) {
-		var div = document.createElement('div'),
-			i = document.createElement('i'),
-			a = document.createElement('a'),
-			t = document.createElement('time');
-		div.className = 'tvsair';
-		div.appendChild(i);div.appendChild(a);
-		a.appendChild(t);
-		t.innerText = cha.title;
-		return div;
-/*
-					<div class="tvsair">
-						<i><img src="img/poster16x9.jpg"></i>
-						<a>
-							<time>22:22, Первый общеобразовательный общеобразовательный</time>
-							<span>Первый общеобразовательный телеканал телеканал телеканал</span>
-						</a>
-					</div>
-*/
-	},
 	update: function(channels) {
+
+		var ul = this.cont.getElementsByTagName('ul')[0];
+		if(ul) this.cont.removeChild(ul);
 
 		this._list = {};
 		var ul = document.createElement('ul'),
 			li = document.createElement('li'),
+			mg = document.createElement('img'),
 			ns = document.createElement('strong');
 		li.className = 'latent';
 
@@ -66,8 +50,12 @@ var modNowonair = extendModule({
 			cid = channels[j].cid;
 			li = li.cloneNode(false);			
 			li.setAttribute('data-cid', cid);
+			li.addEventListener('click',this.onChannelClick.bind(this,cid),false);
 			ns = ns.cloneNode(false);
-			ns.innerText = channels[j].title;
+			mg = mg.cloneNode(false);
+			mg.src = channels[j].logo;
+			ns.appendChild(mg);
+			ns.appendChild(document.createTextNode(channels[j].title));
 			li.appendChild(ns);
 			ul.appendChild(li);
 			this._list[cid]=li;
@@ -78,8 +66,9 @@ var modNowonair = extendModule({
 	loadElements: function(lis) {
 		var cid = [];
 		lis.forEach(function(li){cid.push(li.getAttribute('data-cid'))});
-		console.log(cid.join(','));
-		return cnapi.request.nowonair(cid.join(','),this.fillElements.bind(this));
+		if(cid.length) cnapi.request.nowonair(cid.join(','),this.fillElements.bind(this));
+		//console.log(cid.join(','));
+		return; 
 	},
 	fillElements: function(data) {
 		var tvs, li, nd, ng, pg;
@@ -96,8 +85,15 @@ var modNowonair = extendModule({
 			nd.innerText = tvs.title;
 			pg.setAttribute('src',tvs.poster);
 
-			console.log(cid, tvs.title, li);
+			//console.log(cid, tvs.title, li);
 		}
-		console.log('fillElements',tvs);
+		//console.log('fillElements',tvs);
+	},
+	onChannelClick: function(id, event) {
+		if(event) {
+			event.preventDefault();
+			event.stopImmediatePropagation();
+		}
+		this.fire('channelView',{channelId:id});
 	}
 });

@@ -20,19 +20,17 @@ var cnapi = {
 	},
 	_handler_whereami: function(data, xhr) {
 
-		if(DEBUG) console.log('Whereami', !!xhr, data);
+		console.log('Whereami', !!xhr, data);
 		if(data===false) return this._monitor('whereami',false);
 		else this._monitor('whereami',true);
-
-		localStorage.setItem('data_whereami',JSON.stringify(data));
+		//localStorage.setItem('data_whereami',JSON.stringify(data));
 
 		var terr = data.territories[0];
-		this.location = terr.territoryId;
-		this.timezone = terr.timezone;
+		this.location = !terr ? '0' : terr.territoryId;
 
 		var whrmdate = !xhr ? false : xhr.getResponseHeader('Date');
 		if(whrmdate) Date.server(whrmdate);
-		else if(terr.timezone) {
+		else if(terr && terr.timezone) {
 			var dt = new Date(),
 				dtz = dt.getTimezoneOffset() + terr.timezone/60;
 			Date.server(dt.setMinutes(dt.getMinutes() + dtz));
@@ -49,7 +47,8 @@ var cnapi = {
 			};
 			if(data.contractor.images) data.contractor.images.forEach(function(v){if(v.profile==1)provider.logo=v.URL});
 		}
-		if(DEBUG) console.log('Whereami provider', this.provider = provider);
+		this.provider = provider;
+		if(DEBUG) console.log('Whereami provider', this.provider);
 
 		var playlists = {}, mlocators = {}, apislist = {};
 		data.services.forEach(function(v){

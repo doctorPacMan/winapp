@@ -90,7 +90,7 @@ var modTvplayer = extendModule({
 		var event_ended = function(e){console.log('ENDS',e)};
 		video.addEventListener('ended',event_ended.bind(this));
 
-		//this._hover_observe();
+		this._hover_observe();
 		
 		// poster autohide
 		//video.addEventListener('canplay',this.poster.bind(this,false));
