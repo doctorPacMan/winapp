@@ -1,7 +1,5 @@
 ﻿"use strict";
 var cnapi = {
-	apiurl: 'http://api.peers.tv',
-	//apiurl: 'http://a.trunk.ptv.bender.inetra.ru',
 	_data: {},
 	token: null,
 	location: null,
@@ -11,12 +9,13 @@ var cnapi = {
 		this._monitor = monitor.progress.bind(monitor);
 
 		this._monitor('whereami',null);
-		var apiurl = this.apiurl+'/registry/2/whereami.json',
+		var wrmurl = APIHOST+'/registry/2/whereami.json',
 			colbek = this._handler_whereami.bind(this);
 
+		if(window.WRMURL) console.info('Whereami override', wrmurl = WRMURL);
+		$Ajax(wrmurl,colbek,null,true);
 		//var wd = localStorage.getItem('data_whereami');
 		//wd = JSON.parse(wd);this._handler_whereami(wd);
-		$Ajax(apiurl,colbek,null,true);
 	},
 	_handler_whereami: function(data, xhr) {
 
@@ -78,9 +77,9 @@ var cnapi = {
 			this._request_playlists();
 		}
 		else {
-			var apiurl = this.apis.auth+'token',
+			var srcurl = this.apis.auth+'token',
 				params = {'grant_type':'inetra:anonymous','client_id':'demoapp','client_secret':'demoapp'};
-			$Ajax(apiurl,this._handler_acstoken.bind(this),params);
+			$Ajax(srcurl,this._handler_acstoken.bind(this),params);
 			this._monitor('authtoken',null);
 		}
 	},

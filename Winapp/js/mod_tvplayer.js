@@ -6,7 +6,6 @@ var modTvplayer = extendModule({
 	STATE_VIEW: 'view',
 	PLAYSTATE_PLAYING: 'playing',
 	PLAYSTATE_ONPAUSE: 'onpause',
-	PLAYSTATE_STANDBY: 'standby',
 	initialize: function(node_id) {
 		this.node = document.getElementById(node_id);
 		//this.listen('telecastView',this.onTelecastView.bind(this));
@@ -28,10 +27,11 @@ var modTvplayer = extendModule({
 		this._button.onclick = this.click.bind(this);
 
 		//this.fitinWidth();
-		this.fitinHeight(4/3);
+		//this.fitinHeight(4/3);
 		this.initVideo(this._video);
 		this.initControls(this.node.querySelector('div.tvcntrls'));
-		
+		this.resize(4/3);
+
 		this._hlsjs = this.attachHlsjs(this._video);
 		var ntype = this.node.querySelector('div.tvcntrls > i');
 		ntype.innerText = this._hlsjs ? 'hlsjs' : (this._hlsPlayType || 'video');
@@ -65,23 +65,20 @@ var modTvplayer = extendModule({
 			'waiting',
 			'error'];
 		
-		var prestate = 'standby',
+		var	prestate = 'standby',
 			oldstate = 'emptied',
 			callback = function(event) {
 				//console.log(event.type, event);
 				u.innerText = prestate+' > '+oldstate+' > '+event.type;
 				prestate = oldstate;
 				oldstate = event.type;
+				video.setAttribute('data-playstate',u.innerText);
 			};
 
 		while(ea.length) video.addEventListener(ea.shift(),callback,false);
 	},
 	initVideo: function(video) {
 		video.removeAttribute('controls');
-
-		//video.addEventListener('canplay',this._event_metadata.bind(this));
-		//video.addEventListener('playing',this._event_playstart.bind(this,false));
-		//video.addEventListener('ended',this._event_complete.bind(this));
 
 		video.addEventListener('playing',this._event_playstart.bind(this,false));
 		video.addEventListener('loadstart',this._event_playstart.bind(this,true));
@@ -90,21 +87,25 @@ var modTvplayer = extendModule({
 		var event_ended = function(e){console.log('ENDS',e)};
 		video.addEventListener('ended',event_ended.bind(this));
 
-		this._hover_observe();
-		
 		// poster autohide
 		//video.addEventListener('canplay',this.poster.bind(this,false));
+		this._resize_observe();
+		this._hover_observe();
 
 		// observe loading state
 		var loading_callback = this.statechange.bind(this),
 			loading_state = this.STATE_IDLE,
+			loading_sauce = this._sauce,
 			event_loading = function(state, e) {return function(e){
+				var empty = loading_sauce.getAttribute('src')===null;
+				if('loadstart'===event.type && empty) return e.preventDefault() && e.stopImmediatePropagation();
 				if(loading_state === state) return;
 				var oldstate = loading_state,
 					newstate = loading_state = state;
 				loading_callback(newstate, oldstate, e);
 			}};
 		video.addEventListener('loadstart',event_loading(this.STATE_LOAD));
+		video.addEventListener('emptied',event_loading(this.STATE_IDLE));
 		video.addEventListener('canplay',event_loading(this.STATE_VIEW));
 		video.addEventListener('error',event_loading(this.STATE_FAIL));
 		
@@ -124,15 +125,15 @@ var modTvplayer = extendModule({
 
 		// observe paused state
 		var paused_state = true,
-			event_paused = function(video, st, e) {
+			event_paused = function(st, e) {
 				var paused = this._video.paused,
-					stoped = (video.readyState<2);
-				//console.log('STOPED',video.readyState,'st:'+st,'paused:'+paused,'vp:'+video.paused);
-				//console.log('PAUSED',video.readyState,'st:'+st,'paused:'+paused,'vp:'+video.paused);
+					stoped = (this._video.readyState<2);
+				//console.log('PAUSED',this._video.readyState,'st:'+st,'paused:'+paused,'stoped:'+stoped);
 				if(!stoped) this.pausechange(paused, e);
 			};
-		video.addEventListener('play',event_paused.bind(this,video,false),false);
-		video.addEventListener('pause',event_paused.bind(this,video,true),false);
+		video.addEventListener('play',event_paused.bind(this,false),false);
+		video.addEventListener('pause',event_paused.bind(this,true),false);
+		video.addEventListener('emptied',event_paused.bind(this,true),false);
 		video.addEventListener('loadstart',this.pausechange.bind(this,true),false);
 
 		// observe muted state
@@ -143,6 +144,14 @@ var modTvplayer = extendModule({
 			}).bind(this,video);
 		video.addEventListener('volumechange',event_muted,false);
 		this.mutedchange();
+	},
+	_resize_observe: function() {
+		var wsize_timer = false,
+			onresizeend = this.resize.bind(this);
+		window.addEventListener('resize',function(e) {
+			if(wsize_timer) clearTimeout(wsize_timer);
+			wsize_timer = setTimeout(onresizeend,250);
+		});
 	},
 	_hover_observe: function() {
 		
@@ -173,10 +182,8 @@ var modTvplayer = extendModule({
 		var batons = cwrp.getElementsByTagName('button');
 		this._button_play = batons[0];
 		this._button_mute = batons[1];
-		this._button_size = batons[2];
 		this._button_play.addEventListener('click',this.pause.bind(this,null));
 		this._button_mute.addEventListener('click',this.mute.bind(this,null));
-		this._button_size.addEventListener('click',this.size.bind(this,null));
 		//console.log(cwrp);
 	},
 	mutedchange: function(muted) {
@@ -184,8 +191,8 @@ var modTvplayer = extendModule({
 		this._wrppr.classList[muted?'add':'remove']('volmuted');
 	},
 	pausechange: function(paused, event) {
-		this._wrppr.classList[paused?'add':'remove']('ps-onpause');
-		this._wrppr.classList[paused?'remove':'add']('ps-playing');
+		this._wrppr.classList[paused?'add':'remove']('ps-'+this.PLAYSTATE_ONPAUSE);
+		this._wrppr.classList[paused?'remove':'add']('ps-'+this.PLAYSTATE_PLAYING);
 	},
 	statechange: function(newstate, oldstate, event) {
 		//console.log('STATE',oldstate+' > '+newstate+' ('+event.type+')');
@@ -208,9 +215,7 @@ var modTvplayer = extendModule({
 		this._video.setAttribute('width',vw);
 		this._video.setAttribute('height',vh);
 
-		var stretch = (true===$App.settings('stretch'));
-		if(stretch) this.fitinWidth(vw/vh);
-		else this.fitinHeight(vw/vh)
+		this.resize(vw/vh);
 		this.poster(false);
 	},
 	attachHlsjs: function(video) {
@@ -238,8 +243,7 @@ var modTvplayer = extendModule({
 	},
 	onSetStretch: function(event) {
 		var data = event.detail;
-		if(data.newvalue===true) this.fitinWidth();
-		else this.fitinHeight();
+		this.resize();
 		console.log('stretch', data.newvalue);
 	},
 	onSetAutoplay: function(event) {
@@ -266,10 +270,8 @@ var modTvplayer = extendModule({
 
 		if(!sy) return scaleY;
 
-		var sx = 1,
-			sy = parseFloat(sy);
+		var sx = 1, sy = parseFloat(sy);
 		sy = isNaN(sy) ? 1 : sy;
-
 		this._video.style.transform = 'scale('+sx+', '+sy+')';
 		return sy;
 	},
@@ -389,16 +391,6 @@ var modTvplayer = extendModule({
 		this._wrppr.classList.add('st-'+state);
 		this._state = state;
 	},
-	size: function(st) {
-
-		var vw = this._video.videoWidth || 0,
-			vh = this._video.videoHeight || 0,
-			pp = (vw>0 && vh>0) ? (vw/vh) : (4/3);
-		
-		console.log(vw+'x'+vh, pp);
-		if('height'==this._fitin) this.fitinWidth(pp);
-		else this.fitinHeight(pp);
-	},
 	mute: function(st) {
 		var muted = this._video.muted,
 			mute = typeof(st)=='boolean' ? st : !muted;
@@ -414,6 +406,26 @@ var modTvplayer = extendModule({
 			vh = parseInt(this._video.videoHeight),
 			vp = parseFloat(vw/vh);
 		return !isNaN(vp) ? vp : undefined;
+	},
+	resize: function() {
+		var	cw = this._wrppr.offsetWidth,
+			ch = this._wrppr.offsetHeight,
+			vw = this._video.videoWidth,
+			vh = this._video.videoHeight;
+		if(isNaN(vw) || vw<=0) vw = 720;
+		if(isNaN(vh) || vh<=0) vh = Math.round(3*vw/4);
+		
+		var cp = ch/cw,
+			vp = vh/vw,
+			stretch = (true===$App.settings('stretch'));
+		
+		console.log('stretch:'+stretch, 'video:'+vw+'x'+vh, 'cont:'+cw+'x'+ch);
+		
+		if(stretch) {
+			if(cp>vp) this.fitinHeight(); else this.fitinWidth();
+		} else {
+			if(cp<vp) this.fitinHeight(); else this.fitinWidth();
+		}
 	},
 	fitinWidth: function(pp) {
 

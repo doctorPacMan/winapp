@@ -128,7 +128,7 @@ div.player-video:before {}
 	top: auto;
 	bottom:0;height:40px;
 	left:0px; width:100%;
-	padding: 4px 8px 4px;
+	padding: 4px 0px;
 	background: rgba(255,255,255,0);
 	background-image: linear-gradient(0deg, rgba(0,0,0,.75) 0%, rgba(0,0,0,.25) 75%, transparent);
 }
@@ -139,20 +139,24 @@ div.player-video:before {}
 .tvcntrls > s,
 .tvcntrls > i {
 	font: normal normal 12px/19px monospace;
+	background: rgba(0,0,0,.75);
 	text-decoration: none;
 	pointer-events: none;
 	white-space: nowrap;
-	background: rgba(0,0,0,.75);
-	color: lightgreen;
 	padding: 0 6px 1px;
 	position: absolute;
 	bottom:100%;left:0;
-	margin-bottom: 17px;
-	margin-left: 1px;
+	visibility: hidden;
+	color: lightgreen;
 }
-.tvcntrls > s {margin-bottom: 38px}
-.tvcntrls > i {margin-bottom: 59px}
-
+.tvcntrls > u {margin-bottom: 0px}
+.tvcntrls > s {margin-bottom: 21px}
+.tvcntrls > i {
+	right: 0px;
+	left: auto;
+	bottom: 0;
+	margin: 0;
+}
 .tvcntrls > button {
 	position: relative;
 	float: left;
@@ -163,6 +167,7 @@ div.player-video:before {}
 	color: black;
 	border: 2px solid white;
 	border-radius: 50%;
+	font-size: 8px;
 }
 .tvcntrls > button:after {
 	color: white;
@@ -172,7 +177,7 @@ div.player-video:before {}
 	top:50%;height:48px;
 	margin: -24px;
 }
-.ps-standby .tvcntrls > button#tvc-play:after {content: '\E7E8'}
+.tvcntrls > button#tvc-play:after {content: '\E7E8'}
 .ps-playing .tvcntrls > button#tvc-play:after {content: '\E769'}
 .ps-onpause .tvcntrls > button#tvc-play:after {content: '\E768'}
 
@@ -258,7 +263,7 @@ div.player-video:before {}
 	opacity: .0;
 	pointer-events: none;
 }
-.hover #playbttn,
+.shover #playbttn,
 .st-view.ps-onpause #playbttn {
 	opacity: .75;
 	pointer-events: auto;

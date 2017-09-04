@@ -8,7 +8,7 @@ cnapi.request.schedule = function(cid,day,onComplete) {
 		nxt_url = nxt.format('yyyy-mm-dd');
 	
 	console.log('cnapi.request.schedule',cid);
-	var apiurl = cnapi.apiurl + '/tvguide/2/schedule.json?channel='+cid+'&dates='+day_url+','+nxt_url;
+	var apiurl = cnapi.apis.tvguide + 'schedule.json?channel='+cid+'&dates='+day_url+','+nxt_url;
 	$Ajax(apiurl,this.schedule_onload.bind(this, onComplete, day));
 };
 cnapi.request.schedule_onload = function(callback, day, data) {
