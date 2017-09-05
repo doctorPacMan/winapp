@@ -6,23 +6,23 @@ window.APIHOST = 'http://api.peers.tv';
 //window.WRMURL = '/data/whereami.json';
 var $App = {
 	initialize: function() {
+		this.sbbuttons();
 		this.modSettings = new modSettings('mod-settings');
+		this.modTvplayer = new modTvplayer('mod-tvplayer');
 		//return this.TEST();
 		
 		console.info('$App initialize');
 		this._telecast = {};
 		this._channels = {};
-
 		cnapi.initialize(this.onready.bind(this),new modLoading('mod-loading'));
-		this.sbbuttons();
 	},
 	TEST: function() {
 		
 		//return;
 
-		this.sbbuttons();
-		var tp = this.modTvplayer = new modTvplayer('mod-tvplayer');
-		//tp._video.setAttribute('controls','');
+		//this.sbbuttons();
+		var tp = this.modTvplayer;
+		tp._video.setAttribute('controls','');
 		//tp._wrppr.classList.add('testmode');
 		tp.poster(false);
 
@@ -31,7 +31,9 @@ var $App = {
 		//tp.load('http://hls.novotelecom.ru/streaming/russian_roman/16/tvrec/playlist.m3u8');
 		//tp.load('http://hls.peers.tv/streaming/cam_krylova-krasny/16/variable.m3u8');
 		//tp.load('http://archive2.peers.tv/archive/101354016/101354016.m3u8');
-		tp.load('http://www.cn.ru/data/files/test/countdown.mp4');
+		//tp.load('http://www.cn.ru/data/files/test/countdown.mp4');
+		tp.load('/data/countdown.mp4');
+		//tp.load('/data/error.mp4');
 		//tp.squeeze(.75);
 		return;
 	},
@@ -82,7 +84,6 @@ var $App = {
 		//return cnapi.request.sauce(101613384);
 		
 		this.modChannels = new modChannels('mod-channels');
-		this.modTvplayer = new modTvplayer('mod-tvplayer');
 		this.modTitlebar = new modTitlebar('mod-titlebar');
 		this.modSchedule = new modSchedule('mod-schedule');
 		this.modNowonair = new modNowonair('mod-nowonair');

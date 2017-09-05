@@ -41,7 +41,6 @@ var modNowonair = extendModule({
 		this._list = {};
 		var ul = document.createElement('ul'),
 			li = document.createElement('li'),
-			mg = document.createElement('img'),
 			ns = document.createElement('strong');
 		li.className = 'latent';
 
@@ -52,9 +51,7 @@ var modNowonair = extendModule({
 			li.setAttribute('data-cid', cid);
 			li.addEventListener('click',this.onChannelClick.bind(this,cid),false);
 			ns = ns.cloneNode(false);
-			mg = mg.cloneNode(false);
-			mg.src = channels[j].logo;
-			ns.appendChild(mg);
+			ns.appendChild(channels[j].getLogo());
 			ns.appendChild(document.createTextNode(channels[j].title));
 			li.appendChild(ns);
 			ul.appendChild(li);

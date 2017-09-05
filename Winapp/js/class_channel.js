@@ -29,5 +29,21 @@ TvChannel.prototype = {
 		//if(cid==24646020) console.log(data);//HD
 		//if(cid==58456826) console.log(data);//cam
 		//if(!data.logoURL) console.log(data);
+	},
+	getLogo: function() {
+		var i = document.createElement('i'),
+			g = document.createElement('img');
+		i.className = 'chalogo';
+		g.src = this.logo;
+		i.appendChild(g);
+		return i;
+	},
+	getIcon: function() {
+		var i = document.createElement('i'),
+			g = document.createElement('img');
+		i.className = 'chaicon';
+		g.src = this.logo;
+		i.appendChild(g);
+		return i;
 	}
 };

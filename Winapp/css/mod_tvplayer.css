@@ -20,24 +20,6 @@
 	left:0;width: 100%;
 	top:0;height: 100%;
 }
-.tvplayer > u,
-.tvplayer > i {
-	position: absolute;
-	top: 0;
-	left: 50%;
-	width: 400px;
-	margin-left:-200px;
-	color: white;
-	text-align: center;
-	pointer-events: none;
-	padding: 4px 0;
-	font: normal normal 12px monospace;
-	text-decoration: none;
-	background: black;
-}
-.tvplayer > u {
-	top: 50px;
-}
 .player-video > s {
 	position: absolute;
 	left:0; width:100%;
@@ -122,6 +104,46 @@ div.player-video:before {}
 }
 .st-view div.player-video:before {content: none}
 
+.tvplayer > u,
+.tvplayer > s {
+	font: normal normal 12px/19px monospace;
+	background: rgba(0,0,0,.0);
+	text-decoration: none;
+	pointer-events: none;
+	white-space: nowrap;
+	padding: 0 6px 1px;
+	position: absolute;
+	color: lightgreen;
+	left: 0px;
+	width: 100%;
+	text-align:center;
+	text-shadow: 0 0 1px black;
+	visibility: hidden;
+}
+.tvplayer > u {bottom:0px}
+.tvplayer > s {bottom:20px}
+/* ============================================================== */
+.tvplayer > div.tverror {
+	left:50%;width:360px;
+	top:50%;height:60px;
+	margin: -35px 0 0 -185px;
+	padding: 5px;
+	background: rgba(60,60,60,.9);
+	outline: 1px solid tomato;
+	font: 14px/15px monospace;
+	z-index:3;
+}
+.tvplayer > div.tverror:before {
+	float: left;
+	width: 60px;
+	height: 100%;
+	color: tomato;
+	border-right: 1px solid rgba(255,99,71,.33);
+	margin-right: 12px;
+	font: 36px/60px 'Segoe';
+	text-align: center;
+	content: '\E783';
+}
 /* ============================================================== */
 .tvplayer > div.tvcntrls {
 	position: absolute;

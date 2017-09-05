@@ -7,10 +7,10 @@ var modTvplayer = extendModule({
 	PLAYSTATE_PLAYING: 'playing',
 	PLAYSTATE_ONPAUSE: 'onpause',
 	initialize: function(node_id) {
+
 		this.node = document.getElementById(node_id);
 		//this.listen('telecastView',this.onTelecastView.bind(this));
 		this.listen('channelView',this.onChannelView.bind(this));
-		//this.listen('settingsChange',this.onSettingsChange.bind(this));
 		this.listen('settings:stretch',this.onSetStretch.bind(this));
 		this.listen('settings:autoplay',this.onSetAutoplay.bind(this));
 
@@ -18,9 +18,14 @@ var modTvplayer = extendModule({
 		this._posta = this.node.querySelector('p');
 		this._video = this.node.querySelector('video');
 		this._sauce = this.node.querySelector('video > source[type="application/x-mpegURL"]');
-		this._inf_u = this.node.querySelector('div.tvcntrls > u');
+		this._inf_u = this.node.querySelector('s');
+		this._inf_state = this.node.querySelector('.tvplayer > s');
+		this._inf_sauce = this.node.querySelector('.tvplayer > u');
 
 		this._hlsPlayType = this.hlsPlayType(this._video);
+		
+		this._error = this.node.querySelector('div.tverror');
+		this._error.onclick = this.reload.bind(this);
 		
 		this.state(this.STATE_IDLE);
 		this._button = this.node.querySelector('button#playbttn');
@@ -38,28 +43,16 @@ var modTvplayer = extendModule({
 		
 		this.poster('/img/poster.jpg');
 		this._state_observe(this._video);
-
-		//this.onTelecastView({detail:{id:100435894}});
-		//this._video.setAttribute('autoplay','');
-		var view_movie = this.play.bind(this,'http://www.cn.ru/data/files/test/countdown.mp4');
-		var view_stream = this.play.bind(this,'http://hls.peers.tv/streaming/cam_lunintsev_sq/16/variable.m3u8');
-		var view_record = this.play.bind(this,'http://hls.peers.tv/playlist/program/101354016.m3u8');
-		//setTimeout(view_movie,0);
-		//setTimeout(view_record,4000);
-		//setTimeout(view_stream,8000);
-		//this._wrppr.classList.add('load');
 	},
 	_state_observe: function(video) {
-		var u = this.node.querySelector('div.tvcntrls > s')
-		//this._wrppr.querySelector('u');
-		//console.log(u);
-		var ea = [
+		var s = this._inf_state,
+			ea = [
 			//'readystatechange',
 			//'durationchange',
 			'emptied','loadstart','loadedmetadata',
 			'loadeddata','canplay',//'canplaythrough',
 			'playing','ended',
-			'play','pause',
+			//'play','pause',
 			//'progress','stalled',
 			'suspend',
 			'waiting',
@@ -69,12 +62,10 @@ var modTvplayer = extendModule({
 			oldstate = 'emptied',
 			callback = function(event) {
 				//console.log(event.type, event);
-				u.innerText = prestate+' > '+oldstate+' > '+event.type;
+				s.innerText = prestate+' > '+oldstate+' > '+event.type;
 				prestate = oldstate;
 				oldstate = event.type;
-				video.setAttribute('data-playstate',u.innerText);
 			};
-
 		while(ea.length) video.addEventListener(ea.shift(),callback,false);
 	},
 	initVideo: function(video) {
@@ -82,7 +73,7 @@ var modTvplayer = extendModule({
 
 		video.addEventListener('playing',this._event_playstart.bind(this,false));
 		video.addEventListener('loadstart',this._event_playstart.bind(this,true));
-		//video.addEventListener('error',this.error.bind(this));
+		video.addEventListener('error',this._event_error.bind(this));
 
 		var event_ended = function(e){console.log('ENDS',e)};
 		video.addEventListener('ended',event_ended.bind(this));
@@ -184,7 +175,6 @@ var modTvplayer = extendModule({
 		this._button_mute = batons[1];
 		this._button_play.addEventListener('click',this.pause.bind(this,null));
 		this._button_mute.addEventListener('click',this.mute.bind(this,null));
-		//console.log(cwrp);
 	},
 	mutedchange: function(muted) {
 		var muted = this._video.muted;
@@ -211,7 +201,7 @@ var modTvplayer = extendModule({
 		
 		var vw = this._video.videoWidth || 600,
 			vh = this._video.videoHeight || 450;
-		console.log('playstart', e.type, vw+'x'+vh, this._sauce.src);
+		//console.log('playstart', e.type, vw+'x'+vh, this._sauce.src);
 		this._video.setAttribute('width',vw);
 		this._video.setAttribute('height',vh);
 
@@ -324,12 +314,12 @@ var modTvplayer = extendModule({
 		//console.log(this._video.readyState);
 		this.pause();
 	},
-	pause: function(st) {
+	pause: function(st,e) {
 		var paused = this._video.paused,
-			stoped = (this._video.readyState<2);
-		var st = (typeof st == 'boolean') ? st : !paused;
+			stoped = (this._video.readyState<2),
+			st = (typeof st == 'boolean') ? st : !paused;
 		//console.log('PAUSE','paused:'+paused, 'stoped:'+stoped, 'st:'+st);
-		if(!stoped) this._video[st ? 'pause' : 'play']();		
+		if(!stoped) this._video[st ? 'pause' : 'play']();
 	},
 	stop: function() {
 
@@ -341,6 +331,7 @@ var modTvplayer = extendModule({
 		this._video.removeAttribute('autoplay');
 		this._sauce.removeAttribute('type');
 		this._sauce.removeAttribute('src');
+		this._inf_sauce.innerText = 'empty';
 
 		if(!this._hlsjs) this._video.load();
 		else {
@@ -351,6 +342,11 @@ var modTvplayer = extendModule({
 		//var so = Array.prototype.slice.call(this._video.querySelectorAll('source'));
 		//while(so.length) this._video.removeChild(so.pop());
 	},
+	reload: function(src) {
+		var src = this._video.getAttribute('data-src');
+		//console.log('reload',src);
+		this.load(src);
+	},
 	play: function(src) {
 
 		this.load(src, true);
@@ -359,6 +355,7 @@ var modTvplayer = extendModule({
 	load: function(src, autoplay) {
 
 		this.stop();
+		this.error(false);
 		
 		var avp = (true===autoplay || true===$App.settings('autoplay')),
 			hls = /\.(m3u8|m3u)($|\?|#)/.test(src),
@@ -367,6 +364,8 @@ var modTvplayer = extendModule({
 		if(avp) this._video.setAttribute('autoplay','');
 		else this._video.removeAttribute('autoplay');
 
+		this._inf_sauce.innerText = src;
+		this._video.setAttribute('data-src',src);
 		this._sauce.setAttribute('src',src);
 		if(hls && hpt) this._sauce.setAttribute('type', hpt);
 		else this._sauce.removeAttribute('type');
@@ -380,10 +379,26 @@ var modTvplayer = extendModule({
 			this._hlsjs.attachMedia(this._video);
 		}.bind(this),250);
 	},
-	error: function(error) {
-		this.stop();
+	_event_error: function(e) {
+		var error = e.target.error;
+		this.error(error.code, error.message);
+		console.log('ERROR', error.code, error.message);
+		//console.log('ERROR', error);
+	},
+	error: function(code, message) {
+		if(code===false) return this._error.style.display = 'none';
+		var codes = {
+			0:"Unexpected error",
+			1:"The fetching of the associated resource was aborted by the user's request.",//MEDIA_ERR_ABORTED
+			2:"Some kind of network error occurred which prevented the media from being successfully fetched, despite having previously been available.",//MEDIA_ERR_NETWORK
+			3:"Despite having previously been determined to be usable, an error occurred while trying to decode the media resource, resulting in an error.",//MEDIA_ERR_DECODE
+			4:"The associated resource or media provider object has been found to be unsuitable.",//MEDIA_ERR_SRC_NOT_SUPPORTED
+			5:"MS_MEDIA_ERR_ENCRYPTED"//MS_MEDIA_ERR_ENCRYPTED
+		}, codemssg = codes[code];
+		this._error.innerText = message || codemssg || code;
+		this._error.style.display = 'block';
 		this.state(this.STATE_FAIL);
-		console.log(error);
+		this.stop();
 	},
 	state: function(state) {
 		if(!this._state) this._state = this.STATE_IDLE;
@@ -419,8 +434,7 @@ var modTvplayer = extendModule({
 			vp = vh/vw,
 			stretch = (true===$App.settings('stretch'));
 		
-		console.log('stretch:'+stretch, 'video:'+vw+'x'+vh, 'cont:'+cw+'x'+ch);
-		
+		//console.log('stretch:'+stretch, 'video:'+vw+'x'+vh, 'cont:'+cw+'x'+ch);
 		if(stretch) {
 			if(cp>vp) this.fitinHeight(); else this.fitinWidth();
 		} else {
