@@ -12,9 +12,10 @@ TvShow.prototype = {
 		this.dura = json.duration*1e3;
 		this.time = new Date(d.year, d.month-1, d.day, d.hour, d.minute);
 		this.ends = new Date(this.time.getTime() + this.dura);
-		this.progress = this.getProgress();
 		this.sauce = undefined;
 		this.files = false;
+		this.onair = false;
+		this.progress = this.getProgress();
 
 		var telecastImage = 'img/poster.jpg';
 		var telecastPoster = 'img/poster.jpg';
@@ -28,16 +29,24 @@ TvShow.prototype = {
 		this._json = json;
 		//console.log(json);
 	},
+	update: function(json) {
+		
+		this.getProgress();
+
+		return this;
+	},
 	getProgress: function() {
 		if(typeof(this.progress)=='boolean') return this.progress;
 
-		var now = Date.server();
-		if(this.time > now) return true;
-		else if(this.ends < now) return false;
+		var now = Date.server(), prg;
+		if(this.time > now) prg = true;
+		else if(this.ends < now) prg = false;
 		else {
 			var p = now - this.time;
-			return Math.round(1e3 * p/this.dura)/1e3;
+			prg = Math.round(1e3 * p/this.dura)/1e3;
 		}
+		this.onair = (typeof(prg)!='boolean');
+		return this.progress = prg;
 	},
 	getNodeList: function() {
 		var pg = this.getProgress(),

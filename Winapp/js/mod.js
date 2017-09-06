@@ -17,7 +17,7 @@ appModule.prototype = {
 		console.log('MOD initialize',args)
 	},
 	listen: function(ename,callback) {
-		//console.log('Listen',ename);
+		//console.log('Listen',ename,callback);
 		document.addEventListener(ename,callback,false);
 	},
 	fire: function(ename,detail) {
@@ -25,6 +25,7 @@ appModule.prototype = {
 		//ename = args.shift();
 		if(undefined===detail) detail = {};
 		var ce = new CustomEvent(ename,{'detail':detail});
+		//console.log('dispatchEvent',ename);
 		document.dispatchEvent(ce);
 	}
 };

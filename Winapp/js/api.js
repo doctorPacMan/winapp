@@ -19,7 +19,7 @@ var cnapi = {
 	},
 	_handler_whereami: function(data, xhr) {
 
-		console.log('Whereami', !!xhr, data);
+		//console.log('Whereami', data);
 		if(data===false) return this._monitor('whereami',false);
 		else this._monitor('whereami',true);
 		//localStorage.setItem('data_whereami',JSON.stringify(data));

@@ -49,10 +49,12 @@ var $App = {
 	},
 	toggleSection: function(secid) {
 
-		var sec = this._sections[secid];
-		var st = sec.node.classList.contains('hidden');
-		sec.node.classList[!st?'add':'remove']('hidden');
-		sec.bttn.classList[st?'add':'remove']('active');
+		var sec = this._sections[secid], st = false;
+		if(sec) {
+			st = sec.node.classList.contains('hidden');
+			sec.node.classList[!st?'add':'remove']('hidden');
+			sec.bttn.classList[st?'add':'remove']('active');
+		}
 		
 		if(this._curr_sec && this._curr_sec!=secid) {
 			sec = this._sections[this._curr_sec]
@@ -144,19 +146,27 @@ var $App = {
 		}
 		else provlogo.innerText = '?';
 	},
-	getChannelById: function(id) {
-		return this._playlist.channels[id];
-	},
-	getTelecastById: function(id) {
-		return this._telecast[id];
-	},
-	registerTelecast: function(json) {
-		if (!this._telecast[json.id]) this._telecast[json.id] = new TvShow(json);
-		return this._telecast[json.id];
-	},
 	pushChannel: function(json) {
 		if (this._channels[json.id]) return;
 		else this._channels[json.id] = new TvChannel(json);
+	},
+	getChannelById: function(id) {
+		return this._playlist.channels[id];
+	},
+	registerTelecast: function(json) {
+		if(this._telecast[json.id]) return this._telecast[json.id];
+		else var tvs = this._telecast[json.id] = new TvShow(json);
+
+		if(tvs.onair) {
+			var cha = this.getChannelById(tvs.channel);
+			cha.currentTelecast = tvs.id;
+		}
+		
+		return tvs;
+	},
+	getTelecastById: function(id) {
+		var tvs = this._telecast[id];
+		return tvs ? tvs.update() : undefined;
 	},
 	clickChannel: function(tile, event) {
 		event.preventDefault();
