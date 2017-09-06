@@ -13,7 +13,7 @@ var modTvplayer = extendModule({
 		this.listen('channelView',this.onChannelView.bind(this));
 
 		this.node = document.getElementById(node_id);
-		this._wrppr = this.node.querySelector(':scope > div');
+		this._wrppr = this.node.querySelector('div');
 		this._posta = this.node.querySelector('.tvplayer > p');
 		this._video = this.node.querySelector('video');
 		this._sauce = this.node.querySelector('video > source[type="application/x-mpegURL"]');
