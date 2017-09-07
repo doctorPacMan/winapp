@@ -234,18 +234,88 @@ div.player-video:before {}
 		linear-gradient(180deg, transparent 0%, transparent 50%, rgb(30,40,70) 50%, rgb(30,40,70));
 	background-size: 2px 2px;
 }
-.mod-tvplayer > div > p > span {
-	position: absolute;
-	bottom: 12px;
-	padding: 12px;
-	left: 12px;right:12px;
-	background: rgba(0,0,0,.75);
-	padding: 6px 12px 8px;
+/* ============================================================== */
+.tvplayer > div.tvsdescr {
+	left: 0;right:0;
+	width: auto;
+	bottom: auto;
+	height: auto;
+	overflow: hidden;
+	height: 134px;
+	padding: 8px 6px;
+	top: 0px;
+	background: rgba(0,0,0,.5);
+	text-shadow: 0px 0px 1px black;
+	color: white;
+	transition: top .25s ease-in-out 0s;
+}
+.tvplayer > div.tvsdescr {top: -150px}
+.tvplayer.hover > div.tvsdescr {top: 0px}
+
+.tvsdescr > i {
+	width: 36px;
+	height: 36px;
+	float: left;
+	margin: 0 5px 0 0;
+}
+.tvsdescr > h5 {
+	height: 14px;
+	font-size: 14px;
+	line-height: 14px;
+	font-weight: bold;
+	color: whitesmoke;
+}
+.tvsdescr > div {
+	position:absolute;
+	height: 22px;
+	left: 47px;
+	right: 5px;
+	top: 24px;
 	font-size: 18px;
 	font-weight: 200;
-	color: white;
+	line-height: 20px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
 }
-
+.tvsdescr > div > time {
+	color: rgb(210,210,210);
+	margin-right: .25em;
+}
+.tvsdescr > div > span {}
+.tvsdescr > p {
+	margin: 0;
+	height: 90px;
+	width: 100%;
+	clear: both;
+	padding: 6px 0 0;
+	line-height: 1.3;
+	font-size: 93%;
+}
+.tvsdescr > p > i {
+	float: left;
+	width: 160px;
+	height: 90px;
+	border: 1px solid rgba(255,255,255,.25);
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	margin-right: 5px;
+}
+.tvsdescr > p > i > img {
+	display: block;
+	width: auto;
+	height: 120px;
+	margin-top: -15px;
+}
+.tvsdescr > p > u {
+	text-decoration: none;
+	overflow: hidden;
+	display: block;
+	height: 82px;
+	padding: 4px 0 0;
+	line-height: 16px;
+}
 /* ============================================================== */
 .mod-tvplayer > div > video {
 	display: block;
@@ -293,7 +363,8 @@ div.player-video:before {}
 	content: '\E769';
 	padding-left: .01em;
 }
-#playbttn {
+#playbttn,
+.st-view.ps-playing #playbttn {
 	opacity: .0;
 	pointer-events: none;
 }

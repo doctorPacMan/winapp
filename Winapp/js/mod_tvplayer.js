@@ -21,6 +21,16 @@ var modTvplayer = extendModule({
 		this._inf_state = this.node.querySelector('.tvplayer > s');
 		this._inf_sauce = this.node.querySelector('.tvplayer > u');
 
+		var ndesc = this.node.querySelector('.tvsdescr');
+		this._descr = {
+			title: ndesc.querySelector('h5'),
+			logo: ndesc.querySelector('img'),
+			time: ndesc.querySelector('time'),
+			name: ndesc.querySelector('span'),
+			descr: ndesc.querySelector('p > u'),
+			image: ndesc.querySelector('p img')
+		};
+
 		this._hlsPlayType = this.hlsPlayType(this._video);
 		
 		this._error = this.node.querySelector('div.tverror');
@@ -80,7 +90,7 @@ var modTvplayer = extendModule({
 		// poster autohide
 		//video.addEventListener('canplay',this.poster.bind(this,false));
 		this._resize_observe();
-		this._hover_observe();
+		//this._hover_observe();
 
 		// observe loading state
 		var loading_callback = this.statechange.bind(this),
@@ -170,16 +180,10 @@ var modTvplayer = extendModule({
 		this._wrppr.classList[st ? 'add' : 'remove']('hover');
 		//console.log('HOVER',st);
 	},
-	poster: function(image, descr) {
+	poster: function(image) {
 		//this._posta.innerHTML = '';
 		this._posta.style.display = image===false?'none':'block';
 		if(image) this._posta.style.backgroundImage = 'url("'+image+'")';
-		if(descr) {
-			var text = document.createElement('span');
-			text.appendChild(document.createTextNode(descr));
-			//this._posta.appendChild(text);
-			this._posta.replaceChild(text,this._posta.childNodes[0]);
-		}
 	},
 	initControls: function(cwrp) {
 		var batons = cwrp.getElementsByTagName('button');
@@ -277,20 +281,24 @@ var modTvplayer = extendModule({
 		//console.log('loadTelecast', tvs.onair, tvs.files);
 		//this.poster(false);
 		
-		this.poster(tvs.poster, tvs.description);
+		this.poster(tvs.poster);
 		//console.log(tvs)
 		if(null!==this._video.getAttribute('autoplay')) this.poster(false);
+		if(tvs.onair) this.load(cha.stream);
+		else if(tvs.files) this.load(tvs.files[0].uri);
+		else this.stop();
 		
-		if(tvs.onair) {
-			this.load(cha.stream);
-		}
-		else if(tvs.files) {
-			this.load(tvs.files[0].uri);
-		} else {
-			this.stop();
-			//this.poster(tvs.poster);
-		}
-		//else console.log(tvs);
+		console.log(tvs);
+
+		this._descr.title.innerText = cha.title;
+		this._descr.logo.src = cha.logo;
+			//time: ndesc.querySelector('time'),
+		this._descr.time.innerText = tvs.time.format('dd mmmm h:nn');
+		this._descr.name.innerText = tvs.title;
+		this._descr.descr.innerText = tvs.description;
+		//this._descr.image.setAttribute('src',tvs.image);
+		this._descr.image.setAttribute('src',tvs.poster);
+			//: ndesc.querySelector('p')
 	},
 	squeeze: function(sy) {
 		var style = window.getComputedStyle(this._video),
@@ -416,7 +424,7 @@ var modTvplayer = extendModule({
 	click: function(e) {
 		e.preventDefault() && e.stopImmediatePropagation();
 		//console.log('videoclick',e.target);
-		this.hover(true, false);
+		this.hover(!this._hover_state, true);
 		$App.toggleSection();
 	},
 	mute: function(st) {

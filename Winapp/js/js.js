@@ -86,7 +86,6 @@ var $App = {
 		//return cnapi.request.sauce(101613384);
 		
 		this.modChannels = new modChannels('mod-channels');
-		this.modTitlebar = new modTitlebar('mod-titlebar');
 		this.modSchedule = new modSchedule('mod-schedule');
 		this.modNowonair = new modNowonair('mod-nowonair');
 
@@ -133,12 +132,8 @@ var $App = {
 		document.location.reload(true);
 	},
 	informers: function() {
-		var provlogo = document.getElementById('inf-provlogo'),
-			acstoken = document.getElementById('inf-acstoken'),
-			location = document.getElementById('inf-location');
+		var provlogo = document.getElementById('inf-provlogo');
 
-		acstoken.innerText = cnapi.getAuthToken();
-		location.innerText = cnapi.location || '';
 		if(cnapi.provider) {
 			provlogo.style.backgroundImage = cnapi.provider.logo ? 'url("'+cnapi.provider.logo+'")' : null;
 			provlogo.innerText = cnapi.provider.name ? cnapi.provider.name[0] : '?';

@@ -7,7 +7,6 @@
 @import url("mod_playlist.css");
 @import url("mod_tvplayer.css");
 @import url("mod_schedule.css");
-@import url("mod_titlebar.css");
 .scrollhide {
 	width: 300px;
 	height: 100%;
@@ -29,6 +28,7 @@
 .chalogo {
 	overflow: hidden;
 	background-color: white;
+	display: inline-block;
 }
 .chalogo {
 	width:36px;
@@ -37,11 +37,12 @@
 .chaicon {
 	width:48px;
 	height:48px;
-	border-radius: 3px;
+	border-radius: 2px;
 	position: relative;
 }
 .chaicon:after {
 	content: '';
+	border-radius: 2px;
 	position: absolute;
 	width:100%; left:0;
 	height:100%; top:0;
@@ -50,7 +51,6 @@
 }
 .chaicon > img,
 .chalogo > img {
-	position: relative;
 	display: block;
 	width: auto;
 	height: 100%;
