@@ -51,7 +51,10 @@ var modTvplayer = extendModule({
 		this.poster('/img/poster.jpg');
 		this._state_observe(this._video);
 		
+		//this._hover_observe();
 		this._video.addEventListener('click',this.click.bind(this));
+		this._posta.addEventListener('click',this.click.bind(this));
+		this.hover(false,true);
 	},
 	_state_observe: function(video) {
 		var s = this._inf_state,
@@ -90,7 +93,6 @@ var modTvplayer = extendModule({
 		// poster autohide
 		//video.addEventListener('canplay',this.poster.bind(this,false));
 		this._resize_observe();
-		//this._hover_observe();
 
 		// observe loading state
 		var loading_callback = this.statechange.bind(this),
@@ -278,27 +280,23 @@ var modTvplayer = extendModule({
 	loadTelecast: function(id) {
 		var tvs = $App.getTelecastById(id) || {},
 			cha = $App.getChannelById(tvs.channel);
-		//console.log('loadTelecast', tvs.onair, tvs.files);
-		//this.poster(false);
 		
-		this.poster(tvs.poster);
-		//console.log(tvs)
+		//console.log('loadTelecast', tvs);
+		this.hover(true,true);
 		if(null!==this._video.getAttribute('autoplay')) this.poster(false);
+		else this.poster(tvs.poster);
+		
 		if(tvs.onair) this.load(cha.stream);
 		else if(tvs.files) this.load(tvs.files[0].uri);
 		else this.stop();
 		
-		console.log(tvs);
-
 		this._descr.title.innerText = cha.title;
 		this._descr.logo.src = cha.logo;
-			//time: ndesc.querySelector('time'),
-		this._descr.time.innerText = tvs.time.format('dd mmmm h:nn');
+		this._descr.time.innerText = tvs.getStartime();
 		this._descr.name.innerText = tvs.title;
 		this._descr.descr.innerText = tvs.description;
-		//this._descr.image.setAttribute('src',tvs.image);
-		this._descr.image.setAttribute('src',tvs.poster);
-			//: ndesc.querySelector('p')
+		this._descr.image.setAttribute('src', tvs.image);
+		//this._descr.image.setAttribute('src',tvs.poster);
 	},
 	squeeze: function(sy) {
 		var style = window.getComputedStyle(this._video),

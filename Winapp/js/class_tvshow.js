@@ -35,6 +35,18 @@ TvShow.prototype = {
 
 		return this;
 	},
+	getStartime: function() {
+		
+		var ddt = this.time.getDate() - Date.server().getDate(),
+			stt = this.time;
+
+		if(ddt == 0) stt = this.time.format('h:nn');
+		else if(ddt == 1) stt = 'Tomorrow '+this.time.format('h:nn');
+		else if(ddt ==-1) stt = 'Yesterday '+this.time.format('h:nn');
+		else stt = this.time.format('dd mmmm h:nn');
+
+		return stt;
+	},
 	getProgress: function() {
 		if(typeof(this.progress)=='boolean') return this.progress;
 

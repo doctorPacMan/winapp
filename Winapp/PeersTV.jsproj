@@ -68,7 +68,7 @@
     <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>$(VersionNumberMajor).$(VersionNumberMinor)</MinimumVisualStudioVersion>
-    <DefaultLanguage>ru-ru</DefaultLanguage>
+    <DefaultLanguage>en-us</DefaultLanguage>
     <PackageCertificateKeyFile>PeersTV_StoreKey.pfx</PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundle>Never</AppxBundle>
@@ -93,7 +93,6 @@
     <Content Include="css\mod_playlist.css" />
     <Content Include="css\mod_schedule.css" />
     <Content Include="css\mod_settings.css" />
-    <Content Include="css\mod_titlebar.css" />
     <Content Include="css\mod_tvplayer.css" />
     <Content Include="css\normalize.css" />
     <Content Include="css\sidebar.css" />
@@ -142,7 +141,6 @@
     <Content Include="js\mod_nowonair.js" />
     <Content Include="js\mod_schedule.js" />
     <Content Include="js\mod_settings.js" />
-    <Content Include="js\mod_titlebar.js" />
     <Content Include="js\mod_tvplayer.js" />
     <Content Include="js\playlist.js" />
     <Content Include="js\utils.js" />

@@ -363,8 +363,7 @@ div.player-video:before {}
 	content: '\E769';
 	padding-left: .01em;
 }
-#playbttn,
-.st-view.ps-playing #playbttn {
+#playbttn {
 	opacity: .0;
 	pointer-events: none;
 }
