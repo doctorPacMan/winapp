@@ -1,9 +1,24 @@
 ﻿"use strict";
 var modNowonair = extendModule({
 	initialize: function(node_id) {
+		this._tiles = {};
 		this.node = document.getElementById(node_id);
 		this.cont = this.node.querySelector('.scrollhide > div');
 		//console.log('modNowonair',this.node);
+		this.listen('channelView',this.onChannelView.bind(this));
+	},
+	onChannelView: function(event) {
+
+		var cur = this._current ? this._tiles[this._current] : null;
+		if(cur) cur.classList.remove('checked');
+
+		var id = event.detail.channelId;
+		this._tiles[id].classList.add('checked');
+		this._current = id;
+
+		//var cha = $App.getChannelById(id);
+		//console.log('onChannelView',cha);
+
 	},
 	onscrollLazyLoad: function() {
 		var list = [];
@@ -56,6 +71,7 @@ var modNowonair = extendModule({
 			li.appendChild(ns);
 			ul.appendChild(li);
 			this._list[cid]=li;
+			this._tiles[cid]=li
 		}
 		this.cont.appendChild(ul);
 		this.onscrollLazyLoad();
