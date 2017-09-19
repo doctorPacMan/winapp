@@ -27,9 +27,15 @@ var modTvplayer = extendModule({
 			logo: ndesc.querySelector('img'),
 			time: ndesc.querySelector('time'),
 			name: ndesc.querySelector('span'),
+			bttn: ndesc.querySelector('b'),
+			node: ndesc.querySelector('p'),
 			descr: ndesc.querySelector('p > u'),
 			image: ndesc.querySelector('p img')
 		};
+		this._descr.bttn.onclick = function(dn){
+			var st = dn.classList.contains('cllpsd');
+			dn.classList[st?'remove':'add']('cllpsd');
+		}.bind(this,this._descr.node);
 
 		this._hlsPlayType = this.hlsPlayType(this._video);
 		

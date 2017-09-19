@@ -25,6 +25,7 @@ var $App = {
 		tp._video.setAttribute('controls','');
 		//tp._wrppr.classList.add('testmode');
 		tp.poster(false);
+		tp.hover(true,true);
 
 		//return tp.state('fail');
 		//tp.load('http://hls.peers.tv/streaming/1kanal_hd/16/copy/playlist.m3u8?token=fd7dd8de64e65b43f2107d011c851a71');
