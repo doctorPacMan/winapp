@@ -13,6 +13,7 @@ var modLoading = extendModule({
 		this._bttn = this.node.querySelector('button');
 		this._bttn.setAttribute('type','button');
 		this.node.style.display = 'block';
+		this.complete();
 	},
 	onfail: function() {
 		//this.node.parentNode.removeChild(this.node);
@@ -21,11 +22,7 @@ var modLoading = extendModule({
 		this._bttn.onclick = function(){document.location.reload(true)};
 	},
 	onokay: function() {
-		this._bttn.innerText = 'Continue';
-		this._bttn.removeAttribute('disabled');
-		var p = this.node.parentNode;
-		this._bttn.onclick = p.removeChild.bind(p,this.node);
-		setTimeout(this._bttn.onclick.bind(this._bttn), 500);
+		setTimeout(this.complete.bind(this),500);
 	},
 	progress: function(v, state) {
 		var cn = 'idle';
@@ -51,5 +48,16 @@ var modLoading = extendModule({
 		if(done) this.onokay();
 		
 		return this;
+	},
+	complete: function() {
+
+		//this._bttn.onclick = p.removeChild.bind(p,this.node);
+		this._bttn.innerText = 'Continue';
+		this._bttn.removeAttribute('disabled');
+
+		var n = this.node, p = n.parentNode,
+			cb = function(){p.removeChild(n)};
+		n.addEventListener('animationend',cb);
+		n.classList.add('anime-remove');
 	}
 });

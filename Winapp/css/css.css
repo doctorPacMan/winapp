@@ -7,6 +7,7 @@
 @import url("mod_playlist.css");
 @import url("mod_tvplayer.css");
 @import url("mod_schedule.css");
+@import url("mod_loading.css");
 .scrollhide {
 	width: 300px;
 	height: 100%;
@@ -55,63 +56,3 @@
 	width: auto;
 	height: 100%;
 }
-
-.mod-loading {
-	z-index: 12;
-	position: absolute;
-	left:0; width:100%;
-	top:0; height:100%;
-	overflow: hidden;
-	background: rgba(153,153,153,.95);
-}
-.mod-loading > div {
-	position: absolute;
-	left:50%;width:240px;
-	top:0px;height:auto;
-	margin: 50px 0 0 -120px;
-	padding: 16px 0 0;
-	overflow: hidden;
-	background: rgba(42,48,57,.82);
-	box-shadow: 0px 0px 12px 0px rgba(0,0,0,.5),
-				inset 0 0 0 1px rgba(255,255,255,.35);
-}
-.mod-loading button {
-	display: block;
-	width: 100%;
-	height: 48px;
-	margin: 0 auto;
-	border: 0;
-	background: rgba(255,255,255,0);
-	border-top: 1px solid rgba(255,255,255,.35);
-	color: whitesmoke;
-	font: 200 17px 'Open Sans';
-	cursor: pointer;
-	transition: height .25s ease;
-}
-.mod-loading button[disabled] {height: 0px}
-.mod-loading span {
-	display: block;
-	margin: 0 12px 20px;
-	font-size: 18px;
-	font-weight: 200;
-	line-height: 20px;
-}
-.mod-loading span:before,
-.mod-loading span:after {
-	content: '\E0A2';
-	font: 20px/20px 'Segoe';
-	float: right;
-}
-.mod-loading span:before {
-	margin-right: .5em;
-	float: left;
-	color: darkgray;
-}
-.mod-loading span:nth-child(1):before {content: '\E774'}
-.mod-loading span:nth-child(2):before {content: '\E77B'}
-.mod-loading span:nth-child(3):before {content: '\E7BC'}
-.mod-loading span:nth-child(4):before {content: '\E8FD'}
-.mod-loading span:after {content: '\EA3A'}
-.mod-loading span.load:after {content: '\E9F3'}
-.mod-loading span.okay:after {content: '\E73E';color: greenyellow}
-.mod-loading span.fail:after {content: '\EA39';color: tomato}

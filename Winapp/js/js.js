@@ -18,7 +18,7 @@ var $App = {
 	},
 	TEST: function() {
 		
-		//return;
+		return new modLoading('mod-loading');
 
 		//this.sbbuttons();
 		var tp = this.modTvplayer;
