@@ -17,7 +17,7 @@
 	color: lightgray;
 	font-size: 16px;
 	font-weight: 200;
-	background: rgba(0,120,215,1) url(../img/logo300x300.png) no-repeat 50% 50%;
+	background: rgba(0,120,215,1) url(../img/splashscreen.png) no-repeat 50% 50%;
 }
 .mod-loading.anime-remove {animation: noderemove .25s ease 2s 1}
 .mod-loading > div {

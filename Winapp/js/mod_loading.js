@@ -55,9 +55,17 @@ var modLoading = extendModule({
 		this._bttn.innerText = 'Continue';
 		this._bttn.removeAttribute('disabled');
 
-		var n = this.node, p = n.parentNode,
-			cb = function(){p.removeChild(n)};
-		n.addEventListener('animationend',cb);
-		n.classList.add('anime-remove');
+		var nv = this.node;
+
+		var remove = (function(nv){
+			return function(){
+				if(nv.parentNode) nv.parentNode.removeChild(nv);
+			}
+		})(this.node);
+
+		//var remove = function(e){console.log('ENDS',e)};
+
+		nv.addEventListener('animationend',remove);
+		nv.classList.add('anime-remove');
 	}
 });

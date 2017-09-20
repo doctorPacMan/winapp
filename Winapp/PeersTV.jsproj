@@ -89,6 +89,7 @@
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="css\appstyles.css" />
     <Content Include="css\css.css" />
+    <Content Include="css\mod_loading.css" />
     <Content Include="css\mod_nowonair.css" />
     <Content Include="css\mod_playlist.css" />
     <Content Include="css\mod_schedule.css" />
@@ -122,6 +123,7 @@
     <Content Include="img\poster.jpg" />
     <Content Include="img\poster16x10.jpg" />
     <Content Include="img\poster16x9.jpg" />
+    <Content Include="img\splashscreen.png" />
     <Content Include="js\ajax.js" />
     <Content Include="js\api.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>

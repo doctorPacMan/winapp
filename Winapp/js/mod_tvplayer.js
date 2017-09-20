@@ -57,9 +57,9 @@ var modTvplayer = extendModule({
 		this.poster('/img/poster.jpg');
 		this._state_observe(this._video);
 		
-		//this._hover_observe();
-		this._video.addEventListener('click',this.click.bind(this));
-		this._posta.addEventListener('click',this.click.bind(this));
+		this._hover_observe();
+		//this._video.addEventListener('click',this.click.bind(this));
+		//this._posta.addEventListener('click',this.click.bind(this));
 		this.hover(false,true);
 	},
 	_state_observe: function(video) {
