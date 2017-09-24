@@ -66,7 +66,7 @@ var modNowonair = extendModule({
 			li.setAttribute('data-cid', cid);
 			li.addEventListener('click',this.onChannelClick.bind(this,cid),false);
 			ns = ns.cloneNode(false);
-			ns.appendChild(channels[j].getLogo());
+			ns.appendChild(channels[j].getIcon());
 			ns.appendChild(document.createTextNode(channels[j].title));
 			li.appendChild(ns);
 			ul.appendChild(li);
@@ -96,7 +96,7 @@ var modNowonair = extendModule({
 			ng.appendChild(pg);
 
 			nd.innerText = tvs.title;
-			pg.setAttribute('src',tvs.poster);
+			pg.setAttribute('src',tvs.preview);
 
 			//console.log(cid, tvs.title, li);
 		}

@@ -19,13 +19,15 @@ TvShow.prototype = {
 
 		var telecastImage = 'img/poster.jpg';
 		var telecastPoster = 'img/poster.jpg';
+		var telecastPreview = 'img/poster.jpg';
 		(json.telecastImages || []).forEach(function(v){
 			if(v.profile===2) telecastPoster = v.location;
 			else if(v.profile===0) telecastImage = v.location;
+			else if(v.profile===3) telecastPreview = v.location;
 		});
 		this.image = telecastImage;
 		this.poster = telecastPoster;
-
+		this.preview = telecastPreview;
 		this._json = json;
 		//console.log(json);
 	},

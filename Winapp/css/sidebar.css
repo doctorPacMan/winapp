@@ -41,9 +41,8 @@
 .sidebar > a#stopit,
 .sidebar > a#config {position: absolute;bottom:0}
 
-
-.sidebar > a#chlist:before {content: '\E700'}
-.sidebar > a#nowair:before {content: '\E93E'}
+.sidebar > a#nowair:before {content: '\E700'}
+.sidebar > a#chlist:before {content: '\E93E'}
 
 .sidebar > a#config {margin-bottom: 48px}
 .sidebar > a#config:before {content: '\E713'}
