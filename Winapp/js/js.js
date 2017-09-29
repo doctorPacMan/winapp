@@ -1,7 +1,7 @@
 ﻿"use strict";
 window.DEBUG = false;
-window.APIHOST = 'http://api.peers.tv';
-//window.APIHOST = 'http://a.trunk.ptv.bender.inetra.ru';
+//window.APIHOST = 'http://api.peers.tv';
+window.APIHOST = 'http://a.trunk.ptv.bender.inetra.ru';
 //window.CHANNELS_LIMIT = 24;
 //window.WRMURL = '/data/whereami.json';
 var $App = {
@@ -9,31 +9,48 @@ var $App = {
 		this.sbbuttons();
 		this.modSettings = new modSettings('mod-settings');
 		this.modTvplayer = new modTvplayer('mod-tvplayer');
-		//return this.TEST();
-		
-		console.info('$App initialize');
+		this.modSchedule = new modSchedule('mod-schedule');
 		this._telecast = {};
 		this._channels = {};
+		
+		return this.TEST();
+		//return cnapi.initialize(this.TEST.bind(this),new modLoading('mod-loading'),true);
+		
+		console.info('$App initialize');
 		cnapi.initialize(this.onready.bind(this),new modLoading('mod-loading'));
+		
 	},
 	TEST: function() {
-		
-		return new modLoading('mod-loading');
-
-		//this.sbbuttons();
 		var tp = this.modTvplayer;
-		tp._video.setAttribute('controls','');
-		//tp._wrppr.classList.add('testmode');
+		//tp._video.setAttribute('controls','');
 		tp.poster(false);
 		tp.hover(true,true);
 
+		if(0) cnapi.request.schedule(10338232,null,function(data){
+			console.log(data);
+			this.modSchedule.setSchedule(data, new Date);
+		}.bind(this));
+		return
+
+		//$Ajax('/data/channels.json',function(json,xhr) {json.channels.forEach(this.pushChannel.bind(this))}.bind(this),true);
+		$Ajax('/data/telecast.json',function(json,xhr) {//console.log(json);
+			json.duration = 60;
+			json.date.day = (new Date).getDate();
+			json.date.hour = (new Date).getHours();
+			json.date.minute = (new Date).getMinutes();
+			json.date.second = (new Date).getSeconds() - 15;
+			var tlc = this.registerTelecast(json);
+			//console.log(tlc);
+			this.modTvplayer.setTelecast(json.id);
+		}.bind(this));
+
+		return;
 		//return tp.state('fail');
 		//tp.load('http://hls.peers.tv/streaming/1kanal_hd/16/copy/playlist.m3u8?token=fd7dd8de64e65b43f2107d011c851a71');
 		//tp.load('http://hls.novotelecom.ru/streaming/russian_roman/16/tvrec/playlist.m3u8');
 		//tp.load('http://hls.peers.tv/streaming/cam_krylova-krasny/16/variable.m3u8');
 		//tp.load('http://archive2.peers.tv/archive/101354016/101354016.m3u8');
 		//tp.load('http://www.cn.ru/data/files/test/countdown.mp4');
-		tp.load('/data/countdown.mp4');
 		//tp.load('/data/error.mp4');
 		//tp.squeeze(.75);
 		return;
@@ -41,10 +58,10 @@ var $App = {
 	settings: function(name, value) {
 		if(undefined===value) {
 			value = this.modSettings.get(name);
-			//console.log('settings get', name, value);
+			//console.log('settings get',name,value);
 			return value;
 		} else {
-			//console.log('settings set', name, value);
+			//console.log('settings set',name,value);
 			return this.modSettings.set(name, value);
 		}
 	},
@@ -87,7 +104,6 @@ var $App = {
 		//return cnapi.request.sauce(101613384);
 		
 		this.modChannels = new modChannels('mod-channels');
-		this.modSchedule = new modSchedule('mod-schedule');
 		this.modNowonair = new modNowonair('mod-nowonair');
 
 		this._playlist = playlist;
@@ -147,6 +163,7 @@ var $App = {
 		else this._channels[json.id] = new TvChannel(json);
 	},
 	getChannelById: function(id) {
+		if(!this._playlist) return null;
 		return this._playlist.channels[id];
 	},
 	registerTelecast: function(json) {
@@ -155,7 +172,7 @@ var $App = {
 
 		if(tvs.onair) {
 			var cha = this.getChannelById(tvs.channel);
-			cha.currentTelecast = tvs.id;
+			if(cha) cha.currentTelecast = tvs.id;
 		}
 		
 		return tvs;

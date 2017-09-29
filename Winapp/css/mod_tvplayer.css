@@ -158,7 +158,6 @@ div.player-video:before {}
 .tvplayer.hover > div.tvcntrls {bottom:0}
 
 .tvcntrls > u,
-.tvcntrls > s,
 .tvcntrls > i {
 	font: normal normal 12px/19px monospace;
 	background: rgba(0,0,0,.75);
@@ -172,13 +171,70 @@ div.player-video:before {}
 	color: lightgreen;
 }
 .tvcntrls > u {margin-bottom: 0px}
-.tvcntrls > s {margin-bottom: 21px}
 .tvcntrls > i {
 	right: 0px;
 	left: auto;
 	bottom: 0;
 	margin: 0;
 }
+.tvcntrls > p {
+	position: absolute;
+	left: 50%;
+	bottom: 100%;
+	margin: 0 0 120px -185px;
+	background: rgba(255,255,255,.5);
+	height: 24px;
+	width: 360px;
+	font: 14px/24px monospace;
+	padding: 5px;
+}
+.tvcntrls > p > time {
+	float: left;
+	height: 100%;
+	width: 48px;
+	overflow: hidden;
+	text-align: center;
+	color: black;
+}
+.tvcntrls > p > time + time {float: right}
+.tvcntrls > p > u.timeline {
+	background-color: rgba(120,120,120,.5);
+	overflow: visible;
+	height: 4px;
+	margin: 10px 50px 0;
+}
+.tvcntrls > p > u.timeline > s {
+	position: relative; top: -1px;
+	background-color: rgb(50,180,230);
+	background-color: rgba(55,116,186,1);
+	height: 6px;
+}
+.tvcntrls > s:before {
+	content: '';
+	display: block;
+	height: 100%;
+	background: rgba(200,200,200,.35);
+}
+.tvcntrls > s > u {
+	display: block;
+	height: 5px;
+	width: 50%;
+	margin: -4px 0 0;
+	background: darkorange;
+}
+.tvcntrls > s > u:after {
+	content: '';
+	display: block;
+	display: none;
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	background: tomato;
+	box-shadow: 0 0 3px black;
+	float: right;
+	margin: -6px -8px 0 0;
+}
+
 .tvcntrls > button {
 	position: relative;
 	float: left;

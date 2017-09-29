@@ -12,7 +12,7 @@
 	transition: right .2s ease-out 0s;
 }
 .appconfig.hidden {
-	right: -240px;
+	right: -241px;
 	box-shadow: none;
 }
 .appconfig > h2 {

@@ -13,7 +13,8 @@ TvShow.prototype = {
 		this.time = new Date(d.year, d.month-1, d.day, d.hour, d.minute);
 		this.ends = new Date(this.time.getTime() + this.dura);
 		this.sauce = undefined;
-		this.files = false;
+		this.source = undefined;
+		//this.files = false;
 		this.onair = false;
 		this.progress = this.getProgress();
 

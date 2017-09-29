@@ -1,0 +1,29 @@
+@keyframes timeline-u {
+	0% {background-position: 0px top}
+	100% {background-position: 360px top}
+}
+@keyframes timeline-s {100% {width:100%}}
+.timeline {
+	height: 5px;
+	display: block;
+	overflow: hidden;
+	background: transparent none no-repeat 0 0;
+	background-color: rgba(125,125,125,.125);
+}
+.timeline {
+	background-image: linear-gradient(90deg,
+		transparent 0px,
+		rgba(255,200,0,.5) 4px,
+		rgba(255,200,0,.5) 6px,
+		transparent 10px);
+	-no-animation: timeline-u 1s 0s infinite ease;
+}
+.timeline > s {
+	display: block;
+	width: 50%;
+	height: 100%;
+	background-color: rgb(255,200,0);
+	animation: timeline-s 2s 0s 1 linear;
+	animation-fill-mode: forwards;
+	animation-play-state: running;
+}

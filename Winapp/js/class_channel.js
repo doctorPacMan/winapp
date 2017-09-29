@@ -16,9 +16,9 @@ TvChannel.prototype = {
 
 		var scheduledDates = [];
 		if(json.scheduledDates)	json.scheduledDates.forEach(function(v){
-			var sd = v.year+'/'+v.month+'/'+v.day;
-			sd += ' '+v.hour+':'+v.minute+':'+v.second;
-			scheduledDates.push(new Date(sd));//var tz = v.timezone/60;
+			var sd = new Date(v.year+'/'+v.month+'/'+v.day+' '+v.hour+':'+v.minute+':'+v.second);
+			//scheduledDates.push(sd.setHours(6,0,0,0));
+			scheduledDates.push(sd.format('dd/mm'));
 		});
 		this.scheduledDates = scheduledDates;
 

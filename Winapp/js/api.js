@@ -4,9 +4,11 @@ var cnapi = {
 	token: null,
 	location: null,
 	provider: null,
-	initialize: function(callback, monitor) {
+	initialize: function(callback, monitor, simple) {
+
 		this._onready = callback;
 		this._monitor = monitor.progress.bind(monitor);
+		this._simple = simple===true;
 
 		this._monitor('whereami',null);
 		var wrmurl = APIHOST+'/registry/2/whereami.json',
@@ -74,10 +76,15 @@ var cnapi = {
 		if(this.token = this.getAuthToken()) {
 			if(DEBUG) console.log('Authtoken restore', this.token);
 			this._monitor('authtoken',true);
-			this._request_playlists();
+			if(!this._simple) this._request_playlists();
+			else {
+				this._monitor('playlist',true);
+				this._monitor('channels',true);
+				this._onready();
+			}
 		}
 		else {
-			var srcurl = this.apis.auth+'token',
+			var srcurl = this.apis.auth+'token/',
 				params = {'grant_type':'inetra:anonymous','client_id':'demoapp','client_secret':'demoapp'};
 			$Ajax(srcurl,this._handler_acstoken.bind(this),params);
 			this._monitor('authtoken',null);

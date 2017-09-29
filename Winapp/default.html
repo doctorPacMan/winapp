@@ -16,6 +16,9 @@
 	<!-- Ссылки Winapp -->
 	<link href="css/css.css" rel="stylesheet" />
 
+	<link href="css/timeline.css" rel="stylesheet" />
+	<script src="js/timeline.js"></script>
+
 	<script src="js/hls.light.min.js"></script>
 
 	<script src="js/playlist.js"></script>
@@ -43,7 +46,7 @@
 <body class="win-type-body">
 <div>
 
-	<div class="mod-loading" id="mod-loading" style="display:nones">
+	<div class="mod-loading" id="mod-loading" style="display:none">
 	<div>
 		<span>Whereami</span>
 		<span>Authorization</span>
@@ -89,6 +92,7 @@
 			<i>video</i>
 			<button id="tvc-play"></button>
 			<button id="tvc-mute"></button>
+			<p><time>00:00</time><!-- timeline --><time>00:00</time></p>
 		</div>
 		<div class="tverror">Error</div>
 	</div>
@@ -112,7 +116,7 @@
 			<ul>
 				<li class="latent">
 					<strong>
-						<i class="chalogo"><img src="img/logo150x150.png"></i>
+						<i class="chaicon"><img src="img/logo150x150.png"></i>
 						<b>Московский образовательный интернет-телеканал</b>
 					</strong>
 					<span>Первый общеобразовательный телеканал телеканал телеканал</span>
@@ -120,7 +124,7 @@
 				</li>
 				<li class="latent">
 					<strong>
-						<i class="chalogo"><img src="img/logo150x150.png"></i>
+						<i class="chaicon"><img src="img/logo150x150.png"></i>
 						<b>Московский образовательный интернет-телеканал</b>
 					</strong>
 					<span>---</span>
@@ -144,10 +148,12 @@
 		</form>
 	</section>
 
-	<aside class="mod-schedule hidden" id="mod-schedule">
+	<section class="mod-schedule hidden" id="mod-schedule">
 		<div class="mod-schedule-dayz">
-		<div>
-		<ul>
+			<button></button>
+			<button></button>
+			<div>
+			<ul>
 			<li><time><b>04</b><u>Вт</u></time></li>
 			<li><time><b>05</b><u>Ср</u></time></li>
 			<li><time><b>06</b><u>Чт</u></time></li>
@@ -164,10 +170,11 @@
 			<li><time><b>17</b><u>Пн</u></time></li>
 			<li><time><b>18</b><u>Вт</u></time></li>
 			<li><time><b>19</b><u>Ср</u></time></li>
-		</ul>
+			</ul>
+			</div>
 		</div>
-		</div>
-	</aside>
+		<p>Program not found</p>
+	</section>
 
 	<section class="mod-playlist hidden" id="mod-channels">
 		<big>Channels</big>

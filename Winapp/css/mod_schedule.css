@@ -5,34 +5,62 @@
 .mod-schedule {
 	z-index: 3;
 	position: absolute;
-	right:0;width:auto;
-	top: 0px; bottom:0;
+	right:0;width:400px;
+	top: 0px;bottom:0px;
 	margin: 0 0 0px;
 	overflow: hidden;
-	background: rgba(42,48,57,.82);
+	background: rgba(42,48,57,.95);
 	border-left: 1px solid rgba(255,255,255,.125);
 	box-shadow: 0 0 5px black;
-	width: 342px;
 	transition: right .25s ease-out 0s;
 }
 .mod-schedule.hidden {
-	right: -342px;
 	box-shadow: none;
+	right: -401px;
 }
-
-
-
+.mod-schedule > p {
+	position: absolute;
+	left:0px;right:0px;
+	top: 50%;
+	padding: 6px;
+	background: black;
+	margin: 0 6px;
+}
 .mod-schedule-dayz {
 	height: 48px;
 	width: 100%;
 	display: block;
 	overflow: hidden;
 	border-bottom: 1px solid dodgerblue;
+	background-color: rgba(42,48,57,1);	
 }
+.mod-schedule-dayz > button {
+	padding: 0;
+	margin: 0;
+	color: whitesmoke;
+	text-align: center;
+	float: left;
+	width: 32px;
+	height:100%;
+	border: 0px solid rgba(255,255,255,.125);
+	border-width: 0 1px 0 0;
+}
+.mod-schedule-dayz > button:before {
+	font: 24px/48px 'Segoe';
+	content: '\E76B';
+}
+.mod-schedule-dayz > button + button {
+	float: right;
+	border-width: 0 0 0 1px;
+}
+.mod-schedule-dayz > button + button:before {content: '\E76C'}
+
+
 .mod-schedule-dayz > div {
 	height: calc(100% + 24px);
 	overflow: hidden;
 	overflow-x: scroll;
+	position: relative;
 	scroll-behavior: smooth;
 }
 .mod-schedule-dayz ul,
@@ -50,12 +78,13 @@
 	justify-content: flex-start;
 }
 .mod-schedule-dayz li {
+	box-sizing: border-box;
+	flex-shrink: 0;
 	display: block;
-	min-width: 48px;
-	max-width: 48px;
+	width: 48px;
 	border-right: 1px solid rgba(255,255,255,.125);
 }
-.mod-schedule-dayz li:last-child {border-right:0}
+.mod-schedule-dayz li:last-child {border-right-width: 0px}
 
 .mod-schedule-dayz time {
 	display: block;
@@ -75,13 +104,17 @@
 .mod-schedule-dayz time b {font-size: 16px}
 .mod-schedule-dayz time u {font-size: 12px}
 
-.mod-schedule-dayz time:hover {background-color: rgba(255,255,255,.125)}
-.mod-schedule-dayz time.is-today {}
-.mod-schedule-dayz time.is-crrnt {
-	background-color: rgba(255,255,255,.125);
-	border-bottom: 4px solid dodgerblue;
-	padding-bottom: 0;
+.mod-schedule-dayz time:hover {
+	background-color: rgba(220,220,220,.16);
 }
+.mod-schedule-dayz time.is-crrnt {
+	background-color: dodgerblue;
+}
+.mod-schedule-dayz time.is-empty {
+	pointer-events: auto;
+	opacity: .5;
+}
+.mod-schedule-dayz time.is-today {}
 
 .mod-schedule ol,
 .mod-schedule ol li {
