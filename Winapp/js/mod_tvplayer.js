@@ -56,10 +56,8 @@ var modTvplayer = extendModule({
 		var ntype = this.node.querySelector('div.tvcntrls > i');
 		ntype.innerText = this._hlsjs ? 'hlsjs' : (this._hlsPlayType || 'video');
 		
-		this.poster('/img/poster.jpg');
+		this._hover_observe();
 		this._state_observe(this._video);
-		
-		//this._hover_observe();
 		this._video.addEventListener('click',this.click.bind(this));
 		this._posta.addEventListener('click',this.click.bind(this));
 		this.hover(false,true);
@@ -183,7 +181,7 @@ var modTvplayer = extendModule({
 	},
 	hover: function(st, fxd) {
 		if(this._hover_timer){clearTimeout(this._hover_timer);delete this._hover_timer};
-		if(!fxd && st) this._hover_timer = setTimeout(this.hover.bind(this,false),5000);
+		if(!fxd && st) this._hover_timer = setTimeout(this.hover.bind(this,false),3500);
 		if(st===this._hover_state) return;
 		else this._hover_state = st;
 
@@ -191,9 +189,7 @@ var modTvplayer = extendModule({
 		//console.log('HOVER',st);
 	},
 	poster: function(image) {
-		//this._posta.innerHTML = '';
 		this._posta.style.display = image===false?'none':'block';
-		if(image) this._posta.style.backgroundImage = 'url("'+image+'")';
 	},
 	initControls: function(cwrp) {
 		var batons = cwrp.getElementsByTagName('button');
@@ -233,7 +229,7 @@ var modTvplayer = extendModule({
 		
 		var vw = this._video.videoWidth || 600,
 			vh = this._video.videoHeight || 450;
-		//console.log('playstart', e.type, vw+'x'+vh, this._sauce.src);
+		console.log('playstart', e.type, vw+'x'+vh, this._sauce.src);
 		this._video.setAttribute('width',vw);
 		this._video.setAttribute('height',vh);
 
@@ -247,7 +243,7 @@ var modTvplayer = extendModule({
 
 		var hlsjs = new Hls({});
 		hlsjs.on(Hls.Events.MEDIA_ATTACHED,function(event,data){
-			var src = this._sauce.getAttribute('src');
+			var src = this._sauce.getAttribute('src'),
 				video = data.media;
 			//console.log('attach', src);
 		}.bind(this));
@@ -305,31 +301,34 @@ var modTvplayer = extendModule({
 	},
 	loadTelecast: function(id) {
 		var tvs = $App.getTelecastById(id) || {},
-			cha = $App.getChannelById(tvs.channel);
+			cha = $App.getChannelById(tvs.channel),
+			progress = tvs.getProgress(),
+			playable = !!tvs.source || (tvs.onair && cha),
+			autoplay = null!==this._video.getAttribute('autoplay');
 		
-		this.hover(true,true);
-		if(null!==this._video.getAttribute('autoplay')) this.poster(false);
-		else this.poster(tvs.poster);
-		
-		if(tvs.onair && cha) this.load(cha.stream);
+		if(progress===true) this.stop();
 		else if(tvs.source) this.load(tvs.source);
+		else if(tvs.onair && cha) this.load(cha.stream);
 		else {
 			this.stop();
 			cnapi.request.sauce(tvs.id,function(d){
-				//console.log('player saucerequest', d);
 				var src = d[0] ? d[0]['uri'] : null;
 				this.load(tvs.source = src);
+				console.log('player saucerequest: '+src, d);
 			}.bind(this));
 		}
 		
+		this._posta.style.backgroundImage = 'url("'+tvs.poster+'")';
 		this._descr.title.innerText = cha ? cha.title : 'Channel title';
 		this._descr.logo.src = cha ? cha.logo : 'img/logo150x150.png';
 		this._descr.time.innerText = tvs.getStartime();
 		this._descr.name.innerText = tvs.title;
 		this._descr.descr.innerText = tvs.description;
 		this._descr.image.setAttribute('src',tvs.image);
-
-		var pp = tvs.getProgress(),
+		this.hover(progress != true, false);
+		this.poster(!playable || !autoplay);
+		
+		var pp = progress,
 			pp = pp===true ? 0 : (pp===false ? 1 : pp);
 		this._timeline.duration(tvs.duration*1000).position(pp);
 		this._timeline_time.innerText = tvs.time.format('h:nn');
@@ -394,7 +393,6 @@ var modTvplayer = extendModule({
 			this._hlsjs.stopLoad();
 			this._hlsjs.detachMedia(this._video);
 		}
-		//this.poster(false);
 		//var so = Array.prototype.slice.call(this._video.querySelectorAll('source'));
 		//while(so.length) this._video.removeChild(so.pop());
 	},

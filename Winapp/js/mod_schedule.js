@@ -2,6 +2,7 @@
 var modSchedule = extendModule({
 	initialize: function(node_id) {
 		//console.log('modSchedule initialize');
+		this._storage = {};
 		this.dayz = {};
 		this._time = {};
 		this._cid = null;
@@ -41,7 +42,7 @@ var modSchedule = extendModule({
 		for(var day_id in this._time) {
 			//console.log(day_id, , this._time[day_id]);
 			//console.log(this._time[day_id]);
-			this._time[day_id].classList[dates.indexOf(day_id)==-1?'add':'remove']('is-empty');
+			this._time[day_id].classList[dates.indexOf(day_id)==-1?'add':'remove']('disabled');
 		}
 	},
 	dayzBind: function() {
@@ -78,14 +79,12 @@ var modSchedule = extendModule({
 			if(today.getTime()==day.getTime()) {
 				u.innerText = 'Today';
 				time.classList.add('is-today');
-				time.classList.add('is-crrnt');
+				time.classList.add('checked');
 			}
 			time.setAttribute('datetime',day.getHtmlTime());
 			time.setAttribute('data-day',day_id);
 			time.addEventListener('click',this.clickDay.bind(this,day));
-			//time.addEventListener('click',this.focus.bind(this,day));
 			this._time[day_id] = time;
-			//console.log(time.getAttribute('data-day'));
 		}
 		this.container.appendChild(list);
 		this.focus(today);
@@ -103,39 +102,48 @@ var modSchedule = extendModule({
 		cont.scrollLeft = li.offsetLeft + li.offsetWidth/2 - cont.offsetWidth/2;
 	},
 	clickDay: function(day) {
-		this._day = day;
 		var day = new Date(day),
 			day_id = day.format('dd/mm'),
 			time = this._time[day_id] || undefined;
-		//console.log(time, day);
-		this.request(this._cid,this._day,this.setSchedule.bind(this));
+
+		if(this._day) this._time[this._day.format('dd/mm')].classList.remove('checked');
+		if(time) time.classList.add('checked');
+		
+		this._day = day;
+		var chs = this._storage[this._cid],
+			ids = chs ? chs[day_id] : null;
+		//console.log('clickDay', !!ids, day);
+		if(ids) this.setSchedule(ids,this._day);
+		else this.request(this._cid, this._day);
 	},
 	request: function(cid, day) {
 		cnapi.request.schedule(cid, day, this.setSchedule.bind(this));
 	},
 	setSchedule: function(tvs_ids, day) {
 
-		console.log('setSchedule',tvs_ids);
+		//console.log('setSchedule',this._cid, day, tvs_ids);
 
 		var day_from = day.setHours(6,0,0,0),
-			day_ends = day_from + 86400 * 1000;// +24h
+			day_ends = day_from + 86400 * 1000,// +24h
+			day_id = day.format('dd/mm');
 
 		var ol = document.createElement('ol'),
-			li = document.createElement('li');
+			li = document.createElement('li'),
+			time;
 
 		for(var i=0;i<tvs_ids.length;i++) {
 
 			var tvs = $App.getTelecastById(tvs_ids[i]),
-				time = tvs.time.getTime(),
+				bgns = tvs.time.getTime(),
 				ends = tvs.ends.getTime();
 			
-			if(time<day_from && ends<=day_from) continue;
-			else if(time>=day_ends) break;
+			if(bgns<day_from && ends<=day_from) continue;
+			else if(bgns>=day_ends) break;
 
 			li = li.cloneNode(false);
-			li.appendChild(tvs.getNodeList());
+			li.appendChild(time = tvs.getNodeList());
 			ol.appendChild(li);
-			li.onclick = this.viewTelecast.bind(this,tvs.id);
+			time.onclick = this.viewTelecast.bind(this,tvs.id);
 			//li.onclick = this.fire.bind(this,'telecastView',{id:tvs.id});
 			//console.log(tvs);
 		}
@@ -143,6 +151,9 @@ var modSchedule = extendModule({
 		var old = this.node.getElementsByTagName('ol')[0];
 		if (!old) this.node.appendChild(ol);
 		else this.node.replaceChild(ol,old);
+
+		if(!this._storage[this._cid]) this._storage[this._cid] = {};
+		this._storage[this._cid][day_id] = tvs_ids;
 	},
 	viewTelecast: function(id) {
 		var tvs = $App.getTelecastById(id);

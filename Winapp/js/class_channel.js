@@ -40,6 +40,14 @@ TvChannel.prototype = {
 	},
 	getIcon: function() {
 		var i = document.createElement('i'),
+			g = document.createElement('s');
+		i.className = 'chaicon';
+		g.className = 'logo_small logo_small_'+this.alias;
+		i.appendChild(g);
+		return i;
+	},
+	getIcon0: function() {
+		var i = document.createElement('i'),
 			g = document.createElement('img');
 		i.className = 'chaicon';
 		g.src = this.logo;

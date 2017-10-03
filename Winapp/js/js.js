@@ -1,7 +1,7 @@
 ﻿"use strict";
 window.DEBUG = false;
-//window.APIHOST = 'http://api.peers.tv';
-window.APIHOST = 'http://a.trunk.ptv.bender.inetra.ru';
+window.APIHOST = 'http://api.peers.tv';
+//window.APIHOST = 'http://a.trunk.ptv.bender.inetra.ru';
 //window.CHANNELS_LIMIT = 24;
 //window.WRMURL = '/data/whereami.json';
 var $App = {
@@ -13,12 +13,11 @@ var $App = {
 		this._telecast = {};
 		this._channels = {};
 		
-		return this.TEST();
+		//return this.TEST();
 		//return cnapi.initialize(this.TEST.bind(this),new modLoading('mod-loading'),true);
 		
 		console.info('$App initialize');
 		cnapi.initialize(this.onready.bind(this),new modLoading('mod-loading'));
-		
 	},
 	TEST: function() {
 		var tp = this.modTvplayer;

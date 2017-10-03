@@ -56,7 +56,8 @@ var modNowonair = extendModule({
 		this._list = {};
 		var ul = document.createElement('ul'),
 			li = document.createElement('li'),
-			ns = document.createElement('strong');
+			ns = document.createElement('strong'),
+			nt = document.createElement('b');
 		li.className = 'latent';
 
 		var cid;
@@ -66,8 +67,10 @@ var modNowonair = extendModule({
 			li.setAttribute('data-cid', cid);
 			li.addEventListener('click',this.onChannelClick.bind(this,cid),false);
 			ns = ns.cloneNode(false);
+			nt = nt.cloneNode(false);
+			nt.innerText = channels[j].title;
 			ns.appendChild(channels[j].getIcon());
-			ns.appendChild(document.createTextNode(channels[j].title));
+			ns.appendChild(nt);
 			li.appendChild(ns);
 			ul.appendChild(li);
 			this._list[cid]=li;

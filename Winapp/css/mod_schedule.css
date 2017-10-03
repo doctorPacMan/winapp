@@ -19,12 +19,10 @@
 	right: -401px;
 }
 .mod-schedule > p {
-	position: absolute;
-	left:0px;right:0px;
-	top: 50%;
-	padding: 6px;
+	width: 100%;
 	background: black;
-	margin: 0 6px;
+	margin: 0;
+	padding: 12px;
 }
 .mod-schedule-dayz {
 	height: 48px;
@@ -107,11 +105,11 @@
 .mod-schedule-dayz time:hover {
 	background-color: rgba(220,220,220,.16);
 }
-.mod-schedule-dayz time.is-crrnt {
+.mod-schedule-dayz time.checked {
 	background-color: dodgerblue;
 }
-.mod-schedule-dayz time.is-empty {
-	pointer-events: auto;
+.mod-schedule-dayz time.disabled {
+	pointer-events: none;
 	opacity: .5;
 }
 .mod-schedule-dayz time.is-today {}
@@ -127,10 +125,21 @@
 .mod-schedule ol {
 	overflow-y: scroll;
 	height: calc(100% - 49px);
+	width: 430px;
 	animation: listAppear .25s ease-out 1;
 }
+.mod-schedule ol:empty {
+	overflow-y: hidden;
+	height: auto;
+}
+.mod-schedule ol:empty:before {
+	content: 'Sorry, there is no schedule for this day.';
+	background: black;
+	padding: 12px;
+	display:block;
+}
 .mod-schedule ol li {
-	margin: 0px 0;
+	width: 400px;
 	border-top: 1px dashed rgba(255,255,255,.12);
 }
 .mod-schedule ol li:last-child {}

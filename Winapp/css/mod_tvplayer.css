@@ -95,7 +95,7 @@ div.player-video.ls-waiting:after {
 	animation: loadspin .6s linear 0s infinite reverse;
 }
 div.player-video:before {}
-.st-idle div.player-video:before {content: 'idle'}
+.st-idle div.player-video:before {content: ''; border-color:rgba(0,0,0,.025)}
 .st-load div.player-video:before {animation: loadspin .6s linear 0s infinite}
 .st-fail div.player-video:before {
 	content: 'error';
@@ -187,6 +187,11 @@ div.player-video:before {}
 	width: 360px;
 	font: 14px/24px monospace;
 	padding: 5px;
+	opacity: 0;
+	transition: opacity .25s linear 0s;
+}
+.tvplayer.hover .tvcntrls > p {
+	opacity: 1;
 }
 .tvcntrls > p > time {
 	float: left;
@@ -275,7 +280,7 @@ div.player-video:before {}
 	left:0; width:100%;
 	top:0; height:100%;
 	box-shadow: inset 0 0 0 1px rgba(255,255,255,.125);
-	background: transparent none no-repeat 50% 50%;
+	background: transparent url('/img/poster.jpg') no-repeat 50% 50%;
 	background-size: cover;
 }
 .mod-tvplayer > div > p:before {

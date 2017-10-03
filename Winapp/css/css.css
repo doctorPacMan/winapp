@@ -56,3 +56,8 @@
 	width: auto;
 	height: 100%;
 }
+.logo_small {
+	display: inline-block;
+	width: 48px;
+	height:48px;
+}
