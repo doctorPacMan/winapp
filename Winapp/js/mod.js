@@ -27,5 +27,16 @@ appModule.prototype = {
 		var ce = new CustomEvent(ename,{'detail':detail});
 		//console.log('dispatchEvent',ename);
 		document.dispatchEvent(ce);
+	},
+	visibilityObserver: function(callback) {
+		var section = this.node,
+			handler = function(mutation) {
+			var zisnode = mutation[0].target,
+				visible = !zisnode.classList.contains('hidden');
+			callback(visible);
+		};
+		//section.classList.remove('hidden');
+		var mo = new MutationObserver(handler);
+		mo.observe(section, {attributes:true});
 	}
 };

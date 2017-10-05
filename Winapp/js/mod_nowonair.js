@@ -12,11 +12,11 @@ var modNowonair = extendModule({
 		var cur = this._current ? this._tiles[this._current] : null;
 		if(cur) cur.classList.remove('checked');
 
-		var id = event.detail.channelId;
-		this._tiles[id].classList.add('checked');
-		this._current = id;
+		var cid = event.detail.cid;
+		this._tiles[cid].classList.add('checked');
+		this._current = cid;
 
-		//var cha = $App.getChannelById(id);
+		//var cha = $App.getChannelById(cid);
 		//console.log('onChannelView',cha);
 
 	},
@@ -105,11 +105,11 @@ var modNowonair = extendModule({
 		}
 		//console.log('fillElements',tvs);
 	},
-	onChannelClick: function(id, event) {
+	onChannelClick: function(cid, event) {
 		if(event) {
 			event.preventDefault();
 			event.stopImmediatePropagation();
 		}
-		this.fire('channelView',{channelId:id});
+		this.fire('channelView',{cid:cid});
 	}
 });

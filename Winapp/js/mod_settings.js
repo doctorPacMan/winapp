@@ -77,8 +77,8 @@ var modSettings = extendModule({
 		this.save('mute', muted);
 	},
 	onChannelView: function(event) {
-		var id = event.detail.channelId;
-		this.save('currentChannel',id);
-		//console.log('onChannelView',id);
+		var cid = event.detail.cid;
+		this.save('currentChannel',cid);
+		//console.log('onChannelView',cid);
 	}
 });

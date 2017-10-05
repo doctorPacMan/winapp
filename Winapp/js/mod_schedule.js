@@ -3,6 +3,8 @@ var modSchedule = extendModule({
 	initialize: function(node_id) {
 		//console.log('modSchedule initialize');
 		this._storage = {};
+		this._tsindex = {};
+		this._checked = null;
 		this.dayz = {};
 		this._time = {};
 		this._cid = null;
@@ -15,26 +17,14 @@ var modSchedule = extendModule({
 		arr[0].addEventListener('click',this.slide.bind(this,-1));
 		arr[1].addEventListener('click',this.slide.bind(this, 1));
 
+		this.visibilityObserver(this.onSectionView.bind(this));
 		this.listen('channelView',this.onChannelView.bind(this));
-		this.node.classList.remove('hidden');
+		this.listen('telecastView',this.onTelecastView.bind(this));
+		//this.node.classList.remove('hidden');
 		
-		//this.onChannelView({detail:{channelId:10338251}});
+		//this.onChannelView({detail:{cid:10338251}});
 		//this.request(10338251);
 		//cnapi.request.schedule(cid, null, this.setSchedule.bind(this));
-	},
-	onChannelView: function(event) {
-		var cid = event.detail.channelId,
-			cha = $App.getChannelById(cid);
-		
-		if(this._cid==cid) return;
-		
-		this._cid = event.detail.channelId;
-		//console.log('onChannelView',this._cid, this._day);
-		console.log('onChannelView',this._cid);
-		console.log('onChannelView',cha.scheduledDates);
-		
-		this.dayzUpdt(cha.scheduledDates);
-		//this.request(this._cid,this._day);
 	},
 	dayzUpdt: function(dates) {
 		var dates = [].concat(dates);
@@ -102,7 +92,7 @@ var modSchedule = extendModule({
 		cont.scrollLeft = li.offsetLeft + li.offsetWidth/2 - cont.offsetWidth/2;
 	},
 	clickDay: function(day) {
-		var day = new Date(day),
+		var day = day ? new Date(day) : new Date(),
 			day_id = day.format('dd/mm'),
 			time = this._time[day_id] || undefined;
 
@@ -122,7 +112,6 @@ var modSchedule = extendModule({
 	setSchedule: function(tvs_ids, day) {
 
 		//console.log('setSchedule',this._cid, day, tvs_ids);
-
 		var day_from = day.setHours(6,0,0,0),
 			day_ends = day_from + 86400 * 1000,// +24h
 			day_id = day.format('dd/mm');
@@ -132,33 +121,61 @@ var modSchedule = extendModule({
 			time;
 
 		for(var i=0;i<tvs_ids.length;i++) {
-
 			var tvs = $App.getTelecastById(tvs_ids[i]),
 				bgns = tvs.time.getTime(),
 				ends = tvs.ends.getTime();
-			
 			if(bgns<day_from && ends<=day_from) continue;
 			else if(bgns>=day_ends) break;
 
 			li = li.cloneNode(false);
+			li.setAttribute('data-tid',tvs.id);
 			li.appendChild(time = tvs.getNodeList());
 			ol.appendChild(li);
-			time.onclick = this.viewTelecast.bind(this,tvs.id);
-			//li.onclick = this.fire.bind(this,'telecastView',{id:tvs.id});
-			//console.log(tvs);
+			li.onclick = this.viewTelecast.bind(this,tvs.id);
+			this._tsindex[tvs.id] = li;
 		}
 
 		var old = this.node.getElementsByTagName('ol')[0];
 		if (!old) this.node.appendChild(ol);
 		else this.node.replaceChild(ol,old);
 
+		var licur = this._tsindex[this._checked];
+		if(licur) licur.classList.add('checked');
+
 		if(!this._storage[this._cid]) this._storage[this._cid] = {};
 		this._storage[this._cid][day_id] = tvs_ids;
 	},
+	onChannelView: function(event) {
+		var cid = event.detail.cid,
+			cha = $App.getChannelById(cid);
+		
+		if(this._cid==cid) return;
+		
+		this._cid = event.detail.cid;
+		//console.log('onChannelView',this._cid, this._day);
+		//console.log('onChannelView',this._cid);
+		//console.log('onChannelView',cha.scheduledDates);
+		this.dayzUpdt(cha.scheduledDates);
+		this.clickDay();
+		this.request(this._cid, this._day);
+	},
 	viewTelecast: function(id) {
-		var tvs = $App.getTelecastById(id);
-		//console.log('viewTelecast', tvs);
-		//tvs.source = 'http://www.cn.ru/data/files/test/countdown.mp4';
-		this.fire('telecastView',{id:tvs.id});
+		this.fire('telecastView',{id:id});
+	},
+	onTelecastView: function(event) {
+
+		var pv = this._checked ? this._tsindex[this._checked] : null;
+		if(pv) pv.classList.remove('checked');
+		
+		var id = event.detail.id,
+			li = this._tsindex[id];
+		if(li) li.classList.add('checked');
+		this._checked = id;
+		//console.log('onTelecastView', id, li);
+	},
+	onSectionView: function(visible) {
+
+		console.log('onSectionView', visible);
+
 	}
 });

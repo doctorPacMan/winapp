@@ -274,29 +274,24 @@ var modTvplayer = extendModule({
 		console.log('onChannelNext');
 	},
 	onChannelView: function(event) {
-		var id = event.detail.channelId,
-			cha = $App.getChannelById(id),
+		var cid = event.detail.cid,
+			cha = $App.getChannelById(cid),
 			tvs = $App.getTelecastById(cha.currentTelecast),
 			currentTelecast = tvs && tvs.onair ? tvs : null;
 		//console.log('onChannelView', cha.title, !!currentTelecast);
 		this.load(cha.stream);
-		if(cha.squeeze) this.squeeze(.75);
 
 		if(0) "skip";
-		else if(!cha.cid) this.setTelecast(false);
-		else if(currentTelecast) this.setTelecast(currentTelecast.id);
-		else cnapi.request.current(cha.cid, this.setTelecast.bind(this));
+		else if(!cha.cid) this.viewTelecast(false);
+		else if(currentTelecast) this.viewTelecast(currentTelecast.id);
+		else cnapi.request.current(cha.cid, this.viewTelecast.bind(this));
+	},
+	viewTelecast: function(id) {
+		this.fire('telecastView',{id:id});
 	},
 	onTelecastView: function(event) {
-		var id = event.detail.id,
-			tvs = $App.getTelecastById(id);
-		console.log('onTelecastView', tvs);
-		this.setTelecast(id);
-	},
-	setTelecast: function(id) {
-		var tvs = $App.getTelecastById(id),
-			cha = $App.getChannelById(tvs.channel);
-
+		var id = event.detail.id;
+		console.log('onTelecastView',id);
 		this.loadTelecast(id);
 	},
 	loadTelecast: function(id) {
@@ -306,6 +301,7 @@ var modTvplayer = extendModule({
 			playable = !!tvs.source || (tvs.onair && cha),
 			autoplay = null!==this._video.getAttribute('autoplay');
 		
+			console.log('loadTelecast',tvs)
 		if(progress===true) this.stop();
 		else if(tvs.source) this.load(tvs.source);
 		else if(tvs.onair && cha) this.load(cha.stream);
@@ -325,8 +321,9 @@ var modTvplayer = extendModule({
 		this._descr.name.innerText = tvs.title;
 		this._descr.descr.innerText = tvs.description;
 		this._descr.image.setAttribute('src',tvs.image);
-		this.hover(progress != true, false);
+		this.squeeze(cha.squeeze?.75:false);
 		this.poster(!playable || !autoplay);
+		this.hover(progress != true, false);
 		
 		var pp = progress,
 			pp = pp===true ? 0 : (pp===false ? 1 : pp);
@@ -343,17 +340,24 @@ var modTvplayer = extendModule({
 		console.log('ends at', Math.round(upt/1000)+'s');
 	},
 	squeeze: function(sy) {
-		var style = window.getComputedStyle(this._video),
-			trans = !style ? false : style.getPropertyValue('transform'),
-			trans = !trans ? false : trans.replace('matrix(','').replace(')','').split(', '),
-			scaleX = !trans ? 1 : parseFloat(trans[2]), scaleX = (scaleX>0 ? scaleX : 1),
-			scaleY = !trans ? 1 : parseFloat(trans[3]), scaleY = (scaleY>0 ? scaleY : 1);
 
-		if(!sy) return scaleY;
-
-		var sx = 1, sy = parseFloat(sy);
-		sy = isNaN(sy) ? 1 : sy;
-		this._video.style.transform = 'scale('+sx+', '+sy+')';
+		if(sy === undefined) {
+			var style = window.getComputedStyle(this._video),
+				trans = !style ? false : style.getPropertyValue('transform'),
+				trans = !trans ? false : trans.replace('matrix(','').replace(')','').split(', '),
+				scaleX = !trans ? 1 : parseFloat(trans[2]), scaleX = (scaleX>0 ? scaleX : 1),
+				scaleY = !trans ? 1 : parseFloat(trans[3]), scaleY = (scaleY>0 ? scaleY : 1);
+			sy = scaleY;
+		}
+		else if(sy === false) {
+			this._video.style.transform = null;
+			sy = 1;
+		}
+		else {
+			var sy = parseFloat(sy);
+			sy = isNaN(sy) ? 1 : sy;
+			this._video.style.transform = 'scale(1, '+sy+')';
+		}
 		return sy;
 	},
 	hlsPlayType: function(video) {
@@ -380,7 +384,7 @@ var modTvplayer = extendModule({
 
 		this._video.pause();
 		this._video.currentTime = 0;
-		this._video.removeAttribute('style');
+		//this._video.removeAttribute('style');
 		this._video.removeAttribute('src');
 		this._video.removeAttribute('poster');
 		this._video.removeAttribute('autoplay');

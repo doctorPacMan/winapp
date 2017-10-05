@@ -68,23 +68,23 @@ var modChannels = extendModule({
 		tile.appendChild(name);
 		return tile;		
 	},
-	onChannelClick: function(id, event) {
+	onChannelClick: function(cid, event) {
 		if(event) {
 			event.preventDefault();
 			event.stopImmediatePropagation();
 		}
-		this.fire('channelView',{channelId:id});
+		this.fire('channelView',{cid:cid});
 	},
 	onChannelView: function(event) {
 
 		var cur = this._current ? this._tiles[this._current] : null;
 		if(cur) cur.classList.remove('st-view');
 
-		var id = event.detail.channelId;
-		this._tiles[id].classList.add('st-view');
-		this._current = id;
+		var cid = event.detail.cid;
+		this._tiles[cid].classList.add('st-view');
+		this._current = cid;
 
-		//var cha = $App.getChannelById(id);
+		//var cha = $App.getChannelById(cid);
 		//console.log('onChannelView',cha);
 	}
 });

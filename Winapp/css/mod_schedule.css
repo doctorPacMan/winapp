@@ -186,3 +186,7 @@
 	font: 20px/36px 'Segoe';
 	content: '\E93E';
 }
+.mod-schedule ol li.checked > a {
+	background-color: dodgerblue;
+	color: white;
+}

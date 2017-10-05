@@ -1,4 +1,4 @@
-﻿"use strict";
+"use strict";
 window.DEBUG = false;
 window.APIHOST = 'http://api.peers.tv';
 //window.APIHOST = 'http://a.trunk.ptv.bender.inetra.ru';
@@ -111,7 +111,7 @@ var $App = {
 
 		var cid = this.settings('currentChannel');//cid = 10338227;
 		if(!playlist.channels[cid]) cid = playlist.cids[0];
-		this.modSettings.fire('channelView',{channelId:cid});
+		this.modSettings.fire('channelView',{cid:cid});
 
 		return;		
 	},
