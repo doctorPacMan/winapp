@@ -11,13 +11,15 @@ var cnapi = {
 		this._simple = simple===true;
 
 		this._monitor('whereami',null);
-		var wrmurl = APIHOST+'/registry/2/whereami.json',
-			colbek = this._handler_whereami.bind(this);
 
-		if(window.WRMURL) console.info('Whereami override', wrmurl = WRMURL);
-		$Ajax(wrmurl,colbek,null,true);
-		//var wd = localStorage.getItem('data_whereami');
-		//wd = JSON.parse(wd);this._handler_whereami(wd);
+		var wd = localStorage.getItem('data_whereami');
+		if(!wd) {
+			//if(window.WRMURL) console.info('Whereami override', wrmurl = WRMURL);
+			var wrmurl = APIHOST+'/registry/2/whereami.json',
+				colbek = this._handler_whereami.bind(this);
+			$Ajax(wrmurl, colbek, null, true);
+		}
+		else this._handler_whereami(JSON.parse(wd));
 	},
 	_handler_whereami: function(data, xhr) {
 
@@ -27,6 +29,7 @@ var cnapi = {
 		//localStorage.setItem('data_whereami',JSON.stringify(data));
 
 		var terr = data.territories[0];
+		this.teritory = terr;
 		this.location = !terr ? '0' : terr.territoryId;
 
 		var whrmdate = !xhr ? false : xhr.getResponseHeader('Date');

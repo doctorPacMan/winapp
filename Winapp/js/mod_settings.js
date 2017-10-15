@@ -27,7 +27,22 @@ var modSettings = extendModule({
 			if(lv===null) this.save(bn, bv);
 			else this._settings[bn] = lv;
 		}
+
 		if(DEBUG) console.log('modSettings', this._settings);
+	},
+	updateAbout: function() {
+		var prov = cnapi.provider,
+			terr = cnapi.teritory,
+			provider_logo = this.node.querySelector('.provlogo > i'),
+			provider_name = this.node.querySelector('.provlogo > u'),
+			location_name = this.node.querySelector('.provlogo > s');
+
+		if(prov) {
+			provider_logo.style.backgroundImage = prov.logo ? 'url("'+prov.logo+'")' : null;
+			provider_logo.innerText = (!prov.logo && prov.name) ? prov.name[0] : '';
+			provider_name.innerText = prov.name || 'Unnamed';
+		}
+		location_name.innerText = terr ? terr.name : 'Unknown location';
 	},
 	changeCheckbox: function(name, chbox, event) {
 		var bv = chbox.checked;

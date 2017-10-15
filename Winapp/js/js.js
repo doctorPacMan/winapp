@@ -94,7 +94,6 @@ var $App = {
 	onready: function(playlist) {
 		//console.log('READY', playlist);
 		
-		this.informers();
 		this.sbbuttons();
 		//return cnapi.request.nowonair(10338200);
 		//return cnapi.request.current(10338200);
@@ -108,6 +107,7 @@ var $App = {
 		this._playlist = playlist;
 		this.modChannels.update(playlist.channels);
 		this.modNowonair.update(playlist.channels);
+		this.modSettings.updateAbout();
 
 		var cid = this.settings('currentChannel');//cid = 10338227;
 		if(!playlist.channels[cid]) cid = playlist.cids[0];
@@ -148,14 +148,6 @@ var $App = {
 		document.location.reload(true);
 	},
 	informers: function() {
-		var provlogo = document.getElementById('inf-provlogo');
-
-		if(cnapi.provider) {
-			provlogo.style.backgroundImage = cnapi.provider.logo ? 'url("'+cnapi.provider.logo+'")' : null;
-			provlogo.innerText = cnapi.provider.name ? cnapi.provider.name[0] : '?';
-			provlogo.title = cnapi.provider.name || 'Unknown';
-		}
-		else provlogo.innerText = '?';
 	},
 	pushChannel: function(json) {
 		if (this._channels[json.id]) return;

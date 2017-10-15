@@ -61,3 +61,13 @@
 	width: 48px;
 	height:48px;
 }
+
+body > div > section > h2 {
+    padding: 11px 10px 12px;
+    font-size: 24px;
+    font-weight: 200;
+    line-height: 24px;
+    border-bottom: 1px solid dodgerblue;
+    xbox-shadow: 0 0 12px black;
+    background: rgba(42,48,57,1);
+}

@@ -44,9 +44,9 @@
 .sidebar > a#nowair:before {content: '\E700'}
 .sidebar > a#chlist:before {content: '\E93E'}
 
-.sidebar > a#config {margin-bottom: 48px}
+.sidebar > a#config {margin-bottom: 0px}
 .sidebar > a#config:before {content: '\E713'}
-.sidebar > a#stopit {margin-bottom: 96px}
+.sidebar > a#stopit {margin-bottom: 48px}
 .sidebar > a#stopit:before {content: '\E7E8'}
 
 .sidebar > a#apinfo:before {content: '\E946'}

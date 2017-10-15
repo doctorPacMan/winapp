@@ -97,6 +97,7 @@
     <Content Include="css\mod_tvplayer.css" />
     <Content Include="css\normalize.css" />
     <Content Include="css\sidebar.css" />
+    <Content Include="css\timeline.css" />
     <Content Include="css\_fonts.css" />
     <Content Include="data\playlist.xspf" />
     <Content Include="default.html" />
@@ -145,6 +146,7 @@
     <Content Include="js\mod_settings.js" />
     <Content Include="js\mod_tvplayer.js" />
     <Content Include="js\playlist.js" />
+    <Content Include="js\timeline.js" />
     <Content Include="js\utils.js" />
     <None Include="Package.StoreAssociation.xml" />
     <None Include="PeersTV_StoreKey.pfx" />

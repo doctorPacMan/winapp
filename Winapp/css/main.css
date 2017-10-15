@@ -69,16 +69,3 @@ aside.rside {
 	font: 12px/16px monospace;
 }
 aside.rside > span {display:block}
-span#inf-provlogo {
-	position:absolute;
-	bottom: 0;
-	left: 0;
-	width: 48px;
-	height:48px;
-	background: darkorchid none no-repeat 50% 50%;
-	background-size: 100% 100%;
-	color: white;
-	font: 36px/48px Verdana;
-	text-align: center;
-}
-

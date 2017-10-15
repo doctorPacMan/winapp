@@ -15,15 +15,39 @@
 	right: -241px;
 	box-shadow: none;
 }
-.appconfig > h2 {
-	padding: 11px 10px 12px;
-	font-size: 24px;
-	font-weight: 200;
-	line-height: 24px;
-	border-bottom: 1px solid dodgerblue;
-	box-shadow: 0 0 12px black;
-	background: rgba(42,48,57,1);
+
+.provlogo {
+	height: 48px;
+	margin: 8px 6px 24px;
 }
+.provlogo > i {
+	float: left;
+	margin: 0 6px 0 0px;
+	height: 48px;
+	width: 48px;
+	background: darkorchid none no-repeat 50% 50%;
+	background-size: 100% 100%;
+	text-align: center;
+	font: 36px/48px serif;
+}
+.provlogo > s,
+.provlogo > u {
+	display: block;
+	white-space: nowrap;
+	text-decoration: none;
+	text-overflow: ellipsis;
+}
+.provlogo > u {
+	line-height: 24px;
+	font-size: 115%;
+	padding-top: 4px;
+}
+.provlogo > s {
+	line-height: 15px;
+	font-size: 94%;
+	color: darkgray;
+}
+
 .appconfig > form {
 	margin: 0;
 	padding: 12px;
@@ -93,3 +117,4 @@ span.cbox > input:checked + label b:before {
 
 	background-color: rgb(55,116,186);
 }
+
