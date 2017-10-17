@@ -302,7 +302,7 @@ div.player-video:before {}
 	bottom: auto;
 	height: auto;
 	overflow: hidden;
-	padding: 8px 6px;
+	padding: 6px 6px;
 	top: 0px;
 	background: rgba(0,0,0,.5);
 	text-shadow: 0px 0px 1px black;
@@ -377,6 +377,7 @@ div.player-video:before {}
 	display: flex;
 	justify-content: center;
 	margin: 8px 12px 0 0;
+	background: black;
 }
 .tvsdescr > p > i > img {
 	display: block;
@@ -436,6 +437,7 @@ div.player-video:before {}
 	content: '\E768';
 	padding-left: .05em;
 }
+.st-view.ps-playing #playbttn {visibility:hidden}
 .st-view.ps-playing #playbttn:before {
 	content: '\E769';
 	padding-left: .01em;

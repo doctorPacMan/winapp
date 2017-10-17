@@ -23,24 +23,24 @@ var $App = {
 		var tp = this.modTvplayer;
 		//tp._video.setAttribute('controls','');
 		tp.poster(false);
-		tp.hover(true,true);
+		tp.hover(true,false);
 
 		if(0) cnapi.request.schedule(10338232,null,function(data){
 			console.log(data);
 			this.modSchedule.setSchedule(data, new Date);
 		}.bind(this));
-		return
+		//return
 
 		//$Ajax('/data/channels.json',function(json,xhr) {json.channels.forEach(this.pushChannel.bind(this))}.bind(this),true);
 		$Ajax('/data/telecast.json',function(json,xhr) {//console.log(json);
-			json.duration = 60;
+			json.duration = 10.45;
 			json.date.day = (new Date).getDate();
 			json.date.hour = (new Date).getHours();
 			json.date.minute = (new Date).getMinutes();
-			json.date.second = (new Date).getSeconds() - 15;
-			var tlc = this.registerTelecast(json);
-			//console.log(tlc);
-			this.modTvplayer.setTelecast(json.id);
+			json.date.second = (new Date).getSeconds() - 10;
+			var tvs = this.registerTelecast(json);
+			tvs.source = 'http://www.cn.ru/data/files/test/countdown.mp4';
+			this.modTvplayer.loadTelecast(json.id);
 		}.bind(this));
 
 		return;

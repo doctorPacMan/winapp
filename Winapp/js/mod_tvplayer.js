@@ -185,7 +185,7 @@ var modTvplayer = extendModule({
 		if(st===this._hover_state) return;
 		else this._hover_state = st;
 
-		this._wrppr.classList[st ? 'add' : 'remove']('hover');
+		//this._wrppr.classList[st ? 'add' : 'remove']('hover');
 		//console.log('HOVER',st);
 	},
 	poster: function(image) {
@@ -229,7 +229,7 @@ var modTvplayer = extendModule({
 		
 		var vw = this._video.videoWidth || 600,
 			vh = this._video.videoHeight || 450;
-		console.log('playstart', e.type, vw+'x'+vh, this._sauce.src);
+		console.log('playstart', e.type, vw+'x'+vh, this._video.duration, this._sauce.src);
 		this._video.setAttribute('width',vw);
 		this._video.setAttribute('height',vh);
 
@@ -299,9 +299,12 @@ var modTvplayer = extendModule({
 			cha = $App.getChannelById(tvs.channel),
 			progress = tvs.getProgress(),
 			playable = !!tvs.source || (tvs.onair && cha),
-			autoplay = null!==this._video.getAttribute('autoplay');
+			autoplay = null!==this._video.getAttribute('autoplay'),
+			duration = this._video.duration || tvs.duration;
+
+		if(!isNaN(duration) && duration!==Infinity) duration = 1e3*duration;
+		else duration = tvs.duration;
 		
-			console.log('loadTelecast',tvs)
 		if(progress===true) this.stop();
 		else if(tvs.source) this.load(tvs.source);
 		else if(tvs.onair && cha) this.load(cha.stream);
@@ -321,17 +324,21 @@ var modTvplayer = extendModule({
 		this._descr.name.innerText = tvs.title;
 		this._descr.descr.innerText = tvs.description;
 		this._descr.image.setAttribute('src',tvs.image);
-		this.squeeze(cha.squeeze?.75:false);
+		this.squeeze((cha && cha.squeeze) ? .75 : false);
 		this.poster(!playable || !autoplay);
 		this.hover(progress != true, false);
 		
-		var pp = progress,
-			pp = pp===true ? 0 : (pp===false ? 1 : pp);
-		this._timeline.duration(tvs.duration*1000).position(pp);
 		this._timeline_time.innerText = tvs.time.format('h:nn');
 		this._timeline_ends.innerText = tvs.ends.format('h:nn');
-		//console.log('EE', Date.server());
-		//console.log('EE', tvs.time, tvs.duration, pp);
+		this._timeline.duration(duration*1000);
+
+		if(progress===false) {
+			this._timeline.position(0);
+		} else {
+			this._timeline.position(progress===true ? 1 : progress);
+		}
+		console.log('progress: '+progress);
+		console.log('duration: '+duration+' ('+this._video.duration+'|'+tvs.duration+')\n\t'+tvs.time+'\n\t'+tvs.ends);
 
 		var	upt = tvs.ends - Date.server();
 		if(!this._refresh_clbck) this._refresh_clbck = this.onChannelNext.bind(this);
