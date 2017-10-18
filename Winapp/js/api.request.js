@@ -28,7 +28,7 @@ cnapi.request.sauce = function(id, onComplete) {
 		cha = $App.getChannelById(tvs.channel),
 		pid = cha.pid,
 		medialocator = cnapi.apis.medialocator[pid];
-	console.log('cnapi.request.sauce', id, pid, medialocator);
+	//console.log('cnapi.request.sauce', id, pid, medialocator);
 	//console.log('cnapi.request.sauce', medialocator);
 	//console.log('cnapi.request.sauce', tvs, cha);
 	if(!medialocator) return !onComplete ? null : onComplete([]);

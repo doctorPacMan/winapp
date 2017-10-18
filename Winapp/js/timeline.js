@@ -73,8 +73,9 @@ TimelineBar.prototype = {
 		this.position(start || 0);
 		return this;
 	},
-	position: function(v) {
-		var line = this.line;
+	position: function(v, anime) {
+		var line = this.line,
+			stop = anime===false;
 
 		if(v>=1) {
 			line.style.width = '100%';
@@ -88,10 +89,13 @@ TimelineBar.prototype = {
 			line.style.width = Math.ceil(v*100)+'%';
 			var	dr = Math.floor((1-v)*(this.xpire - this.start)/1000),
 				sp = Math.round(dr / (dr>1500 ? 5 : 3));
-			line.style.animationDuration = dr+'s';
-			line.style.animationTimingFunction = 'linear';
+			//line.style.animationDuration = dr+'s';
+			//line.style.animationTimingFunction = 'linear';
 			//line.style.animationTimingFunction = 'steps('+sp+', end)';
 			//line.style.animationTimingFunction = 'steps('+dr+', end)';
+			
+			if(stop) line.style.animation = 'none';
+			else line.style.animation = 'timeline-s '+dr+'s 0s 1 linear';
 			//console.log('TimelineBar.position', line.style.width, dr+'s', v);
 		}
 		return this;

@@ -96,6 +96,11 @@ var modTvplayer = extendModule({
 		var event_ended = function(e){console.log('ENDS',e)};
 		video.addEventListener('ended',event_ended.bind(this));
 
+		video.addEventListener('seeking',this._on_seek_init.bind(this));
+		video.addEventListener('seeked',this._on_seek_done.bind(this));
+		video.addEventListener('timeupdate',this._ontimeup.bind(this));
+		video.addEventListener('durationchange',this._onduration.bind(this));
+
 		// poster autohide
 		//video.addEventListener('canplay',this.poster.bind(this,false));
 		this._resize_observe();
@@ -202,6 +207,7 @@ var modTvplayer = extendModule({
 		this._timeline = new TimelineBar();
 		this._timeline_time = cwrp.querySelector('p > time');
 		this._timeline_ends = cwrp.querySelector('p > time + time');
+		this._timeline.node.addEventListener('click',this._on_seek_click.bind(this));
 		timeline_wrap.appendChild(this._timeline.node);
 	},
 	mutedchange: function(muted) {
@@ -235,6 +241,92 @@ var modTvplayer = extendModule({
 
 		this.resize(vw/vh);
 		this.poster(false);
+		this.timeline();
+	},
+	_on_seek_click: function(event) {
+		var ct = this._video.currentTime,
+			vd = this._video.duration,
+			tw = this._timeline.node.offsetWidth,
+			tx = event.offsetX,
+			pp = Math.round(1e3 * tx/tw)/1000,
+			seekTime = Math.round(vd * pp);
+		//console.log('_on_seek_click', vd, ct, tw, tx, pp, seekTime);
+		if(Infinity === seekTime) 'Infinity';
+		else this._video.currentTime = seekTime;
+	},
+	_on_seek_init: function(event) {
+		var ct = this._video.currentTime,
+			vd = this._video.duration,
+			pp = ct/vd;
+		//console.log('_on_seek_init', vd, ct, pp);
+		this._timeline.position(0);
+	},
+	_on_seek_done: function(event) {
+		var ct = this._video.currentTime,
+			vd = this._video.duration,
+			pp = ct/vd;
+		//console.log('_on_seek_done', vd, ct, pp);
+		this._timeline.position(pp,false);
+	},
+	_ontimeup: function(event) {
+		var ct = this._video.currentTime;
+		this._timeline_time.innerText = this.sec2time(ct);
+	},
+	_onduration: function(event) {
+		
+		var duration = this._video.duration,
+			progress = this._video.currentTime;
+
+		if(isNaN(duration)) return;
+		else if(this._onduration_value==duration) return;
+		else this._onduration_value = duration;
+		
+		if(duration===Infinity) {
+			this._timeline_time.innerText = this.sec2time(0);
+			this._timeline_ends.innerText = '--:--';
+			this._timeline.position(0,false);
+		}
+		else {
+			console.log('DURA', duration, progress);// duration = 6;
+			this._timeline_time.innerText = this.sec2time(0);
+			this._timeline_ends.innerText = this.sec2time(duration);
+			this._timeline.duration(duration * 1e3).position(0);
+		}
+		//console.log('DURA', duration, progress);
+	},
+	sec2time: function(sec) {
+		if(sec===Infinity) return '\u221E';
+		var time='', s=sec, m, h;
+		if(true) h = 0; // Like Chrome - 000:00
+		else h = Math.floor(s/3600);
+		m = Math.floor((s = s - h*3600)/60);
+		s = Math.floor(s - m*60);
+		if(h>0)time += (h + ':');
+		time += (m<10?('0'+m):m)+':'+(s<10?('0'+s):s);
+		return time;
+	},
+	timeline: function(tvs) {
+		return;
+		var duration = this._video.duration,
+			progress = this._video.currentTime;
+		console.log('TIMELINE', duration, progress, tvs);
+/*
+		this._timeline_time.innerText = tvs.time.format('h:nn');
+		this._timeline_ends.innerText = tvs.ends.format('h:nn');
+		//this._timeline.duration(duration*1000);
+		if(progress===false) {
+			this._timeline.position(0);
+		} else {
+			this._timeline.position(progress===true ? 1 : progress);
+		}
+		console.log('progress: '+progress);
+
+		var duration = this._video.duration || tvs.duration;
+		if(!isNaN(duration) && duration!==Infinity) duration = 1e3*duration;
+		else duration = tvs.duration;
+		this._timeline.duration(duration*1000);		
+		console.log('duration: '+duration+' ('+this._video.duration+'|'+tvs.duration+')\n\t'+tvs.time+'\n\t'+tvs.ends);
+*/
 	},
 	attachHlsjs: function(video) {
 
@@ -271,7 +363,7 @@ var modTvplayer = extendModule({
 		//console.log('autoplay',this._autoplay);
 	},
 	onChannelNext: function(event) {
-		console.log('onChannelNext');
+		//console.log('onChannelNext');
 	},
 	onChannelView: function(event) {
 		var cid = event.detail.cid,
@@ -299,12 +391,9 @@ var modTvplayer = extendModule({
 			cha = $App.getChannelById(tvs.channel),
 			progress = tvs.getProgress(),
 			playable = !!tvs.source || (tvs.onair && cha),
-			autoplay = null!==this._video.getAttribute('autoplay'),
-			duration = this._video.duration || tvs.duration;
+			autoplay = null!==this._video.getAttribute('autoplay');
+		//console.log('LOADTVSHOW',tvs);
 
-		if(!isNaN(duration) && duration!==Infinity) duration = 1e3*duration;
-		else duration = tvs.duration;
-		
 		if(progress===true) this.stop();
 		else if(tvs.source) this.load(tvs.source);
 		else if(tvs.onair && cha) this.load(cha.stream);
@@ -313,10 +402,10 @@ var modTvplayer = extendModule({
 			cnapi.request.sauce(tvs.id,function(d){
 				var src = d[0] ? d[0]['uri'] : null;
 				this.load(tvs.source = src);
-				console.log('player saucerequest: '+src, d);
+				//console.log('player saucerequest: '+src, d);
 			}.bind(this));
 		}
-		
+
 		this._posta.style.backgroundImage = 'url("'+tvs.poster+'")';
 		this._descr.title.innerText = cha ? cha.title : 'Channel title';
 		this._descr.logo.src = cha ? cha.logo : 'img/logo150x150.png';
@@ -324,27 +413,16 @@ var modTvplayer = extendModule({
 		this._descr.name.innerText = tvs.title;
 		this._descr.descr.innerText = tvs.description;
 		this._descr.image.setAttribute('src',tvs.image);
+		this.timeline(tvs);
 		this.squeeze((cha && cha.squeeze) ? .75 : false);
 		this.poster(!playable || !autoplay);
 		this.hover(progress != true, false);
-		
-		this._timeline_time.innerText = tvs.time.format('h:nn');
-		this._timeline_ends.innerText = tvs.ends.format('h:nn');
-		this._timeline.duration(duration*1000);
-
-		if(progress===false) {
-			this._timeline.position(0);
-		} else {
-			this._timeline.position(progress===true ? 1 : progress);
-		}
-		console.log('progress: '+progress);
-		console.log('duration: '+duration+' ('+this._video.duration+'|'+tvs.duration+')\n\t'+tvs.time+'\n\t'+tvs.ends);
 
 		var	upt = tvs.ends - Date.server();
 		if(!this._refresh_clbck) this._refresh_clbck = this.onChannelNext.bind(this);
 		if(this._refresh_timer) clearTimeout(this._refresh_timer);
 		this._refresh_timer = setTimeout(this._refresh_clbck,upt);
-		console.log('ends at', Math.round(upt/1000)+'s');
+		//console.log('ends at', Math.round(upt/1000)+'s');
 	},
 	squeeze: function(sy) {
 
