@@ -1,9 +1,6 @@
 "use strict";
 window.DEBUG = false;
-window.APIHOST = 'http://api.peers.tv';
-//window.APIHOST = 'http://a.trunk.ptv.bender.inetra.ru';
 //window.CHANNELS_LIMIT = 24;
-//window.WRMURL = '/data/whereami.json';
 var $App = {
 	initialize: function() {
 		this.sbbuttons();
@@ -15,7 +12,6 @@ var $App = {
 		
 		//return this.TEST();
 		//return cnapi.initialize(this.TEST.bind(this),new modLoading('mod-loading'),true);
-		
 		console.info('$App initialize');
 		cnapi.initialize(this.onready.bind(this),new modLoading('mod-loading'));
 	},
@@ -24,6 +20,8 @@ var $App = {
 		//tp._video.setAttribute('controls','');
 		tp.poster(false);
 		tp.hover(true,false);
+		tp.load('http://hls.peers.tv/variant_playlist/program/106339044.m3u8?t=16&rnd=136');
+		return;
 
 		if(0) cnapi.request.schedule(10338232,null,function(data){
 			console.log(data);

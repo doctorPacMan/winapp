@@ -145,6 +145,7 @@ div.player-video:before {}
 	content: '\E783';
 }
 /* ============================================================== */
+
 .tvplayer > div.tvcntrls {
 	position: absolute;
 	top: auto;
@@ -181,14 +182,19 @@ div.player-video:before {}
 	position: absolute;
 	left: 50%;
 	bottom: 100%;
-	margin: 0 0 120px -185px;
-	background: rgba(255,255,255,.5);
+	margin: 0 0 12px -185px;
+	background: rgba(255,255,255,.125);
 	height: 24px;
 	width: 360px;
 	font: 14px/24px monospace;
 	padding: 5px;
 	opacity: 0;
 	transition: opacity .25s linear 0s;
+	margin: 0 0 6px;
+	left: 100px;
+	right: 0;
+	bottom: 0;
+	width: auto;
 }
 .tvplayer.hover .tvcntrls > p {
 	opacity: 1;
@@ -202,13 +208,19 @@ div.player-video:before {}
 	color: black;
 }
 .tvcntrls > p > time + time {float: right}
-.tvcntrls > p > u.timeline {
+.tvcntrls > p > span {
+	display: block;
+	height: 100%;
+	overflow: hidden;
+	margin: 0px 50px;
+}
+.tvcntrls u.timeline {
 	background-color: rgba(120,120,120,.5);
 	overflow: visible;
 	height: 4px;
-	margin: 10px 50px 0;
+	margin: 10px 0 0;
 }
-.tvcntrls > p > u.timeline > s {
+.tvcntrls u.timeline > s {
 	position: relative; top: -1px;
 	background-color: rgb(50,180,230);
 	background-color: rgba(55,116,186,1);
@@ -419,25 +431,31 @@ div.player-video:before {}
 	outline: 0;
 	background: rgba(60,60,60,.75);
 	border: 3px solid white;
-	color: white;
-	cursor: pointer;
+	color: rgba(225,225,225,.125);
 	text-align: center;
 	border-radius: 36px;
 	box-shadow: 0 0 8px black;
-	transition: opacity .2s linear 0s;
 }
 #playbttn:before {
-	content: '';
+	content: '\E25B';
 	display: block;
 	width: 100%;
 	height: 100%;
 	font: 42px/66px 'Segoe';
 }
+.st-idle.ps-standby #playbttn {
+	color: darkorange;
+}
+.st-view.ps-onpause #playbttn,
+.st-view.ps-playing #playbttn {
+	cursor: pointer;
+	color: white;
+}
 .st-view.ps-onpause #playbttn:before {
 	content: '\E768';
 	padding-left: .05em;
 }
-.st-view.ps-playing #playbttn {visibility:hidden}
+.st-view.ps-playing #playbttn {visibility: hidden}
 .st-view.ps-playing #playbttn:before {
 	content: '\E769';
 	padding-left: .01em;
@@ -445,6 +463,7 @@ div.player-video:before {}
 #playbttn {
 	opacity: .0;
 	pointer-events: none;
+	transition: opacity .2s linear 0s;
 }
 .hover #playbttn {
 	opacity: .75;

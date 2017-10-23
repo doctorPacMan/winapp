@@ -51,6 +51,7 @@ cnapi.request.sauce_onload = function(callback, id, data) {
 	if(files.length) {
 		var tvs = $App.getTelecastById(id);
 		tvs['files'] = files;
+		tvs['source'] = files[0]['uri'];
 	}
 	//else console.log(data);
 	//console.log('FILES', files);

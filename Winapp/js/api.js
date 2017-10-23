@@ -1,5 +1,12 @@
 ﻿"use strict";
 var cnapi = {
+	API_HOST: 'http://api.peers.tv',
+	API_CLIENT: 'demoapp',
+	API_SECRET: 'demoapp',
+	//API_HOST: 'http://a.trunk.ptv.bender.inetra.ru',
+	//API_CLIENT: '83438335',
+	//API_SECRET: '96ac1ee9b626a5a0a3a147518232d2f5',
+	//WRM_URL: '/data/whereami.json',
 	_data: {},
 	token: null,
 	location: null,
@@ -11,22 +18,20 @@ var cnapi = {
 		this._simple = simple===true;
 
 		this._monitor('whereami',null);
-
-		var wd = localStorage.getItem('data_whereami');
-		if(!wd) {
-			//if(window.WRMURL) console.info('Whereami override', wrmurl = WRMURL);
-			var wrmurl = APIHOST+'/registry/2/whereami.json',
-				colbek = this._handler_whereami.bind(this);
-			$Ajax(wrmurl, colbek, null, true);
+		var jwd = localStorage.getItem('json_whereami');
+		if(jwd && false) this._handler_whereami(JSON.parse(jwd));
+		else {
+			var wrmurl = this.API_HOST+'/registry/2/whereami.json';
+			if(this.WRM_URL) console.info('Whereami override', wrmurl = this.WRM_URL);
+			$Ajax(wrmurl, this._handler_whereami.bind(this), null, true);
 		}
-		else this._handler_whereami(JSON.parse(wd));
 	},
 	_handler_whereami: function(data, xhr) {
 
 		//console.log('Whereami', data);
 		if(data===false) return this._monitor('whereami',false);
 		else this._monitor('whereami',true);
-		//localStorage.setItem('data_whereami',JSON.stringify(data));
+		localStorage.setItem('json_whereami',JSON.stringify(data));
 
 		var terr = data.territories[0];
 		this.teritory = terr;
@@ -76,7 +81,7 @@ var cnapi = {
 		}
 
 		//this.setAuthToken('cd4e5a6bee96fec8b50e9831cdac2572');
-		if(this.token = this.getAuthToken()) {
+		if(this.token = this.getAuthToken() && false) {
 			if(DEBUG) console.log('Authtoken restore', this.token);
 			this._monitor('authtoken',true);
 			if(!this._simple) this._request_playlists();
@@ -88,13 +93,18 @@ var cnapi = {
 		}
 		else {
 			var srcurl = this.apis.auth+'token/',
-				params = {'grant_type':'inetra:anonymous','client_id':'demoapp','client_secret':'demoapp'};
+				params = {
+					//'grant_type': 'inetra:anonymous',
+					'grant_type': 'inetra:anonymous',
+					'client_secret':this.API_SECRET,
+					'client_id':this.API_CLIENT
+				};
+			console.log(srcurl, params);
 			$Ajax(srcurl,this._handler_acstoken.bind(this),params);
 			this._monitor('authtoken',null);
 		}
 	},
 	_handler_acstoken: function(data) {
-		
 		//console.log('TOKEN',data);
 		if(data===false) {
 			console.warn('Authtoken request failure');

@@ -189,7 +189,6 @@ var modTvplayer = extendModule({
 		if(!fxd && st) this._hover_timer = setTimeout(this.hover.bind(this,false),3500);
 		if(st===this._hover_state) return;
 		else this._hover_state = st;
-
 		//this._wrppr.classList[st ? 'add' : 'remove']('hover');
 		//console.log('HOVER',st);
 	},
@@ -205,10 +204,11 @@ var modTvplayer = extendModule({
 
 		var timeline_wrap = cwrp.querySelector('p');
 		this._timeline = new TimelineBar();
+		this._timeline_line = cwrp.querySelector('p > span');
 		this._timeline_time = cwrp.querySelector('p > time');
 		this._timeline_ends = cwrp.querySelector('p > time + time');
 		this._timeline.node.addEventListener('click',this._on_seek_click.bind(this));
-		timeline_wrap.appendChild(this._timeline.node);
+		this._timeline_line.appendChild(this._timeline.node);
 	},
 	mutedchange: function(muted) {
 		var muted = this._video.muted;
@@ -220,6 +220,7 @@ var modTvplayer = extendModule({
 	},
 	statechange: function(newstate, oldstate, event) {
 		//console.log('STATE',oldstate+' > '+newstate+' ('+event.type+')');
+		if(newstate===oldstate) return;
 		this._wrppr.classList.remove('st-'+oldstate);
 		this._wrppr.classList.add('st-'+newstate);
 	},
@@ -287,7 +288,7 @@ var modTvplayer = extendModule({
 			this._timeline.position(0,false);
 		}
 		else {
-			console.log('DURA', duration, progress);// duration = 6;
+			//console.log('DURA', duration, progress);// duration = 6;
 			this._timeline_time.innerText = this.sec2time(0);
 			this._timeline_ends.innerText = this.sec2time(duration);
 			this._timeline.duration(duration * 1e3).position(0);
@@ -392,20 +393,8 @@ var modTvplayer = extendModule({
 			progress = tvs.getProgress(),
 			playable = !!tvs.source || (tvs.onair && cha),
 			autoplay = null!==this._video.getAttribute('autoplay');
-		//console.log('LOADTVSHOW',tvs);
-
-		if(progress===true) this.stop();
-		else if(tvs.source) this.load(tvs.source);
-		else if(tvs.onair && cha) this.load(cha.stream);
-		else {
-			this.stop();
-			cnapi.request.sauce(tvs.id,function(d){
-				var src = d[0] ? d[0]['uri'] : null;
-				this.load(tvs.source = src);
-				//console.log('player saucerequest: '+src, d);
-			}.bind(this));
-		}
-
+		
+		//console.log('LOADTVSHOW',progress,tvs);
 		this._posta.style.backgroundImage = 'url("'+tvs.poster+'")';
 		this._descr.title.innerText = cha ? cha.title : 'Channel title';
 		this._descr.logo.src = cha ? cha.logo : 'img/logo150x150.png';
@@ -423,6 +412,14 @@ var modTvplayer = extendModule({
 		if(this._refresh_timer) clearTimeout(this._refresh_timer);
 		this._refresh_timer = setTimeout(this._refresh_clbck,upt);
 		//console.log('ends at', Math.round(upt/1000)+'s');
+
+		if(progress===true)	this.load(null);
+		else if(tvs.source) this.load(tvs.source);
+		else if(tvs.onair && cha) this.load(cha.stream);
+		else {
+			this.stop();
+			cnapi.request.sauce(tvs.id,(d)=>{this.load(tvs.source || null)});
+		}
 	},
 	squeeze: function(sy) {
 
@@ -484,6 +481,7 @@ var modTvplayer = extendModule({
 		}
 		//var so = Array.prototype.slice.call(this._video.querySelectorAll('source'));
 		//while(so.length) this._video.removeChild(so.pop());
+		return this;
 	},
 	reload: function(src) {
 		var src = this._video.getAttribute('data-src');
@@ -493,6 +491,9 @@ var modTvplayer = extendModule({
 	play: function(src) {
 
 		this.load(src, true);
+
+	},
+	void: function() {
 
 	},
 	load: function(src, autoplay) {
@@ -506,18 +507,16 @@ var modTvplayer = extendModule({
 			hls = /\.(m3u8|m3u)($|\?|#)/.test(src),
 			hpt = this._hlsPlayType;
 
-		if(avp) this._video.setAttribute('autoplay','');
-		else this._video.removeAttribute('autoplay');
+		//console.log(avp?'PLAY':'LOAD', src);
+		if(!avp) this._video.removeAttribute('autoplay');
+		else if(src) this._video.setAttribute('autoplay','');
 
+		this._inf_u.innerText = src;
 		this._inf_sauce.innerText = src;
 		this._video.setAttribute('data-src',src);
-		this._sauce.setAttribute('src',src);
+		if(src) this._sauce.setAttribute('src',src);
 		if(hls && hpt) this._sauce.setAttribute('type', hpt);
-		else this._sauce.removeAttribute('type');
 
-		//console.log(avp?'PLAY':'LOAD', src);
-		this._inf_u.innerText = src;
-		
 		if(!hls || !this._hlsjs) this._video.load();
 		else setTimeout(function(){
 			this._hlsjs.loadSource(src);

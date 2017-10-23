@@ -68,6 +68,7 @@ body > div > section > h2 {
     font-weight: 200;
     line-height: 24px;
     border-bottom: 1px solid dodgerblue;
-    xbox-shadow: 0 0 12px black;
-    background: rgba(42,48,57,1);
+}
+body > div > section > h2:first-child {
+	background-color: rgba(42,48,57,1);
 }

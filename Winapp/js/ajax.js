@@ -8,7 +8,7 @@ var $Ajax = function(url,onComplete,params,async) {
 		var xhr = new XMLHttpRequest();
 		xhr.open('POST', url, async);
 		var token = cnapi.getAuthToken();
-		if(url.indexOf('api.peers.tv')>=0 && token) xhr.setRequestHeader('Authorization','Bearer '+token);
+		if(url.indexOf(cnapi.API_HOST)>=0 && token) xhr.setRequestHeader('Authorization','Bearer '+token);
 
 		xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 		xhr.onreadystatechange = function () {

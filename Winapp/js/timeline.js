@@ -77,6 +77,7 @@ TimelineBar.prototype = {
 		var line = this.line,
 			stop = anime===false;
 
+		this.node.removeChild(this.line);
 		if(v>=1) {
 			line.style.width = '100%';
 			line.style.animation = 'none';
@@ -86,18 +87,23 @@ TimelineBar.prototype = {
 			line.style.animation = 'none';
 		}
 		else {
-			line.style.width = Math.ceil(v*100)+'%';
 			var	dr = Math.floor((1-v)*(this.xpire - this.start)/1000),
-				sp = Math.round(dr / (dr>1500 ? 5 : 3));
+				//sp = Math.round(dr / (dr>1500 ? 5 : 3)),
+				//tf = 'steps('+sp+', end)',
+				tf = 'steps('+dr+', end)',
+				//tf = 'linear',
+				lw = Math.ceil(v*100);
 			//line.style.animationDuration = dr+'s';
 			//line.style.animationTimingFunction = 'linear';
 			//line.style.animationTimingFunction = 'steps('+sp+', end)';
 			//line.style.animationTimingFunction = 'steps('+dr+', end)';
-			
+			line.style.width = lw+'%';
 			if(stop) line.style.animation = 'none';
-			else line.style.animation = 'timeline-s '+dr+'s 0s 1 linear';
+			else line.style.animation = 'timeline-s '+dr+'s 0s 1 '+tf;
 			//console.log('TimelineBar.position', line.style.width, dr+'s', v);
 		}
+		
+		this.node.appendChild(this.line);
 		return this;
 	}
 }

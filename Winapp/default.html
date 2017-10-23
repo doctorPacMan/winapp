@@ -59,6 +59,7 @@
 
 	<div class="mod-tvplayer" id="mod-tvplayer">
 	<div class="tvplayer hover st-idle ps-standby">
+
 		<div class="player-video">
 			<video poster="img/poster16x9.jpg" controls muted preload="none" width="480" height="270">
 			<source src="http://hls.peers.tv/streaming/cam_krylova-krasny/16/variable.m3u8" type="application/x-mpegURL">
@@ -93,7 +94,11 @@
 			<i>video</i>
 			<button id="tvc-play"></button>
 			<button id="tvc-mute"></button>
-			<p><time>00:00</time><!-- timeline --><time>00:00</time></p>
+			<p>
+				<time>00:00</time>
+				<time>00:00</time>
+				<span><!-- timeline --></span>
+			</p>
 		</div>
 		<div class="tverror">Error</div>
 	</div>
