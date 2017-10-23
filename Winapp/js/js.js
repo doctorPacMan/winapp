@@ -1,4 +1,4 @@
-"use strict";
+﻿"use strict";
 window.DEBUG = false;
 //window.CHANNELS_LIMIT = 24;
 var $App = {
@@ -41,7 +41,6 @@ var $App = {
 			this.modTvplayer.loadTelecast(json.id);
 		}.bind(this));
 
-		return;
 		//return tp.state('fail');
 		//tp.load('http://hls.peers.tv/streaming/1kanal_hd/16/copy/playlist.m3u8?token=fd7dd8de64e65b43f2107d011c851a71');
 		//tp.load('http://hls.novotelecom.ru/streaming/russian_roman/16/tvrec/playlist.m3u8');
