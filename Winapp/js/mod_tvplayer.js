@@ -98,8 +98,8 @@ var modTvplayer = extendModule({
 
 		video.addEventListener('seeking',this._on_seek_init.bind(this));
 		video.addEventListener('seeked',this._on_seek_done.bind(this));
-		video.addEventListener('timeupdate',this._ontimeup.bind(this));
-		video.addEventListener('durationchange',this._onduration.bind(this));
+		//video.addEventListener('timeupdate',this._ontimeup.bind(this));
+		//video.addEventListener('durationchange',this._onduration.bind(this));
 
 		// poster autohide
 		//video.addEventListener('canplay',this.poster.bind(this,false));
@@ -197,8 +197,10 @@ var modTvplayer = extendModule({
 	},
 	initControls: function(cwrp) {
 		var batons = cwrp.getElementsByTagName('button');
-		this._button_play = batons[0];
-		this._button_mute = batons[1];
+		console.log(batons);
+		this._button_size = batons[0];
+		this._button_play = batons[1];
+		this._button_mute = batons[2];
 		this._button_play.addEventListener('click',this.pause.bind(this,null));
 		this._button_mute.addEventListener('click',this.mute.bind(this,null));
 

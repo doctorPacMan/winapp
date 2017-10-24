@@ -1,0 +1,153 @@
+.tvplayer > div.tvcntrls {
+	position: absolute;
+	top: auto;
+	bottom:0;height: 0px;
+	left:0px; width:100%;
+	-background: rgba(255,255,255,1);
+	-background-image: linear-gradient(0deg, rgba(0,0,0,.75) 0%, rgba(0,0,0,.25) 75%, transparent);
+	padding: 0px;
+	bottom: 0px;
+	width: 98%;
+	margin: 0 0 120px 1%;
+	background: tomato;
+}
+.Xtvplayer > div.tvcntrls {bottom:-64px; transition: bottom .25s ease-in-out 0s}
+.Xtvplayer.hover > div.tvcntrls {bottom:0}
+
+/* =========================== timeline */
+.tvcntrls > p {
+	position: relative;
+	width:100%;
+	max-width: 800px;
+	background: rgba(255,255,255,.002);
+	height: 24px;
+	font: 16px/24px 'Open Sans';
+	padding: 0px;
+	margin: -90px auto 6px;
+	color: white;
+	text-shadow: 0px 0px 3px black;
+	transition: opacity .25s linear 0s;
+}
+.tvcntrls > p > time {
+	float: left;
+	height: 100%;
+	width: 50px;
+	overflow: hidden;
+	text-align: center;
+}
+.tvcntrls > p > time + time {float: right}
+.tvcntrls > p > span {
+	display: block;
+	height: 100%;
+	overflow: hidden;
+	margin: 0px 56px;
+}
+.tvcntrls u.timeline {
+	height: 3px;
+	overflow: visible;
+	margin-top: 11px;
+	background-color: rgba(255,255,255,.25);
+}
+.tvcntrls u.timeline > s {
+	position: relative; top: -1px;
+	background-color: rgb(50,180,230);
+	height: 5px;
+}
+
+/* =========================== info */
+.tvcntrls > u,
+.tvcntrls > i {
+	font: normal normal 12px/19px monospace;
+	background: rgba(0,0,0,.75);
+	text-decoration: none;
+	pointer-events: none;
+	white-space: nowrap;
+	padding: 0 6px 1px;
+	position: absolute;
+	bottom:100%;left:0;
+	xvisibility: hidden;
+	color: lightgreen;
+}
+.tvcntrls > u {margin-bottom: 0px}
+.tvcntrls > i {
+	right: 0px;
+	left: auto;
+	bottom: 0;
+	margin: 0;
+}
+/*
+.tvcntrls > s:before {
+	content: '';
+	display: block;
+	height: 100%;
+	background: rgba(200,200,200,.35);
+}
+.tvcntrls > s > u {
+	display: block;
+	height: 5px;
+	width: 50%;
+	margin: -4px 0 0;
+	background: darkorange;
+}
+.tvcntrls > s > u:after {
+	content: '';
+	display: block;
+	display: none;
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	background: tomato;
+	box-shadow: 0 0 3px black;
+	float: right;
+	margin: -6px -8px 0 0;
+}
+*/
+
+/* =========================== buttons */
+.tvcntrls {
+}
+.tvcntrls > div {
+	text-align: center;
+	-background: black;
+    height: 60px;
+    width: 170px;
+    margin: 0 auto;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+    align-items: center;
+}
+.tvcntrls > div > button {
+	display: block;
+	width: 40px;
+	height: 40px;
+	padding: 0;
+	border: 2px solid rgba(50,180,230,.6);
+	border-radius: 50%;
+	background: rgba(53,53,53,.9);
+	color: rgb(50,180,230);
+	font: 20px/34px 'Segoe';
+	box-shadow: 0 0 8px rgba(53,53,53,.5);
+}
+.tvcntrls > div > button#tvc-play {
+	width: 60px;
+	height: 60px;
+	line-height: 56px;
+	font-size: 36px;
+}
+.tvcntrls button#tvc-play:after {content: '\E768';padding-left: .05em}
+.tvcntrls > div > button#tvc-mute:after {content: '\E767'}
+.tvcntrls > div > button#tvc-size:after {content: '\E740'}
+.tvcntrls > div > button#tvc-size:after {content: '\E73F'}
+
+.ps-onpause button#tvc-play:after {content: '\E768';padding-left:.05em}
+.ps-playing button#tvc-play:after {content: '\E769';padding-left: 0}
+
+.tvcntrls > button#tvc-mute:after {content: '\E767'}
+.volmuted .tvcntrls > button#tvc-mute:after {content: '\E74F'}
+
+.tvcntrls > button#tvc-size:after {content: '\E73F'}
+.tvcntrls > button#tvc-size:hover:after {content: '\E740'}
+
+.tvcntrls > button#tvc-stop:after {content: '\E768'}
+.tvcntrls > button#tvc-stop:hover:after {content: '\E71A'}

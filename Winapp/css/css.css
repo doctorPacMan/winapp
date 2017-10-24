@@ -8,6 +8,7 @@
 @import url("mod_tvplayer.css");
 @import url("mod_schedule.css");
 @import url("mod_loading.css");
+@import url("controls.css");
 .scrollhide {
 	width: 300px;
 	height: 100%;

@@ -10,17 +10,26 @@ var $App = {
 		this._telecast = {};
 		this._channels = {};
 		
-		//return this.TEST();
+		return this.TEST();
 		//return cnapi.initialize(this.TEST.bind(this),new modLoading('mod-loading'),true);
 		console.info('$App initialize');
 		cnapi.initialize(this.onready.bind(this),new modLoading('mod-loading'));
 	},
 	TEST: function() {
+		var sauce = [
+			'http://hls.peers.tv/streaming/1kanal_hd/16/copy/playlist.m3u8?token=fd7dd8de64e65b43f2107d011c851a71',
+			'http://hls.novotelecom.ru/streaming/russian_roman/16/tvrec/playlist.m3u8',
+			'http://hls.peers.tv/streaming/cam_krylova-krasny/16/variable.m3u8',
+			'http://hls.peers.tv/variant_playlist/program/106339044.m3u8?t=16&rnd=136',//cam
+			'http://archive2.peers.tv/archive/101354016/101354016.m3u8',
+			'http://www.cn.ru/data/files/test/countdown.mp4',
+			'/data/error.mp4'];
+
 		var tp = this.modTvplayer;
 		//tp._video.setAttribute('controls','');
 		tp.poster(false);
 		tp.hover(true,false);
-		tp.load('http://hls.peers.tv/variant_playlist/program/106339044.m3u8?t=16&rnd=136');
+		tp.load(sauce[1]);
 		return;
 
 		if(0) cnapi.request.schedule(10338232,null,function(data){
