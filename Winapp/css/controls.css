@@ -8,12 +8,18 @@
 	padding: 0px;
 	bottom: 0px;
 	width: 98%;
-	margin: 0 0 120px 1%;
+	margin: 0 0 60px 1%;
 	background: tomato;
 }
-.Xtvplayer > div.tvcntrls {bottom:-64px; transition: bottom .25s ease-in-out 0s}
-.Xtvplayer.hover > div.tvcntrls {bottom:0}
-
+.tvplayer > div.tvcntrls {
+	bottom: -60px;
+	opacity: .0;
+	transition: all .25s ease-out 0s;
+}
+.tvplayer.hover > div.tvcntrls {
+	opacity: 1;
+	bottom: 0;
+}
 /* =========================== timeline */
 .tvcntrls > p {
 	position: relative;
@@ -26,7 +32,6 @@
 	margin: -90px auto 6px;
 	color: white;
 	text-shadow: 0px 0px 3px black;
-	transition: opacity .25s linear 0s;
 }
 .tvcntrls > p > time {
 	float: left;
@@ -104,9 +109,8 @@
 */
 
 /* =========================== buttons */
-.tvcntrls {
-}
 .tvcntrls > div {
+	position: relative;
 	text-align: center;
 	-background: black;
     height: 60px;
@@ -136,18 +140,68 @@
 	font-size: 36px;
 }
 .tvcntrls button#tvc-play:after {content: '\E768';padding-left: .05em}
-.tvcntrls > div > button#tvc-mute:after {content: '\E767'}
+.XXtvcntrls > div > button#tvc-mute:after {content: '\E767'}
 .tvcntrls > div > button#tvc-size:after {content: '\E740'}
 .tvcntrls > div > button#tvc-size:after {content: '\E73F'}
 
 .ps-onpause button#tvc-play:after {content: '\E768';padding-left:.05em}
 .ps-playing button#tvc-play:after {content: '\E769';padding-left: 0}
 
-.tvcntrls > button#tvc-mute:after {content: '\E767'}
-.volmuted .tvcntrls > button#tvc-mute:after {content: '\E74F'}
+.tvcntrls button#tvc-mute:after {content: '\E767'}
+.volmuted .tvcntrls button#tvc-mute:after {content: '\E74F'}
 
 .tvcntrls > button#tvc-size:after {content: '\E73F'}
 .tvcntrls > button#tvc-size:hover:after {content: '\E740'}
 
 .tvcntrls > button#tvc-stop:after {content: '\E768'}
 .tvcntrls > button#tvc-stop:hover:after {content: '\E71A'}
+
+/* ===================== Button play */
+#playbttn {
+	display: none;
+	position: absolute;
+	left:50%;width:72px;
+	top:50%;height:72px;
+	margin: -36px 0 0 -36px;
+	padding: 0;
+	outline: 0;
+	background: rgba(60,60,60,.75);
+	border: 3px solid white;
+	color: rgba(225,225,225,.125);
+	text-align: center;
+	border-radius: 36px;
+	box-shadow: 0 0 8px black;
+}
+#playbttn:before {
+	content: '\E25B';
+	display: block;
+	width: 100%;
+	height: 100%;
+	font: 42px/66px 'Segoe';
+}
+.st-idle.ps-standby #playbttn {
+	color: darkorange;
+}
+.st-view.ps-onpause #playbttn,
+.st-view.ps-playing #playbttn {
+	cursor: pointer;
+	color: white;
+}
+.st-view.ps-onpause #playbttn:before {
+	content: '\E768';
+	padding-left: .05em;
+}
+.st-view.ps-playing #playbttn {visibility: hidden}
+.st-view.ps-playing #playbttn:before {
+	content: '\E769';
+	padding-left: .01em;
+}
+#playbttn {
+	opacity: .0;
+	pointer-events: none;
+	transition: opacity .2s linear 0s;
+}
+.hover #playbttn {
+	opacity: .75;
+	pointer-events: auto;
+}

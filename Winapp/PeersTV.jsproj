@@ -88,6 +88,7 @@
     <Content Include="Assets\StoreLogo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="css\appstyles.css" />
+    <Content Include="css\controls.css" />
     <Content Include="css\css.css" />
     <Content Include="css\mod_loading.css" />
     <Content Include="css\mod_nowonair.css" />

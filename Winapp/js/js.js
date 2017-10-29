@@ -10,7 +10,7 @@ var $App = {
 		this._telecast = {};
 		this._channels = {};
 		
-		return this.TEST();
+		//return this.TEST();
 		//return cnapi.initialize(this.TEST.bind(this),new modLoading('mod-loading'),true);
 		console.info('$App initialize');
 		cnapi.initialize(this.onready.bind(this),new modLoading('mod-loading'));
@@ -28,7 +28,7 @@ var $App = {
 		var tp = this.modTvplayer;
 		//tp._video.setAttribute('controls','');
 		tp.poster(false);
-		tp.hover(true,false);
+		//tp.hover(true,false);
 		tp.load(sauce[1]);
 		return;
 

@@ -189,7 +189,7 @@ var modTvplayer = extendModule({
 		if(!fxd && st) this._hover_timer = setTimeout(this.hover.bind(this,false),3500);
 		if(st===this._hover_state) return;
 		else this._hover_state = st;
-		//this._wrppr.classList[st ? 'add' : 'remove']('hover');
+		this._wrppr.classList[st ? 'add' : 'remove']('hover');
 		//console.log('HOVER',st);
 	},
 	poster: function(image) {
@@ -197,7 +197,7 @@ var modTvplayer = extendModule({
 	},
 	initControls: function(cwrp) {
 		var batons = cwrp.getElementsByTagName('button');
-		console.log(batons);
+		//console.log(batons);
 		this._button_size = batons[0];
 		this._button_play = batons[1];
 		this._button_mute = batons[2];
