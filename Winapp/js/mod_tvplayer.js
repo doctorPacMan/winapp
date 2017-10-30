@@ -98,7 +98,7 @@ var modTvplayer = extendModule({
 		video.addEventListener('seeking',this._on_seek_init.bind(this));
 		video.addEventListener('seeked',this._on_seek_done.bind(this));
 		//video.addEventListener('timeupdate',this._ontimeup.bind(this));
-		video.addEventListener('durationchange',this._onduration.bind(this));
+		//video.addEventListener('durationchange',this._onduration.bind(this));
 
 		// poster autohide
 		//video.addEventListener('canplay',this.poster.bind(this,false));
@@ -121,6 +121,13 @@ var modTvplayer = extendModule({
 		video.addEventListener('canplay',event_loading(this.STATE_VIEW));
 		video.addEventListener('error',event_loading(this.STATE_FAIL));
 		
+		// observe duration change
+		video.addEventListener('durationchange',function(){
+			if(this._hlsjs) return;
+			var dura = Math.round(video.duration);
+			if (!isNaN(dura)) this.duration(dura);
+		}.bind(this),false);
+
 		// observe buffering state
 		var waiting_state = false,
 			event_waiting = function(st,e){
@@ -275,6 +282,16 @@ var modTvplayer = extendModule({
 		var ct = this._video.currentTime;
 		this._timeline_time.innerText = this.sec2time(ct);
 	},
+	duration: function(dura) {
+		if(dura===undefined) return this._duration;
+		else if(dura===null) delete this._duration;
+		else if(dura===this._duration) return dura;
+		else {
+			console.log('DURA', dura);
+			this._timeline_ends.innerText = dura===Infinity ? '--:--' : this.sec2time(dura);
+			return this._duration = dura;
+		}
+	},
 	_onduration: function(event) {
 		
 		var duration = this._video.duration,
@@ -352,6 +369,17 @@ var modTvplayer = extendModule({
 		hlsjs.on(Hls.Events.ERROR,(function(){
 			video.dispatchEvent(new CustomEvent('hlserror',{'detail':0}));
 		}).bind(this));
+
+		// duration
+		(function(callback){
+			var hls_live = false, duration;
+			hlsjs.on(Hls.Events.LEVEL_LOADED,function(ename,event){hls_live = !!event.details.live});
+			video.addEventListener('loadstart',function(){hls_live = false; duration = undefined},false);
+			video.addEventListener('durationchange',function(){
+				var dura = hls_live ? Infinity : video.duration;
+				if(duration!==dura) callback(Math.round(duration = dura));
+			},false);
+		})(this.duration.bind(this));
 
 		video.classList.add('hlsjs');
 		return hlsjs;
@@ -465,14 +493,14 @@ var modTvplayer = extendModule({
 
 		this._video.pause();
 		this._video.currentTime = 0;
-		//this._video.removeAttribute('style');
 		this._video.removeAttribute('src');
 		this._video.removeAttribute('poster');
 		this._video.removeAttribute('autoplay');
 		this._sauce.removeAttribute('type');
 		this._sauce.removeAttribute('src');
 		this._inf_sauce.innerText = 'empty';
-
+		this.duration(null);
+		
 		if(!this._hlsjs) this._video.load();
 		else {
 			this._hlsjs.stopLoad();
