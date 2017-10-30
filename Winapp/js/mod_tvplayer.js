@@ -9,7 +9,7 @@ var modTvplayer = extendModule({
 	initialize: function(node_id) {
 
 		this.listen('settings:autoplay',this.onSetAutoplay.bind(this));
-		this.listen('settings:stretch',this.onSetStretch.bind(this));
+		//this.listen('settings:stretch',this.onSetStretch.bind(this));
 		this.listen('telecastView',this.onTelecastView.bind(this));
 		this.listen('channelView',this.onChannelView.bind(this));
 
@@ -50,7 +50,6 @@ var modTvplayer = extendModule({
 
 		this.initVideo(this._video);
 		this.initControls(this.node.querySelector('div.tvcntrls'));
-		//this.resize(4/3);
 
 		this._hlsjs = this.attachHlsjs(this._video);
 		var ntype = this.node.querySelector('div.tvcntrls > i');
@@ -99,7 +98,7 @@ var modTvplayer = extendModule({
 		video.addEventListener('seeking',this._on_seek_init.bind(this));
 		video.addEventListener('seeked',this._on_seek_done.bind(this));
 		//video.addEventListener('timeupdate',this._ontimeup.bind(this));
-		//video.addEventListener('durationchange',this._onduration.bind(this));
+		video.addEventListener('durationchange',this._onduration.bind(this));
 
 		// poster autohide
 		//video.addEventListener('canplay',this.poster.bind(this,false));
@@ -201,6 +200,7 @@ var modTvplayer = extendModule({
 		this._button_size = batons[0];
 		this._button_play = batons[1];
 		this._button_mute = batons[2];
+		this._button_size.addEventListener('click',this.resize.bind(this,null));
 		this._button_play.addEventListener('click',this.pause.bind(this,null));
 		this._button_mute.addEventListener('click',this.mute.bind(this,null));
 
@@ -242,7 +242,7 @@ var modTvplayer = extendModule({
 		this._video.setAttribute('width',vw);
 		this._video.setAttribute('height',vh);
 
-		this.resize(vw/vh);
+		this.resize(this._stretch);
 		this.poster(false);
 		this.timeline();
 	},
@@ -283,6 +283,8 @@ var modTvplayer = extendModule({
 		if(isNaN(duration)) return;
 		else if(this._onduration_value==duration) return;
 		else this._onduration_value = duration;
+		
+		console.log('DURA',duration);
 		
 		if(duration===Infinity) {
 			this._timeline_time.innerText = this.sec2time(0);
@@ -353,11 +355,6 @@ var modTvplayer = extendModule({
 
 		video.classList.add('hlsjs');
 		return hlsjs;
-	},
-	onSetStretch: function(event) {
-		var data = event.detail;
-		this.resize();
-		//console.log('stretch', data.newvalue);
 	},
 	onSetAutoplay: function(event) {
 		var data = event.detail;
@@ -575,24 +572,24 @@ var modTvplayer = extendModule({
 			vp = parseFloat(vw/vh);
 		return !isNaN(vp) ? vp : undefined;
 	},
-	resize: function() {
-		var	cw = this._wrppr.offsetWidth,
+	resize: function(st) {
+
+		var	st = typeof(st)=='boolean' ? st : !this._stretch,
+			cw = this._wrppr.offsetWidth,
 			ch = this._wrppr.offsetHeight,
 			vw = this._video.videoWidth,
 			vh = this._video.videoHeight;
 		if(isNaN(vw) || vw<=0) vw = 720;
 		if(isNaN(vh) || vh<=0) vh = Math.round(3*vw/4);
+		//console.log('stretch:'+this._stretch, 'video:'+vw+'x'+vh, 'cont:'+cw+'x'+ch);
 		
-		var cp = ch/cw,
-			vp = vh/vw,
-			stretch = (true===$App.settings('stretch'));
-		
-		//console.log('stretch:'+stretch, 'video:'+vw+'x'+vh, 'cont:'+cw+'x'+ch);
-		if(stretch) {
+		var cp = ch/cw, vp = vh/vw;
+		if(this._stretch = st) {
 			if(cp>vp) this.fitinHeight(); else this.fitinWidth();
 		} else {
 			if(cp<vp) this.fitinHeight(); else this.fitinWidth();
 		}
+		this._wrppr.classList[st ? 'add' : 'remove']('stretchd');
 	},
 	fitinWidth: function(pp) {
 

@@ -140,9 +140,6 @@
 	font-size: 36px;
 }
 .tvcntrls button#tvc-play:after {content: '\E768';padding-left: .05em}
-.XXtvcntrls > div > button#tvc-mute:after {content: '\E767'}
-.tvcntrls > div > button#tvc-size:after {content: '\E740'}
-.tvcntrls > div > button#tvc-size:after {content: '\E73F'}
 
 .ps-onpause button#tvc-play:after {content: '\E768';padding-left:.05em}
 .ps-playing button#tvc-play:after {content: '\E769';padding-left: 0}
@@ -150,8 +147,8 @@
 .tvcntrls button#tvc-mute:after {content: '\E767'}
 .volmuted .tvcntrls button#tvc-mute:after {content: '\E74F'}
 
-.tvcntrls > button#tvc-size:after {content: '\E73F'}
-.tvcntrls > button#tvc-size:hover:after {content: '\E740'}
+.tvcntrls button#tvc-size:after {content: '\E740'}
+.stretchd .tvcntrls button#tvc-size:after {content: '\E73F'}
 
 .tvcntrls > button#tvc-stop:after {content: '\E768'}
 .tvcntrls > button#tvc-stop:hover:after {content: '\E71A'}
