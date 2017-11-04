@@ -15,6 +15,7 @@
 .sidebar > a {
 	position: relative;
 	font: 0px/0px serif;
+	cursor: pointer;
 	display: block;
 	width: calc(100% - 8px);
 	border-left: 4px solid transparent;

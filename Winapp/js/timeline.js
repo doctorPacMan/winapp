@@ -4,27 +4,13 @@ TimelineBar.prototype = {
 	initialize: function(bgn, end) {
 
 		var node = document.createElement('u'),
-			line = document.createElement('s'),
-			now = Date.server(),
-			bgn = new Date(bgn),
-			end = new Date(end);
+			line = document.createElement('s');
 		
-		//this.dura = (end - bgn);
 		this.node = node;
 		this.line = line;
-		this.start = bgn;
-		this.xpire = end;
-
+		
 		node.setAttribute('class','timeline');
-		//node.setAttribute('data-start',this.start.format('dd mmmm h:nn:ss'));
-		//node.setAttribute('data-xpire',this.xpire.format('dd mmmm h:nn:ss'));
-		//node.setAttribute('data-total',Math.round((end - bgn)/1000)+'s');
 		node.appendChild(line);
-
-		if(end<now) this.position(1);
-		else if(bgn<now) this.positionTime(now);
-		else this.delayTime(now).position(0);
-		//else this.position(0);
 
 		return this;
 	},
@@ -67,13 +53,26 @@ TimelineBar.prototype = {
 		
 		return this.position(p);
 	},
-	duration: function(duration, start) {
-		this.start = new Date();
-		this.xpire = new Date(this.start.getTime() + duration);
-		this.position(start || 0);
+	duration: function(duration, position) {
+		//console.log('TimelineBar.duration', duration, position);
+		var position = (position || 0),
+			dr = Math.round(duration),
+			ps = position/duration;
+
+		dr = Math.round(duration - position);
+
+		this.line.style.animation = null;
+		this.node.removeChild(this.line);
+
+		var animation = 'timeline-s '+dr+'s linear 0s 1';
+		animation+= ' normal forwards';
+		this.line.style.animation = animation;
+		this.line.style.width = Math.round(ps * 100)+'%';
+		setTimeout(this.node.appendChild.bind(this.node,this.line),50);
+		
 		return this;
 	},
-	position: function(v, anime) {
+	xposition: function(v, anime) {
 		var line = this.line,
 			stop = anime===false;
 
@@ -91,7 +90,7 @@ TimelineBar.prototype = {
 				//sp = Math.round(dr / (dr>1500 ? 5 : 3)),
 				//tf = 'steps('+sp+', end)',
 				tf = 'steps('+dr+', end)',
-				//tf = 'linear',
+				tf = 'linear',
 				lw = Math.ceil(v*100);
 			//line.style.animationDuration = dr+'s';
 			//line.style.animationTimingFunction = 'linear';
@@ -100,10 +99,22 @@ TimelineBar.prototype = {
 			line.style.width = lw+'%';
 			if(stop) line.style.animation = 'none';
 			else line.style.animation = 'timeline-s '+dr+'s 0s 1 '+tf;
-			//console.log('TimelineBar.position', line.style.width, dr+'s', v);
+			console.log('TimelineBar.position', stop, line.style.width, dr+'s', v);
 		}
 		
 		this.node.appendChild(this.line);
+		return this;
+	},
+	pause: function(st) {
+		var st = typeof(st)=='boolean' ? st : !this._paused;
+		this.line.style.animationPlayState = st ? 'paused' : 'running';
+		this._paused = st;
+		return this;
+	},
+	visibile: function(st) {
+		var st = typeof(st)=='boolean' ? st : this._hidden;
+		this.node.style.display = st ? 'block' : 'none';
+		this._hidden = !st;
 		return this;
 	}
 }

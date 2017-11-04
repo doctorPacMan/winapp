@@ -1,6 +1,7 @@
 .vs
 Winapp/bin
 Winapp/bld
+Winapp/css/logos/*
 Winapp/AppPackages
 Winapp/WinJS
 Winapp/Assets

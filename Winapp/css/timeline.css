@@ -1,17 +1,17 @@
 ﻿@keyframes timeline-s {100% {width:100%}}
-.timeline {
-	height: 5px;
+.timeline,
+.timeline > s {
+	position: relative;
 	display: block;
-	overflow: hidden;
+	height: 5px;
+}
+.timeline {
+	overflow: visible;
 	background: transparent none no-repeat 0 0;
-	background-color: rgba(125,125,125,.125);
+	background-color: rgba(50, 180, 230, .255);
 }
 .timeline > s {
-	display: block;
-	width: 50%;
-	height: 100%;
-	background-color: rgb(255,200,0);
-	animation: timeline-s 2s 0s 1 linear;
-	animation-fill-mode: forwards;
-	animation-play-state: running;
+	width: 12%;
+	background-color: rgb(50,180,230);
+	animation: timeline-s 2s 0s 1 linear normal forwards paused;
 }

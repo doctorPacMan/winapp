@@ -70,7 +70,7 @@
     <MinimumVisualStudioVersion>$(VersionNumberMajor).$(VersionNumberMinor)</MinimumVisualStudioVersion>
     <DefaultLanguage>en-us</DefaultLanguage>
     <PackageCertificateKeyFile>PeersTV_StoreKey.pfx</PackageCertificateKeyFile>
-    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Never</AppxBundle>
     <PackageCertificateThumbprint>25558BE218A2D4E2E69725E85F58B4808D5A00E8</PackageCertificateThumbprint>
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
@@ -90,6 +90,9 @@
     <Content Include="css\appstyles.css" />
     <Content Include="css\controls.css" />
     <Content Include="css\css.css" />
+    <Content Include="css\logos\channels_mini.png" />
+    <Content Include="css\logos\channels_small.png" />
+    <Content Include="css\logos\logos.css" />
     <Content Include="css\mod_loading.css" />
     <Content Include="css\mod_nowonair.css" />
     <Content Include="css\mod_playlist.css" />

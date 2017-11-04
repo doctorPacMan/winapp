@@ -193,6 +193,10 @@ div.player-video:before {}
 	margin-left: 5px;
 	text-align: center;
 	font: 24px/36px 'Segoe';
+	cursor: pointer;
+}
+.tvsdescr > b:hover {
+	background-color: rgba(220,220,220,.16);
 }
 .tvsdescr > b:before {
 	content: '\E70D';

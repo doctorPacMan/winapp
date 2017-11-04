@@ -19,17 +19,19 @@ var $App = {
 		var sauce = [
 			'http://hls.peers.tv/streaming/1kanal_hd/16/copy/playlist.m3u8?token=fd7dd8de64e65b43f2107d011c851a71',
 			'http://hls.novotelecom.ru/streaming/russian_roman/16/tvrec/playlist.m3u8',
+			'http://hls.novotelecom.ru/streaming/cam_lenina_sq/16/camv/playlist.m3u8',
 			'http://hls.peers.tv/streaming/cam_krylova-krasny/16/variable.m3u8',
 			'http://hls.peers.tv/variant_playlist/program/106339044.m3u8?t=16&rnd=136',//cam
-			'http://hls.peers.tv/variant_playlist/program/107362495.m3u8?rnd=930&t=16',
+			'http://hls.peers.tv/variant_playlist/program/107531719.m3u8?rnd=99&t=16',
 			'http://www.cn.ru/data/files/test/countdown.mp4',
 			'/data/error.mp4'];
 
 		var tp = this.modTvplayer;
 		//tp._video.setAttribute('controls','');
-		tp.poster(false);
-		//tp.hover(true,false);
-		tp.load(sauce[4]);
+		//tp.poster(false);
+		tp.hover(true,false);
+		tp.load(sauce[5]);
+		//tp.load(sauce[2]);
 		return;
 
 		if(0) cnapi.request.schedule(10338232,null,function(data){
